@@ -1,21 +1,30 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ExternalLink, Github, Globe, Heart, ShieldCheck } from "lucide-react";
 
 export function Footer() {
+  const pathname = usePathname();
+
+  // Only show footer on public landing showcase (/)
+  if (pathname !== "/") {
+    return null;
+  }
   return (
     <footer className="border-t border-[#EAE5DC] bg-[#FAF7F2] py-14 text-xs text-[#78716C]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 pb-8 border-b border-[#EAE5DC]">
           {/* Brand & Mission */}
           <div className="space-y-2 max-w-md">
-            <div className="flex items-center gap-2">
-              <span className="font-extrabold text-xl text-[#111827]">CampusIQ</span>
+            <Link href="/" className="flex items-center gap-2 group w-fit">
+              <span className="font-extrabold text-xl text-[#111827] group-hover:text-blue-600 transition-colors">CampusIQ</span>
               <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
               <span className="text-stone-300">|</span>
               <span className="text-[11px] font-semibold text-stone-500 uppercase tracking-wider font-mono">
                 Smart Campus Analytics
               </span>
-            </div>
+            </Link>
             <p className="text-xs text-[#57534E] leading-relaxed">
               AI-powered student analytics and decision intelligence platform built for the <strong>KPMG in India Hackathon</strong>. Predict, optimize, and improve student success across 7 collegiate data silos.
             </p>
@@ -61,8 +70,8 @@ export function Footer() {
         </div>
 
         {/* Bottom Row */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#78716C]">
-          <div className="flex items-center gap-2">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#78716C] text-center sm:text-left">
+          <div className="flex flex-wrap items-center justify-center gap-2">
             <span>Designed & Engineered by</span>
             <a
               href="https://devlikhith.vercel.app/"
@@ -75,7 +84,9 @@ export function Footer() {
             <span>for KPMG in India Hackathon</span>
           </div>
 
-          <div className="flex items-center gap-6 text-[#57534E]">
+          <div className="flex flex-wrap items-center justify-center sm:justify-end gap-x-6 gap-y-2 text-[#57534E]">
+            <Link href="/" className="hover:text-stone-900 transition-colors">Landing Showcase</Link>
+            <Link href="/home" className="hover:text-stone-900 transition-colors">Campus Home</Link>
             <Link href="/faculty" className="hover:text-stone-900 transition-colors">Faculty Workspace</Link>
             <Link href="/segmentation" className="hover:text-stone-900 transition-colors">AI Segmentation</Link>
             <Link href="/interventions" className="hover:text-stone-900 transition-colors">Interventions</Link>
