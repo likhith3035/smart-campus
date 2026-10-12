@@ -54,9 +54,29 @@ export function LandingDashboardPreview() {
     >
       <div className="flex flex-col lg:flex-row min-h-[520px]">
         {/* ───────────────────────────────────────────────────────────
-            LEFT PREVIEW SIDEBAR
+            MOBILE COMPACT COCKPIT HEADER (Shown only on small screens)
         ─────────────────────────────────────────────────────────── */}
-        <aside className="w-full lg:w-52 bg-[#FBF9F5] border-b lg:border-b-0 lg:border-r border-stone-200/80 p-4 flex flex-col justify-between shrink-0">
+        <div className="lg:hidden flex items-center justify-between px-4 py-2.5 bg-[#FAF7F0] border-b border-stone-200 text-xs">
+          <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1">
+              <span className="w-2.5 h-2.5 rounded-full bg-rose-400" />
+              <span className="w-2.5 h-2.5 rounded-full bg-amber-400" />
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
+            </div>
+            <span className="font-bold text-stone-800 text-[11px] ml-1 font-mono">Live Institutional Cockpit</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="font-mono text-[10px] font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full">
+              600 MONITORED
+            </span>
+          </div>
+        </div>
+
+        {/* ───────────────────────────────────────────────────────────
+            LEFT PREVIEW SIDEBAR (Desktop Only)
+        ─────────────────────────────────────────────────────────── */}
+        <aside className="hidden lg:flex lg:w-52 bg-[#FBF9F5] border-r border-stone-200/80 p-4 flex-col justify-between shrink-0">
           <div className="space-y-1">
             <div className="text-[10px] font-mono uppercase tracking-widest text-stone-400 font-bold px-3 py-1">
               Workspace

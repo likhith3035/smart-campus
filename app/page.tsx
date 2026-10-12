@@ -241,36 +241,37 @@ export default function CampusIQLandingPage() {
               </div>
 
               {/* Top Pill Badge: ● KPMG IN INDIA HACKATHON · DECISION INTELLIGENCE */}
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/90 border border-stone-200/90 shadow-2xs text-[11px] font-mono tracking-wider text-stone-700 backdrop-blur-sm">
-                <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse" />
-                <span className="uppercase font-bold text-stone-600">
+              <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full bg-white/95 border border-stone-200/90 shadow-2xs text-[10px] sm:text-[11px] font-mono tracking-wider text-stone-700 backdrop-blur-md">
+                <span className="w-2 h-2 rounded-full bg-blue-600 animate-ping" />
+                <span className="uppercase font-bold text-stone-900">
                   KPMG IN INDIA HACKATHON
                 </span>
-                <span className="text-stone-300">•</span>
-                <span className="uppercase text-stone-500">
+                <span className="text-stone-300 hidden sm:inline">•</span>
+                <span className="uppercase font-semibold text-purple-700 hidden sm:inline">
                   DECISION INTELLIGENCE
                 </span>
               </div>
 
-              {/* Hero Headline: Exact typography with Italic Serif */}
-              <h1 className="text-4xl sm:text-6xl lg:text-[68px] font-extrabold tracking-tight text-[#111827] leading-[1.08] max-w-4xl mx-auto">
+              {/* Hero Headline: Exact typography with Italic Serif & Warm Highlight */}
+              <h1 className="text-[34px] sm:text-6xl lg:text-[68px] font-extrabold tracking-tight text-[#111827] leading-[1.12] sm:leading-[1.08] max-w-4xl mx-auto">
                 Turn student data <br />
                 into earlier, smarter <br />
-                <span className="font-serif-italic font-normal tracking-normal text-[#111827]">
+                <span className="font-serif-italic font-normal tracking-normal text-[#111827] relative inline-block">
                   student success.
+                  <span className="absolute -bottom-1 left-0 w-full h-1.5 sm:h-2 bg-amber-300/60 -z-10 rounded-full"></span>
                 </span>
               </h1>
 
               {/* Hero Subtitle */}
-              <p className="text-base sm:text-lg text-stone-600 max-w-2xl mx-auto leading-relaxed">
+              <p className="text-sm sm:text-lg text-stone-600 max-w-2xl mx-auto leading-relaxed px-2 sm:px-0">
                 Unify academic, attendance, LMS, engagement and placement signals to identify students who may need support — and help faculty take informed action.
               </p>
 
               {/* Dual Action CTAs */}
-              <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 pt-2">
+              <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-4 pt-1 sm:pt-2">
                 <Link
                   href="/home"
-                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#111827] hover:bg-black text-white text-sm font-semibold shadow-md hover:shadow-lg transition-all hover:gap-2.5"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-[#111827] hover:bg-black text-white text-sm font-bold shadow-md hover:shadow-lg transition-all hover:gap-2.5 active:scale-95"
                 >
                   <span>Explore the platform</span>
                   <ArrowRight className="w-4 h-4" />
@@ -278,7 +279,7 @@ export default function CampusIQLandingPage() {
 
                 <a
                   href="#how-it-works"
-                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-white hover:bg-stone-50 text-[#111827] text-sm font-semibold border border-stone-200/90 shadow-2xs hover:border-stone-400 transition-all"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-white hover:bg-stone-50 text-[#111827] text-sm font-semibold border border-stone-200/90 shadow-2xs hover:border-stone-400 transition-all active:scale-95"
                 >
                   <div className="w-5 h-5 rounded-full border border-stone-400 flex items-center justify-center text-stone-700">
                     <Play className="w-2.5 h-2.5 fill-current ml-0.5" />
@@ -287,11 +288,36 @@ export default function CampusIQLandingPage() {
                 </a>
               </div>
 
-              {/* 3 Horizontal Feature Micro-Cards */}
-              <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 pt-6 max-w-4xl mx-auto">
+              {/* Quick Mobile Feature Launchers (Instant 1-Click Access) */}
+              <div className="pt-2 flex flex-wrap items-center justify-center gap-2 px-1">
+                <Link
+                  href="/faculty"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-purple-50 hover:bg-purple-100 border border-purple-200 text-purple-900 text-xs font-bold shadow-2xs transition-all active:scale-95"
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-purple-600" />
+                  <span>🎯 What-If Simulator</span>
+                </Link>
+                <Link
+                  href="/home"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-50 hover:bg-amber-100 border border-amber-200 text-amber-900 text-xs font-bold shadow-2xs transition-all active:scale-95"
+                >
+                  <Award className="w-3.5 h-3.5 text-amber-700" />
+                  <span>📄 Dean&apos;s Governance Brief</span>
+                </Link>
+                <Link
+                  href="/upload"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-900 text-xs font-bold shadow-2xs transition-all active:scale-95"
+                >
+                  <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>⚡ Upload Custom Data</span>
+                </Link>
+              </div>
+
+              {/* 3 Feature Micro-Cards (Horizontal Touch Carousel on Mobile) */}
+              <div className="flex sm:flex-wrap items-center justify-start sm:justify-center gap-2.5 sm:gap-4 pt-4 sm:pt-6 max-w-4xl mx-auto overflow-x-auto pb-2 px-2 sm:px-0 scrollbar-none snap-x">
                 {/* Card 1 */}
-                <div className="flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-white/80 backdrop-blur-sm border border-stone-200/80 shadow-2xs hover:border-blue-200 transition-all">
-                  <div className="p-2.5 rounded-xl bg-blue-50 text-blue-600 border border-blue-100">
+                <div className="flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-white/90 backdrop-blur-sm border border-stone-200/80 shadow-2xs hover:border-blue-200 transition-all shrink-0 snap-center min-w-[240px] sm:min-w-0">
+                  <div className="p-2.5 rounded-xl bg-blue-50 text-blue-600 border border-blue-100 shrink-0">
                     <Layers className="w-4 h-4" />
                   </div>
                   <div className="text-left">
@@ -301,8 +327,8 @@ export default function CampusIQLandingPage() {
                 </div>
 
                 {/* Card 2 */}
-                <div className="flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-white/80 backdrop-blur-sm border border-stone-200/80 shadow-2xs hover:border-emerald-200 transition-all">
-                  <div className="p-2.5 rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-100">
+                <div className="flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-white/90 backdrop-blur-sm border border-stone-200/80 shadow-2xs hover:border-emerald-200 transition-all shrink-0 snap-center min-w-[240px] sm:min-w-0">
+                  <div className="p-2.5 rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-100 shrink-0">
                     <TrendingUp className="w-4 h-4" />
                   </div>
                   <div className="text-left">
@@ -312,8 +338,8 @@ export default function CampusIQLandingPage() {
                 </div>
 
                 {/* Card 3 */}
-                <div className="flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-white/80 backdrop-blur-sm border border-stone-200/80 shadow-2xs hover:border-amber-200 transition-all">
-                  <div className="p-2.5 rounded-xl bg-amber-50 text-amber-600 border border-amber-100">
+                <div className="flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-white/90 backdrop-blur-sm border border-stone-200/80 shadow-2xs hover:border-amber-200 transition-all shrink-0 snap-center min-w-[240px] sm:min-w-0">
+                  <div className="p-2.5 rounded-xl bg-amber-50 text-amber-600 border border-amber-100 shrink-0">
                     <Users className="w-4 h-4" />
                   </div>
                   <div className="text-left">
@@ -1397,6 +1423,35 @@ export default function CampusIQLandingPage() {
         </div>
       </section>
 
+      </div>
+
+      {/* ───────────────────────────────────────────────────────────
+          MOBILE FLOATING ACTION DOCK (Fixed at bottom on phones)
+      ─────────────────────────────────────────────────────────── */}
+      <div className="sm:hidden fixed bottom-3 left-3 right-3 z-40 bg-[#111827]/95 text-white backdrop-blur-xl rounded-2xl p-2.5 border border-stone-700/80 shadow-2xl flex items-center justify-between gap-2 animate-in slide-in-from-bottom duration-300">
+        <div className="flex items-center gap-2 pl-2">
+          <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+          <span className="text-xs font-bold font-mono tracking-tight">CampusIQ</span>
+          <span className="text-[9px] text-amber-400 font-mono font-bold bg-amber-400/10 px-1.5 py-0.5 rounded border border-amber-400/20">
+            HACKATHON
+          </span>
+        </div>
+        <div className="flex items-center gap-2">
+          <Link
+            href="/faculty"
+            className="px-3 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs flex items-center gap-1 active:scale-95 transition-all shadow-sm"
+          >
+            <Sparkles className="w-3 h-3 text-amber-300" />
+            <span>What-If</span>
+          </Link>
+          <Link
+            href="/home"
+            className="px-3.5 py-1.5 rounded-xl bg-white hover:bg-stone-100 text-stone-950 font-extrabold text-xs flex items-center gap-1 shadow-sm active:scale-95 transition-all"
+          >
+            <span>Launch</span>
+            <ArrowRight className="w-3.5 h-3.5 text-stone-950" />
+          </Link>
+        </div>
       </div>
     </div>
   );

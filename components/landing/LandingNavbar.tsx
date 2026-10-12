@@ -78,7 +78,8 @@ export function LandingNavbar() {
             {/* Mobile menu toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 rounded-xl text-stone-700 hover:bg-stone-200/60"
+              className="md:hidden p-2 rounded-xl text-stone-700 hover:bg-stone-200/60 transition-colors"
+              aria-label="Toggle navigation menu"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
@@ -87,35 +88,69 @@ export function LandingNavbar() {
 
         {/* Mobile menu dropdown */}
         {mobileMenuOpen && (
-          <div className="md:hidden border-t border-stone-200 bg-[#FBF9F5] px-5 py-4 space-y-3">
-            <a
-              href="#platform"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block text-sm font-semibold text-stone-900 py-1.5"
-            >
-              Platform Overview
-            </a>
-            <a
-              href="#how-it-works"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block text-sm font-semibold text-stone-600 hover:text-stone-900 py-1.5"
-            >
-              How it works
-            </a>
-            <Link
-              href="/methodology"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block text-sm font-semibold text-stone-600 hover:text-stone-900 py-1.5"
-            >
-              Methodology
-            </Link>
-            <Link
-              href="/about"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block text-sm font-semibold text-stone-600 hover:text-stone-900 py-1.5"
-            >
-              About &amp; Guide
-            </Link>
+          <div className="md:hidden border-t border-stone-200/90 bg-[#FBF9F5]/98 backdrop-blur-xl px-4 py-5 space-y-4 shadow-xl animate-in slide-in-from-top-2 duration-200">
+            {/* Direct App Launchers on Mobile */}
+            <div className="grid grid-cols-2 gap-2 pb-2 border-b border-stone-200">
+              <Link
+                href="/home"
+                onClick={() => setMobileMenuOpen(false)}
+                className="p-3 rounded-2xl bg-stone-900 text-white font-bold text-xs flex items-center justify-between shadow-sm"
+              >
+                <span>Command Center</span>
+                <ArrowRight className="w-3.5 h-3.5 text-amber-300" />
+              </Link>
+              <Link
+                href="/faculty"
+                onClick={() => setMobileMenuOpen(false)}
+                className="p-3 rounded-2xl bg-purple-100 hover:bg-purple-200 text-purple-950 font-bold text-xs flex items-center justify-between border border-purple-200"
+              >
+                <span>What-If Simulator</span>
+                <span className="text-[10px] font-mono font-bold text-purple-700">AI</span>
+              </Link>
+            </div>
+
+            <div className="space-y-1 text-sm font-semibold text-stone-700">
+              <a
+                href="#platform"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center justify-between py-2 px-3 rounded-xl hover:bg-stone-100"
+              >
+                <span>Platform Cockpit</span>
+                <span className="text-xs text-stone-400 font-mono">Overview</span>
+              </a>
+              <Link
+                href="/faculty"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center justify-between py-2 px-3 rounded-xl hover:bg-stone-100"
+              >
+                <span>Faculty Triage Directory</span>
+                <span className="text-xs text-stone-400 font-mono">600 Students</span>
+              </Link>
+              <Link
+                href="/upload"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center justify-between py-2 px-3 rounded-xl hover:bg-stone-100"
+              >
+                <span>Custom Dataset Ingestion</span>
+                <span className="text-[10px] bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded font-mono">CSV/XLSX</span>
+              </Link>
+              <Link
+                href="/methodology"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center justify-between py-2 px-3 rounded-xl hover:bg-stone-100"
+              >
+                <span>Algorithm Methodology</span>
+                <span className="text-xs text-stone-400 font-mono">7 Pillars</span>
+              </Link>
+              <Link
+                href="/about"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center justify-between py-2 px-3 rounded-xl hover:bg-stone-100"
+              >
+                <span>Guide & Architecture</span>
+                <span className="text-xs text-stone-400 font-mono">Docs</span>
+              </Link>
+            </div>
           </div>
         )}
       </header>
