@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -9,6 +9,9 @@ export const metadata: Metadata = {
   title: "CampusIQ | AI-Powered Student Analytics & Success Platform",
   description: "Turn student data into brighter futures. Identify at-risk students early, provide personalized support, and improve academic and placement outcomes.",
   manifest: "/manifest.json",
+};
+
+export const viewport: Viewport = {
   themeColor: "#0B1528",
 };
 
