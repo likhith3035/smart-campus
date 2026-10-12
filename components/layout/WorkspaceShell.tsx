@@ -327,46 +327,46 @@ function WorkspaceShellInner({ children }: WorkspaceShellProps) {
         <div className={`lg:hidden shrink-0 ${isCustomDataset ? "h-[86px]" : "h-14"}`} />
 
         {/* ─── Desktop Dedicated Top Bar (>= lg screens) ─── */}
-        <header className="hidden lg:flex sticky top-0 z-30 bg-[#FAF7F2]/95 backdrop-blur-md border-b border-[#ECE7DF] px-6 xl:px-8 py-3.5 items-center justify-between gap-4 w-full">
-          <div className="flex items-center gap-3 flex-1 max-w-2xl">
+        <header className="hidden lg:flex sticky top-0 z-30 bg-[#FAF7F2]/95 backdrop-blur-md border-b border-[#ECE7DF] px-5 xl:px-6 py-2.5 items-center justify-between gap-3 w-full">
+          <div className="flex items-center gap-3 flex-1 max-w-md">
             {/* Universal Search Bar with ⌘ K Shortcut */}
             <div
               onClick={() => setCommandPaletteOpen(true)}
-              className="w-full max-w-xl flex items-center justify-between px-3.5 py-2 rounded-2xl border border-stone-200/90 bg-white/80 hover:bg-white shadow-2xs hover:border-stone-400 transition-all cursor-pointer group"
+              className="w-full flex items-center justify-between px-3 py-1.5 rounded-xl border border-stone-200/90 bg-white/90 hover:bg-white shadow-2xs hover:border-stone-400 transition-all cursor-pointer group"
             >
-              <div className="flex items-center gap-2.5 text-stone-400 text-xs sm:text-sm truncate">
-                <Search className="w-4 h-4 text-stone-400 group-hover:text-stone-700 transition-colors shrink-0" />
-                <span className="truncate">Search students, departments, or keywords...</span>
+              <div className="flex items-center gap-2 text-stone-400 text-xs truncate">
+                <Search className="w-3.5 h-3.5 text-stone-400 group-hover:text-stone-700 transition-colors shrink-0" />
+                <span className="truncate">Search students, roll #, or views...</span>
               </div>
-              <kbd className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[10px] font-mono font-bold text-stone-500 bg-stone-100 border border-stone-200/80">
-                ⌘ K
+              <kbd className="hidden sm:inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[9.5px] font-mono font-bold text-stone-500 bg-stone-100 border border-stone-200/80">
+                ⌘K
               </kbd>
             </div>
           </div>
 
           {/* Right Institutional Controls */}
-          <div className="flex items-center gap-2.5 sm:gap-3 shrink-0 relative">
+          <div className="flex items-center gap-2 shrink-0 relative">
             {/* Active Dataset Status Pill */}
             {isCustomDataset ? (
-              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 shadow-2xs font-semibold">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-                <span className="max-w-[120px] sm:max-w-[180px] truncate" title={datasetName}>
+              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 shadow-2xs font-semibold">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+                <span className="max-w-[130px] truncate" title={datasetName}>
                   {datasetName}
                 </span>
                 <span className="text-[10px] text-emerald-600 font-mono">({studentCount})</span>
                 <button
                   onClick={resetToDemoData}
                   title="Revert back to standard 600-student benchmark cohort"
-                  className="ml-1 inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-white border border-emerald-300 text-[10px] font-bold text-emerald-700 hover:bg-emerald-100 hover:text-emerald-900 transition-colors shadow-2xs cursor-pointer"
+                  className="ml-1 inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-white border border-emerald-300 text-[10px] font-bold text-emerald-700 hover:bg-emerald-100 hover:text-emerald-900 transition-colors shadow-2xs cursor-pointer"
                 >
-                  <RotateCcw className="w-3 h-3" />
-                  <span className="hidden sm:inline">Reset</span>
+                  <RotateCcw className="w-2.5 h-2.5" />
+                  <span>Reset</span>
                 </button>
               </div>
             ) : (
-              <div className="hidden xl:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-stone-200/90 text-xs font-semibold text-stone-600 shadow-2xs">
+              <div className="hidden 2xl:flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white border border-stone-200/90 text-xs font-semibold text-stone-600 shadow-2xs">
                 <Database className="w-3.5 h-3.5 text-stone-400" />
-                <span>Demo Cohort ({studentCount})</span>
+                <span>Demo ({studentCount})</span>
               </div>
             )}
 
@@ -374,15 +374,15 @@ function WorkspaceShellInner({ children }: WorkspaceShellProps) {
             <div className="relative">
               <button
                 onClick={() => setTermDropdownOpen(!termDropdownOpen)}
-                className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-stone-200/90 shadow-2xs text-xs font-semibold text-stone-800 hover:bg-stone-50 transition-all"
+                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-white border border-stone-200/90 shadow-2xs text-xs font-semibold text-stone-800 hover:bg-stone-50 transition-all cursor-pointer"
               >
                 <Calendar className="w-3.5 h-3.5 text-stone-500" />
                 <span>{selectedTerm}</span>
-                <ChevronDown className="w-3.5 h-3.5 text-stone-400 ml-1" />
+                <ChevronDown className="w-3 h-3 text-stone-400" />
               </button>
 
               {termDropdownOpen && (
-                <div className="absolute right-0 top-11 w-48 bg-white rounded-xl shadow-xl border border-stone-200 py-1.5 z-40 animate-in fade-in duration-150">
+                <div className="absolute right-0 top-9 w-44 bg-white rounded-xl shadow-xl border border-stone-200 py-1.5 z-40 animate-in fade-in duration-150">
                   {["Fall 2026", "Spring 2026", "Synthetic Stress Cohort"].map((term) => (
                     <button
                       key={term}
@@ -390,10 +390,10 @@ function WorkspaceShellInner({ children }: WorkspaceShellProps) {
                         setSelectedTerm(term);
                         setTermDropdownOpen(false);
                       }}
-                      className="w-full text-left px-3.5 py-2 text-xs font-medium hover:bg-stone-100 text-stone-800 flex items-center justify-between"
+                      className="w-full text-left px-3 py-1.5 text-xs font-medium hover:bg-stone-100 text-stone-800 flex items-center justify-between"
                     >
                       <span>{term}</span>
-                      {selectedTerm === term && <Check className="w-3.5 h-3.5 text-blue-600" />}
+                      {selectedTerm === term && <Check className="w-3 h-3 text-blue-600" />}
                     </button>
                   ))}
                 </div>
@@ -403,7 +403,7 @@ function WorkspaceShellInner({ children }: WorkspaceShellProps) {
             {/* College & Authority Profile Trigger */}
             <button
               onClick={() => setInstitutionalProfileOpen(true)}
-              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-stone-200/90 hover:border-stone-400 text-stone-800 text-xs font-bold shadow-2xs hover:bg-stone-50 transition-all cursor-pointer"
+              className="hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-white border border-stone-200/90 hover:border-stone-400 text-stone-800 text-xs font-bold shadow-2xs hover:bg-stone-50 transition-all cursor-pointer"
               title="Customize College Name, Authority Role (Principal/Dean) & Signatures"
             >
               <Building2 className="w-3.5 h-3.5 text-stone-500" />
@@ -412,36 +412,20 @@ function WorkspaceShellInner({ children }: WorkspaceShellProps) {
               <Settings2 className="w-3 h-3 text-stone-400" />
             </button>
 
-            {/* Quick Student & Command Search Trigger */}
-            <button
-              onClick={() => setCommandPaletteOpen(true)}
-              className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white border border-stone-200/90 hover:border-stone-400 text-stone-500 hover:text-stone-900 text-xs shadow-2xs transition-all cursor-pointer"
-              title="Search students, roll numbers, or navigate (⌘K / Ctrl+K)"
-            >
-              <Search className="w-3.5 h-3.5 text-stone-400" />
-              <span className="font-medium">Search...</span>
-              <kbd className="px-1.5 py-0.5 rounded bg-stone-100 text-[10px] font-mono font-bold text-stone-600 border border-stone-200">
-                ⌘K
-              </kbd>
-            </button>
-
             {/* Judge Live Simulation Scenarios Trigger */}
             <button
               onClick={() => setScenarioModalOpen(true)}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 border border-amber-300/90 text-amber-950 text-xs font-bold shadow-2xs transition-all cursor-pointer"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-50 hover:bg-amber-100 border border-amber-300 text-amber-950 text-xs font-bold shadow-2xs transition-all cursor-pointer"
               title="Test 1-Click Simulation Scenarios (Crisis, Placement Surge, etc.)"
             >
               <Sparkles className="w-3.5 h-3.5 text-amber-600 fill-amber-500/20" />
-              <span className="hidden xl:inline">Scenarios</span>
-              <span className="xl:hidden">Sim</span>
+              <span>Scenarios</span>
             </button>
-
-
 
             {/* 60-Second Judge Tour Trigger */}
             <button
               onClick={() => setJudgeTourOpen(true)}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-purple-700 hover:bg-purple-800 text-white text-xs font-bold shadow-2xs transition-all cursor-pointer group"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-purple-700 hover:bg-purple-800 text-white text-xs font-bold shadow-2xs transition-all cursor-pointer group"
               title="Quick Guided Tour for Evaluators"
             >
               <Zap className="w-3.5 h-3.5 text-amber-300 fill-amber-300 group-hover:scale-110 transition-transform" />
@@ -452,22 +436,22 @@ function WorkspaceShellInner({ children }: WorkspaceShellProps) {
             {/* Executive Authority Brief Modal Trigger */}
             <button
               onClick={() => setExecutiveBriefOpen(true)}
-              className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-stone-200/90 hover:border-stone-400 text-stone-800 text-xs font-bold shadow-2xs hover:bg-stone-50 transition-all cursor-pointer"
+              className="hidden 2xl:flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-white border border-stone-200/90 hover:border-stone-400 text-stone-800 text-xs font-bold shadow-2xs hover:bg-stone-50 transition-all cursor-pointer"
               title={`Open Executive ${institutionProfile.executiveRole}'s Governance Brief & Print PDF`}
             >
               <FileText className="w-3.5 h-3.5 text-stone-500" />
-              <span>{institutionProfile.executiveRole}&apos;s Brief</span>
+              <span>Brief</span>
             </button>
 
-            {/* Notification Bell with Badge 2 */}
+            {/* Notification Bell */}
             <div className="relative">
               <button
                 onClick={() => setNotificationOpen(!notificationOpen)}
-                className="p-2.5 rounded-xl bg-white border border-stone-200/90 text-stone-700 hover:bg-stone-50 transition-all relative shadow-2xs cursor-pointer"
+                className="p-2 rounded-lg bg-white border border-stone-200/90 text-stone-700 hover:bg-stone-50 transition-all relative shadow-2xs cursor-pointer"
                 title="Institutional Alerts"
               >
-                <Bell className="w-4 h-4" />
-                <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-rose-500 text-white font-mono text-[9px] font-bold flex items-center justify-center border-2 border-white">
+                <Bell className="w-3.5 h-3.5" />
+                <span className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-rose-500 text-white font-mono text-[8px] font-bold flex items-center justify-center border border-white">
                   2
                 </span>
               </button>

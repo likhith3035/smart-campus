@@ -98,55 +98,55 @@ export default function CampusHomePage() {
 
   return (
     <WorkspaceShell>
-      <div className="p-4 sm:p-8 space-y-7 max-w-7xl mx-auto w-full">
+      <div className="p-3.5 sm:p-5 space-y-4 max-w-7xl mx-auto w-full">
         {/* Top Breadcrumb & Action Banner */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
           <div>
             {/* Blue Live Badge + Institutional ID */}
-            <div className="flex items-center gap-2.5 mb-2">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-200 font-mono">
-                <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse" />
+            <div className="flex items-center gap-2 mb-1.5">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-blue-50 text-blue-700 border border-blue-200 font-mono">
+                <span className="w-1.5 h-1.5 rounded-full bg-blue-600 animate-pulse" />
                 Live Campus Pulse • Fall 2026 Academic Term
               </span>
-              <span className="hidden sm:inline-flex items-center text-xs text-[#78716C] font-mono">
+              <span className="hidden sm:inline-flex items-center text-[11px] text-[#78716C] font-mono">
                 Institutional ID: UNIV-HQ-8492
               </span>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl lg:text-[34px] font-black tracking-tight text-[#111827]">
+            <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight text-[#111827]">
               Institutional Command Center
             </h1>
-            <p className="text-xs sm:text-sm text-[#57534E] mt-1 max-w-2xl leading-relaxed">
+            <p className="text-[11px] sm:text-xs text-[#57534E] mt-0.5 max-w-2xl leading-relaxed">
               Campus-wide academic trajectory, statutory non-linear debarment monitoring, and proactive cohort success indicators.
             </p>
           </div>
 
           {/* Fast Action Buttons */}
-          <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 shrink-0">
+          <div className="flex flex-wrap items-center gap-2 shrink-0">
             <button
               onClick={() => setExecutiveBriefOpen(true)}
-              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-amber-100 hover:bg-amber-200/90 text-amber-950 border border-amber-300/80 text-xs sm:text-sm font-bold transition-all shadow-2xs cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-100 hover:bg-amber-200 text-amber-950 border border-amber-300/80 text-xs font-bold transition-all shadow-2xs cursor-pointer"
               title="Open Consulting-Grade Board Dossier"
             >
-              <FileText className="w-4 h-4 text-amber-800" />
+              <FileText className="w-3.5 h-3.5 text-amber-800" />
               <span>Board Brief (PDF / NAAC)</span>
             </button>
 
             <Link
               href="/faculty"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#111827] text-white text-xs sm:text-sm font-semibold hover:bg-black transition-all shadow-sm hover:gap-2.5"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#111827] text-white text-xs font-semibold hover:bg-black transition-all shadow-sm hover:gap-2"
             >
-              <Users className="w-4 h-4" />
+              <Users className="w-3.5 h-3.5" />
               <span>Faculty Triage</span>
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-3.5 h-3.5" />
             </Link>
 
             <Link
               href="/"
-              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-white border border-[#E5DFD4] text-xs sm:text-sm font-semibold text-[#57534E] hover:text-[#111827] hover:bg-[#F2EDE4] transition-all shadow-2xs"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-[#E5DFD4] text-xs font-semibold text-[#57534E] hover:text-[#111827] hover:bg-[#F2EDE4] transition-all shadow-2xs"
             >
-              <Sparkles className="w-4 h-4 text-amber-500" />
-              <span>Product Showcase</span>
+              <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+              <span>Showcase</span>
             </Link>
           </div>
         </div>
@@ -154,126 +154,126 @@ export default function CampusHomePage() {
         {/* ───────────────────────────────────────────────────────────
             QUAD ACCREDITATION KPI CARDS ROW (Exact Mockup Match)
         ─────────────────────────────────────────────────────────── */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
           {/* Card 1: Institutional Health Index */}
-          <div className="p-5 rounded-2xl bg-white border border-stone-200/90 shadow-2xs flex flex-col justify-between">
+          <div className="p-3.5 sm:p-4 rounded-xl bg-white border border-stone-200/90 shadow-2xs flex flex-col justify-between">
             <div className="flex items-center justify-between">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-[#78716C]">
+              <span className="text-[9.5px] font-bold uppercase tracking-wider text-[#78716C]">
                 INSTITUTIONAL HEALTH INDEX
               </span>
-              <div className="p-1.5 rounded-lg bg-blue-50 text-blue-600">
-                <BarChart3 className="w-4 h-4" />
+              <div className="p-1 rounded-md bg-blue-50 text-blue-600">
+                <BarChart3 className="w-3.5 h-3.5" />
               </div>
             </div>
-            <div className="my-2.5 flex items-baseline justify-between">
+            <div className="my-1.5 flex items-baseline justify-between">
               <div>
-                <span className="text-3xl sm:text-4xl font-extrabold text-[#111827] font-mono">
+                <span className="text-2xl sm:text-3xl font-extrabold text-[#111827] font-mono">
                   64.6
                 </span>
                 <span className="text-xs font-semibold text-stone-500 ml-1">/ 100</span>
               </div>
               {/* Rising blue sparkline SVG curve */}
-              <svg className="w-16 h-7 text-blue-500" viewBox="0 0 70 24" fill="none">
+              <svg className="w-14 h-6 text-blue-500" viewBox="0 0 70 24" fill="none">
                 <path
                   d="M2 18 C 18 20, 26 12, 38 10 C 48 8, 56 3, 68 2"
                   stroke="currentColor"
-                  strokeWidth="2.4"
+                  strokeWidth="2.2"
                   strokeLinecap="round"
                 />
               </svg>
             </div>
-            <div className="space-y-1.5 pt-1 border-t border-stone-100">
-              <div className="flex items-center justify-between text-[11px] text-[#78716C]">
+            <div className="space-y-1 pt-1 border-t border-stone-100">
+              <div className="flex items-center justify-between text-[10.5px] text-[#78716C]">
                 <span>Target: 75.0+</span>
                 <span className="text-emerald-600 font-bold flex items-center gap-0.5">
-                  <TrendingUp className="w-3 h-3" />
+                  <TrendingUp className="w-2.5 h-2.5" />
                   +3.2% vs midterm
                 </span>
               </div>
-              <div className="w-full h-1.5 rounded-full bg-stone-100 overflow-hidden">
+              <div className="w-full h-1 rounded-full bg-stone-100 overflow-hidden">
                 <div className="h-full bg-blue-600 rounded-full w-[64.6%]" />
               </div>
             </div>
           </div>
 
           {/* Card 2: Monitored Cohort */}
-          <div className="p-5 rounded-2xl bg-white border border-stone-200/90 shadow-2xs flex flex-col justify-between">
+          <div className="p-3.5 sm:p-4 rounded-xl bg-white border border-stone-200/90 shadow-2xs flex flex-col justify-between">
             <div className="flex items-center justify-between">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-[#78716C]">
+              <span className="text-[9.5px] font-bold uppercase tracking-wider text-[#78716C]">
                 MONITORED COHORT
               </span>
-              <div className="p-1.5 rounded-lg bg-amber-50 text-amber-600">
-                <Users className="w-4 h-4" />
+              <div className="p-1 rounded-md bg-amber-50 text-amber-600">
+                <Users className="w-3.5 h-3.5" />
               </div>
             </div>
-            <div className="my-2.5 flex items-baseline gap-2">
-              <span className="text-3xl sm:text-4xl font-extrabold text-[#111827] font-mono">
+            <div className="my-1.5 flex items-baseline gap-2">
+              <span className="text-2xl sm:text-3xl font-extrabold text-[#111827] font-mono">
                 600
               </span>
               <span className="text-xs text-stone-500">Active Profiles</span>
             </div>
-            <div className="flex items-center gap-2 text-xs pt-1 border-t border-stone-100">
-              <span className="px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 font-semibold border border-emerald-200 text-[11px]">
+            <div className="flex items-center gap-1.5 text-xs pt-1 border-t border-stone-100">
+              <span className="px-1.5 py-0.2 rounded bg-emerald-50 text-emerald-700 font-semibold border border-emerald-200 text-[10px]">
                 181 Thriving
               </span>
-              <span className="px-2 py-0.5 rounded-md bg-amber-50 text-amber-700 font-semibold border border-amber-200 text-[11px]">
+              <span className="px-1.5 py-0.2 rounded bg-amber-50 text-amber-700 font-semibold border border-amber-200 text-[10px]">
                 137 Moderate
               </span>
             </div>
           </div>
 
           {/* Card 3: Debarment Risk (<75% ATT.) */}
-          <div className="p-5 rounded-2xl bg-white border border-rose-200/90 shadow-2xs flex flex-col justify-between relative overflow-hidden">
+          <div className="p-3.5 sm:p-4 rounded-xl bg-white border border-rose-200/90 shadow-2xs flex flex-col justify-between relative overflow-hidden">
             <div className="flex items-center justify-between">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-rose-700">
+              <span className="text-[9.5px] font-bold uppercase tracking-wider text-rose-700">
                 DEBARMENT RISK (&lt;75% ATT.)
               </span>
-              <div className="p-1.5 rounded-lg bg-rose-50 text-rose-600">
-                <ShieldAlert className="w-4 h-4" />
+              <div className="p-1 rounded-md bg-rose-50 text-rose-600">
+                <ShieldAlert className="w-3.5 h-3.5" />
               </div>
             </div>
-            <div className="my-2.5 flex items-baseline justify-between">
+            <div className="my-1.5 flex items-baseline justify-between">
               <div>
-                <span className="text-3xl sm:text-4xl font-extrabold text-rose-600 font-mono">
+                <span className="text-2xl sm:text-3xl font-extrabold text-rose-600 font-mono">
                   176
                 </span>
-                <span className="text-xs text-stone-500 ml-1.5 font-medium">
+                <span className="text-[11px] text-stone-500 ml-1 font-medium">
                   (29% of cohort)
                 </span>
               </div>
               {/* Wavy red sparkline SVG */}
-              <svg className="w-16 h-7 text-rose-500" viewBox="0 0 70 24" fill="none">
+              <svg className="w-14 h-6 text-rose-500" viewBox="0 0 70 24" fill="none">
                 <path
                   d="M2 18 C 16 22, 28 8, 42 16 C 52 22, 60 4, 68 6"
                   stroke="currentColor"
-                  strokeWidth="2.4"
+                  strokeWidth="2.2"
                   strokeLinecap="round"
                 />
               </svg>
             </div>
-            <div className="pt-1 border-t border-stone-100 flex items-center gap-1.5 text-[11px] text-amber-700 font-medium">
-              <AlertTriangle className="w-3.5 h-3.5 text-amber-600 shrink-0" />
-              <span className="truncate">Subject to statutory exam disbarment</span>
+            <div className="pt-1 border-t border-stone-100 flex items-center gap-1 text-[10px] text-amber-700 font-medium">
+              <AlertTriangle className="w-3 h-3 text-amber-600 shrink-0" />
+              <span className="truncate">Subject to statutory disbarment</span>
             </div>
           </div>
 
           {/* Card 4: Multi-Vector Risk Flags */}
-          <div className="p-5 rounded-2xl bg-white border border-stone-200/90 shadow-2xs flex flex-col justify-between">
+          <div className="p-3.5 sm:p-4 rounded-xl bg-white border border-stone-200/90 shadow-2xs flex flex-col justify-between">
             <div className="flex items-center justify-between">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-[#78716C]">
+              <span className="text-[9.5px] font-bold uppercase tracking-wider text-[#78716C]">
                 MULTI-VECTOR RISK FLAGS
               </span>
-              <div className="p-1.5 rounded-lg bg-amber-50 text-amber-600">
-                <AlertTriangle className="w-4 h-4" />
+              <div className="p-1 rounded-md bg-amber-50 text-amber-600">
+                <AlertTriangle className="w-3.5 h-3.5" />
               </div>
             </div>
-            <div className="my-2.5 flex items-baseline gap-2">
-              <span className="text-3xl sm:text-4xl font-extrabold text-[#111827] font-mono">
+            <div className="my-1.5 flex items-baseline gap-2">
+              <span className="text-2xl sm:text-3xl font-extrabold text-[#111827] font-mono">
                 282
               </span>
               <span className="text-xs text-stone-500">Priority Cases</span>
             </div>
-            <div className="pt-1 border-t border-stone-100 flex items-center justify-between text-[11px] text-stone-600">
+            <div className="pt-1 border-t border-stone-100 flex items-center justify-between text-[10.5px] text-stone-600">
               <span>Placement Risk: <strong>231</strong></span>
               <span>Disengaged: <strong>103</strong></span>
             </div>
@@ -283,17 +283,17 @@ export default function CampusHomePage() {
         {/* ───────────────────────────────────────────────────────────
             CAMPUSIQ AUTONOMOUS DIAGNOSTIC FEED • ACTIVE ACTION TRIGGERS
         ─────────────────────────────────────────────────────────── */}
-        <div className="p-5 sm:p-6 rounded-2xl bg-white border border-stone-200/90 shadow-2xs space-y-3.5">
+        <div className="p-3.5 sm:p-4 rounded-xl bg-white border border-stone-200/90 shadow-2xs space-y-2.5">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2 text-xs font-bold text-blue-700 tracking-wider font-mono uppercase">
-              <Zap className="w-3.5 h-3.5 text-blue-600" />
-              <span>CAMPUSIQ AUTONOMOUS DIAGNOSTIC FEED • ACTIVE ACTION TRIGGERS</span>
+            <div className="flex items-center gap-1.5 text-[11px] font-bold text-blue-700 tracking-wider font-mono uppercase">
+              <Zap className="w-3 h-3 text-blue-600" />
+              <span>CAMPUSIQ AUTONOMOUS DIAGNOSTIC FEED • ACTION TRIGGERS</span>
             </div>
             <span className="text-stone-400 text-xs font-mono">•••</span>
           </div>
 
           {/* 3 Clickable Action Trigger Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5">
             {/* Trigger 1: Attendance Boundary */}
             <div
               onClick={() =>
@@ -301,24 +301,24 @@ export default function CampusHomePage() {
                   diagnosticFilter === "attendance" ? "all" : "attendance"
                 )
               }
-              className={`p-4 rounded-xl border transition-all cursor-pointer group ${
+              className={`p-3 rounded-lg border transition-all cursor-pointer group ${
                 diagnosticFilter === "attendance"
                   ? "bg-rose-50/80 border-rose-400 shadow-xs ring-2 ring-rose-300"
                   : "bg-[#FAF8F5] border-stone-200/90 hover:border-stone-400 hover:bg-stone-50"
               }`}
             >
-              <div className="flex items-center justify-between mb-1.5">
-                <div className="flex items-center gap-2 text-xs font-bold text-[#111827]">
-                  <span className="w-2 h-2 rounded-full bg-rose-500 shrink-0" />
+              <div className="flex items-center justify-between mb-1">
+                <div className="flex items-center gap-1.5 text-xs font-bold text-[#111827]">
+                  <span className="w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0" />
                   <span>Statutory Attendance Boundary</span>
                 </div>
-                <ChevronRight className="w-4 h-4 text-stone-400 group-hover:translate-x-0.5 transition-transform" />
+                <ChevronRight className="w-3.5 h-3.5 text-stone-400 group-hover:translate-x-0.5 transition-transform" />
               </div>
-              <p className="text-[11px] text-stone-600 leading-relaxed">
+              <p className="text-[10.5px] text-stone-600 leading-relaxed">
                 176 students have breached the 75% statutory threshold, triggering the 0.85× multiplier penalty. Priority mentors auto-assigned.
               </p>
               {diagnosticFilter === "attendance" && (
-                <div className="mt-2 text-[10px] font-bold text-rose-700">
+                <div className="mt-1 text-[9.5px] font-bold text-rose-700">
                   ✓ Watchlist filtered to attendance breaches
                 </div>
               )}
@@ -331,24 +331,24 @@ export default function CampusHomePage() {
                   diagnosticFilter === "backlogs" ? "all" : "backlogs"
                 )
               }
-              className={`p-4 rounded-xl border transition-all cursor-pointer group ${
+              className={`p-3 rounded-lg border transition-all cursor-pointer group ${
                 diagnosticFilter === "backlogs"
                   ? "bg-amber-50/80 border-amber-400 shadow-xs ring-2 ring-amber-300"
                   : "bg-[#FAF8F5] border-stone-200/90 hover:border-stone-400 hover:bg-stone-50"
               }`}
             >
-              <div className="flex items-center justify-between mb-1.5">
-                <div className="flex items-center gap-2 text-xs font-bold text-[#111827]">
-                  <span className="w-2 h-2 rounded-full bg-amber-500 shrink-0" />
+              <div className="flex items-center justify-between mb-1">
+                <div className="flex items-center gap-1.5 text-xs font-bold text-[#111827]">
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0" />
                   <span>Compound Backlog Multiplier</span>
                 </div>
-                <ChevronRight className="w-4 h-4 text-stone-400 group-hover:translate-x-0.5 transition-transform" />
+                <ChevronRight className="w-3.5 h-3.5 text-stone-400 group-hover:translate-x-0.5 transition-transform" />
               </div>
-              <p className="text-[11px] text-stone-600 leading-relaxed">
+              <p className="text-[10.5px] text-stone-600 leading-relaxed">
                 Students with &ge;2 active backlogs are experiencing exponential score dampening (0.90^k). Remedial bootcamps recommended for 12 students.
               </p>
               {diagnosticFilter === "backlogs" && (
-                <div className="mt-2 text-[10px] font-bold text-amber-700">
+                <div className="mt-1 text-[9.5px] font-bold text-amber-700">
                   ✓ Watchlist filtered to active backlog cases
                 </div>
               )}
@@ -361,24 +361,24 @@ export default function CampusHomePage() {
                   diagnosticFilter === "placement" ? "all" : "placement"
                 )
               }
-              className={`p-4 rounded-xl border transition-all cursor-pointer group ${
+              className={`p-3 rounded-lg border transition-all cursor-pointer group ${
                 diagnosticFilter === "placement"
                   ? "bg-emerald-50/80 border-emerald-400 shadow-xs ring-2 ring-emerald-300"
                   : "bg-[#FAF8F5] border-stone-200/90 hover:border-stone-400 hover:bg-stone-50"
               }`}
             >
-              <div className="flex items-center justify-between mb-1.5">
-                <div className="flex items-center gap-2 text-xs font-bold text-[#111827]">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
+              <div className="flex items-center justify-between mb-1">
+                <div className="flex items-center gap-1.5 text-xs font-bold text-[#111827]">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
                   <span>Placement Benchmark Surge</span>
                 </div>
-                <ChevronRight className="w-4 h-4 text-stone-400 group-hover:translate-x-0.5 transition-transform" />
+                <ChevronRight className="w-3.5 h-3.5 text-stone-400 group-hover:translate-x-0.5 transition-transform" />
               </div>
-              <p className="text-[11px] text-stone-600 leading-relaxed">
+              <p className="text-[10.5px] text-stone-600 leading-relaxed">
                 Coding assessment completion in 6th semester cohorts improved placement tier readiness by 14.8% following recent campus hackathons.
               </p>
               {diagnosticFilter === "placement" && (
-                <div className="mt-2 text-[10px] font-bold text-emerald-700">
+                <div className="mt-1 text-[9.5px] font-bold text-emerald-700">
                   ✓ Watchlist filtered to high coding aptitude
                 </div>
               )}
@@ -389,13 +389,13 @@ export default function CampusHomePage() {
         {/* ───────────────────────────────────────────────────────────
             DEPARTMENT COMPARATIVE HEALTH MATRIX
         ─────────────────────────────────────────────────────────── */}
-        <div className="space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+        <div className="space-y-3">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
             <div>
-              <h2 className="text-lg sm:text-xl font-extrabold text-[#111827]">
+              <h2 className="text-base sm:text-lg font-extrabold text-[#111827]">
                 Department Comparative Health Matrix
               </h2>
-              <p className="text-xs text-[#57534E]">
+              <p className="text-[11px] text-[#57534E]">
                 Cross-department benchmarking across academic grades, attendance compliance, and placement tier readiness.
               </p>
             </div>
@@ -403,13 +403,13 @@ export default function CampusHomePage() {
               href="/faculty"
               className="text-xs font-semibold text-blue-700 hover:text-blue-900 flex items-center gap-1 hover:underline"
             >
-              <span>Explore all departments in Faculty Triage</span>
+              <span>Explore in Faculty Triage</span>
               <ChevronRight className="w-3.5 h-3.5" />
             </Link>
           </div>
 
           {/* 3 Department Cards Row */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             {departmentBreakdown.map((d) => {
               const isSelected = selectedDeptFilter === d.dept;
               return (
@@ -418,7 +418,7 @@ export default function CampusHomePage() {
                   onClick={() =>
                     setSelectedDeptFilter(isSelected ? null : d.dept)
                   }
-                  className={`p-4 sm:p-5 rounded-2xl border transition-all cursor-pointer group flex flex-col justify-between ${
+                  className={`p-3.5 rounded-xl border transition-all cursor-pointer group flex flex-col justify-between ${
                     isSelected
                       ? "bg-stone-50 border-stone-800 shadow-md ring-2 ring-stone-900"
                       : "bg-white border-stone-200/90 hover:border-stone-400 shadow-2xs"

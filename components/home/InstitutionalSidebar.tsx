@@ -38,13 +38,13 @@ export function InstitutionalSidebar() {
   return (
     <aside
       className={`bg-[#FAF7F2] border-r border-[#EAE5DC] flex flex-col justify-between shrink-0 h-screen sticky top-0 select-none overflow-y-auto transition-all duration-300 ease-in-out z-40 ${
-        isCollapsed ? "w-20 p-3 items-center" : "w-64 p-5"
+        isCollapsed ? "w-16 p-2 items-center" : "w-56 p-3.5"
       }`}
     >
       {/* ─── Top Brand Header ─── */}
-      <div className="space-y-6 w-full">
+      <div className="space-y-4 w-full">
         {/* Brand & Toggle Row */}
-        <div className={`flex items-center ${isCollapsed ? "justify-center flex-col gap-3" : "justify-between"}`}>
+        <div className={`flex items-center ${isCollapsed ? "justify-center flex-col gap-2" : "justify-between"}`}>
           <Link href="/" className="flex items-center group transition-transform hover:opacity-95" title="Return to Public Showcase">
             {isCollapsed ? (
               <CampusIQLogo size="sm" showText={false} />
@@ -57,18 +57,18 @@ export function InstitutionalSidebar() {
           <button
             onClick={toggleSidebar}
             title={isCollapsed ? "Expand Sidebar (Open)" : "Collapse Sidebar (Close)"}
-            className="p-1.5 rounded-lg border border-stone-200/80 bg-white hover:bg-stone-100 text-stone-600 hover:text-black transition-colors shadow-2xs cursor-pointer shrink-0"
+            className="p-1 rounded-lg border border-stone-200/80 bg-white hover:bg-stone-100 text-stone-600 hover:text-black transition-colors shadow-2xs cursor-pointer shrink-0"
           >
             {isCollapsed ? (
-              <PanelLeftOpen className="w-4 h-4 text-blue-600" />
+              <PanelLeftOpen className="w-3.5 h-3.5 text-blue-600" />
             ) : (
-              <PanelLeftClose className="w-4 h-4 text-stone-500" />
+              <PanelLeftClose className="w-3.5 h-3.5 text-stone-500" />
             )}
           </button>
         </div>
 
         {/* ─── Navigation List ─── */}
-        <nav className="space-y-1.5 w-full">
+        <nav className="space-y-1 w-full">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = pathname === item.href;
@@ -78,15 +78,15 @@ export function InstitutionalSidebar() {
                   href={item.href}
                   className={`w-full flex items-center rounded-xl text-xs font-semibold transition-all ${
                     isCollapsed
-                      ? "justify-center p-3"
-                      : "justify-between px-3.5 py-2.5"
+                      ? "justify-center p-2.5"
+                      : "justify-between px-3 py-2"
                   } ${
                     isActive
                       ? "bg-[#EFECE6] text-[#111827] shadow-xs"
                       : "text-[#57534E] hover:text-[#111827] hover:bg-[#F2EDE4]"
                   }`}
                 >
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2.5">
                     <Icon
                       className={`w-4 h-4 shrink-0 ${
                         isActive ? "text-[#111827]" : "text-stone-500 group-hover:text-stone-900"
@@ -96,7 +96,7 @@ export function InstitutionalSidebar() {
                   </div>
 
                   {!isCollapsed && item.badge && (
-                    <span className="px-2 py-0.5 text-[9px] font-black uppercase rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200 shrink-0">
+                    <span className="px-1.5 py-0.2 text-[8.5px] font-black uppercase rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200 shrink-0">
                       {item.badge}
                     </span>
                   )}
@@ -104,10 +104,10 @@ export function InstitutionalSidebar() {
 
                 {/* Floating Tooltip when Collapsed */}
                 {isCollapsed && (
-                  <div className="absolute left-full top-1/2 -translate-y-1/2 ml-3 px-3 py-1.5 bg-[#111827] text-white text-xs font-semibold rounded-lg shadow-xl opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-150 whitespace-nowrap z-50 flex items-center gap-1.5">
+                  <div className="absolute left-full top-1/2 -translate-y-1/2 ml-2 px-2.5 py-1 bg-[#111827] text-white text-[11px] font-semibold rounded-lg shadow-xl opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-150 whitespace-nowrap z-50 flex items-center gap-1.5">
                     <span>{item.label}</span>
                     {item.badge && (
-                      <span className="px-1.5 py-0.2 text-[8px] uppercase font-bold rounded bg-emerald-500 text-white">
+                      <span className="px-1 py-0.2 text-[7.5px] uppercase font-bold rounded bg-emerald-500 text-white">
                         {item.badge}
                       </span>
                     )}
@@ -120,11 +120,11 @@ export function InstitutionalSidebar() {
       </div>
 
       {/* ─── Bottom Section: Campus Sketch & User Profile ─── */}
-      <div className="pt-6 border-t border-[#EAE5DC]/80 space-y-4 w-full">
+      <div className="pt-4 border-t border-[#EAE5DC]/80 space-y-3 w-full">
         {/* Neoclassical University Hall Sketch Illustration (Expanded Only) */}
         {!isCollapsed && (
-          <div className="px-1 text-center space-y-2 animate-in fade-in duration-200">
-            <div className="w-full h-24 overflow-hidden rounded-xl bg-stone-100/40 border border-stone-200/50 flex items-center justify-center relative">
+          <div className="px-1 text-center space-y-1.5 animate-in fade-in duration-200">
+            <div className="w-full h-16 overflow-hidden rounded-lg bg-stone-100/40 border border-stone-200/50 flex items-center justify-center relative">
               <div
                 className="absolute inset-0 bg-contain bg-no-repeat bg-center opacity-85"
                 style={{
@@ -132,10 +132,10 @@ export function InstitutionalSidebar() {
                 }}
               />
             </div>
-            <div className="text-left px-1">
-              <div className="font-bold text-xs text-[#111827]">CampusIQ</div>
-              <div className="text-[11px] text-[#78716C] leading-snug">
-                Turning data into brighter student futures.
+            <div className="text-left px-0.5">
+              <div className="font-bold text-[11px] text-[#111827]">CampusIQ</div>
+              <div className="text-[10px] text-[#78716C] leading-snug">
+                Turning data into brighter futures.
               </div>
             </div>
           </div>
