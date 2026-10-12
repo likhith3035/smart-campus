@@ -103,11 +103,17 @@ export default function CampusHomePage() {
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
           <div>
             {/* Blue Live Badge + Institutional ID */}
-            <div className="flex items-center gap-2 mb-1.5">
+            <div className="flex flex-wrap items-center gap-2 mb-1.5">
               <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-blue-50 text-blue-700 border border-blue-200 font-mono">
                 <span className="w-1.5 h-1.5 rounded-full bg-blue-600 animate-pulse" />
                 Live Campus Pulse • Fall 2026 Academic Term
               </span>
+              {isCustomDataset && (
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-800 border border-emerald-300 font-mono shadow-2xs">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  Active Custom Dataset: {datasetName} ({students.length} Students)
+                </span>
+              )}
               <span className="hidden sm:inline-flex items-center text-[11px] text-[#78716C] font-mono">
                 Institutional ID: UNIV-HQ-8492
               </span>
@@ -168,7 +174,7 @@ export default function CampusHomePage() {
             <div className="my-1.5 flex items-baseline justify-between">
               <div>
                 <span className="text-2xl sm:text-3xl font-extrabold text-[#111827] font-mono">
-                  64.6
+                  {stats.averageScore}
                 </span>
                 <span className="text-xs font-semibold text-stone-500 ml-1">/ 100</span>
               </div>
@@ -191,7 +197,10 @@ export default function CampusHomePage() {
                 </span>
               </div>
               <div className="w-full h-1 rounded-full bg-stone-100 overflow-hidden">
-                <div className="h-full bg-blue-600 rounded-full w-[64.6%]" />
+                <div
+                  className="h-full bg-blue-600 rounded-full"
+                  style={{ width: `${Math.min(100, Math.max(0, stats.averageScore))}%` }}
+                />
               </div>
             </div>
           </div>
@@ -208,16 +217,16 @@ export default function CampusHomePage() {
             </div>
             <div className="my-1.5 flex items-baseline gap-2">
               <span className="text-2xl sm:text-3xl font-extrabold text-[#111827] font-mono">
-                600
+                {stats.totalStudents}
               </span>
               <span className="text-xs text-stone-500">Active Profiles</span>
             </div>
             <div className="flex items-center gap-1.5 text-xs pt-1 border-t border-stone-100">
               <span className="px-1.5 py-0.2 rounded bg-emerald-50 text-emerald-700 font-semibold border border-emerald-200 text-[10px]">
-                181 Thriving
+                {stats.thrivingCount} Thriving
               </span>
               <span className="px-1.5 py-0.2 rounded bg-amber-50 text-amber-700 font-semibold border border-amber-200 text-[10px]">
-                137 Moderate
+                {stats.moderateRiskCount} Moderate
               </span>
             </div>
           </div>
@@ -235,10 +244,10 @@ export default function CampusHomePage() {
             <div className="my-1.5 flex items-baseline justify-between">
               <div>
                 <span className="text-2xl sm:text-3xl font-extrabold text-rose-600 font-mono">
-                  176
+                  {debarmentStudents.length}
                 </span>
                 <span className="text-[11px] text-stone-500 ml-1 font-medium">
-                  (29% of cohort)
+                  ({((debarmentStudents.length / (students.length || 1)) * 100).toFixed(0)}% of cohort)
                 </span>
               </div>
               {/* Wavy red sparkline SVG */}
@@ -269,13 +278,13 @@ export default function CampusHomePage() {
             </div>
             <div className="my-1.5 flex items-baseline gap-2">
               <span className="text-2xl sm:text-3xl font-extrabold text-[#111827] font-mono">
-                282
+                {stats.highRiskCount + stats.moderateRiskCount}
               </span>
               <span className="text-xs text-stone-500">Priority Cases</span>
             </div>
             <div className="pt-1 border-t border-stone-100 flex items-center justify-between text-[10.5px] text-stone-600">
-              <span>Placement Risk: <strong>231</strong></span>
-              <span>Disengaged: <strong>103</strong></span>
+              <span>Placement Risk: <strong>{stats.placementRiskCount}</strong></span>
+              <span>Disengaged: <strong>{stats.disengagementRiskCount}</strong></span>
             </div>
           </div>
         </div>
@@ -315,7 +324,7 @@ export default function CampusHomePage() {
                 <ChevronRight className="w-3.5 h-3.5 text-stone-400 group-hover:translate-x-0.5 transition-transform" />
               </div>
               <p className="text-[10.5px] text-stone-600 leading-relaxed">
-                176 students have breached the 75% statutory threshold, triggering the 0.85× multiplier penalty. Priority mentors auto-assigned.
+                {debarmentStudents.length} {debarmentStudents.length === 1 ? "student has" : "students have"} breached the 75% statutory threshold, triggering the 0.85× multiplier penalty. Priority mentors auto-assigned.
               </p>
               {diagnosticFilter === "attendance" && (
                 <div className="mt-1 text-[9.5px] font-bold text-rose-700">
@@ -345,7 +354,7 @@ export default function CampusHomePage() {
                 <ChevronRight className="w-3.5 h-3.5 text-stone-400 group-hover:translate-x-0.5 transition-transform" />
               </div>
               <p className="text-[10.5px] text-stone-600 leading-relaxed">
-                Students with &ge;2 active backlogs are experiencing exponential score dampening (0.90^k). Remedial bootcamps recommended for 12 students.
+                Students with &ge;2 active backlogs are experiencing exponential score dampening (0.90^k). Remedial bootcamps recommended for {students.filter((s) => (s.active_backlogs || 0) >= 2).length} students.
               </p>
               {diagnosticFilter === "backlogs" && (
                 <div className="mt-1 text-[9.5px] font-bold text-amber-700">

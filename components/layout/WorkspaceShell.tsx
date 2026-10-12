@@ -364,9 +364,10 @@ function WorkspaceShellInner({ children }: WorkspaceShellProps) {
                 </button>
               </div>
             ) : (
-              <div className="hidden 2xl:flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white border border-stone-200/90 text-xs font-semibold text-stone-600 shadow-2xs">
+              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-stone-100/90 border border-stone-200/90 text-xs font-semibold text-stone-700 shadow-2xs" title="Currently showing built-in benchmark dataset (600 Students)">
+                <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0" />
                 <Database className="w-3.5 h-3.5 text-stone-400" />
-                <span>Demo ({studentCount})</span>
+                <span>Demo Data ({studentCount})</span>
               </div>
             )}
 
