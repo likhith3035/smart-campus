@@ -409,25 +409,7 @@ function WorkspaceShellInner({ children }: WorkspaceShellProps) {
               <Settings2 className="w-3 h-3 text-stone-400" />
             </button>
 
-            {/* 1-Click Institutional Persona Switcher Trigger */}
-            <button
-              onClick={() => setPersonaModalOpen(true)}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-stone-200/90 hover:border-stone-400 text-stone-800 text-xs font-bold shadow-2xs hover:bg-stone-50 transition-all cursor-pointer group"
-              title="Switch Institutional Role / Persona (Dean, Faculty, Placement Officer)"
-            >
-              <div className={`w-2 h-2 rounded-full ${
-                activePersona === "dean" ? "bg-stone-900" : activePersona === "faculty" ? "bg-blue-600" : "bg-purple-600"
-              }`} />
-              <span className="text-stone-500 font-normal">Role:</span>
-              <span className="text-[#111827]">
-                {activePersona === "dean"
-                  ? (institutionProfile.executiveRole || "Dean")
-                  : activePersona === "faculty"
-                  ? "Faculty"
-                  : "Placement (TPO)"}
-              </span>
-              <ChevronDown className="w-3 h-3 text-stone-400 group-hover:text-stone-700 transition-colors" />
-            </button>
+
 
             {/* 60-Second Judge Tour Trigger */}
             <button
