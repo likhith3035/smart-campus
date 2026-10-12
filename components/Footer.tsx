@@ -81,6 +81,7 @@ export function Footer() {
             <Link href="/interventions" className="hover:text-stone-900 transition-colors">Interventions</Link>
             <Link href="/upload" className="hover:text-stone-900 transition-colors">Data Ingestion</Link>
             <Link href="/methodology" className="hover:text-stone-900 transition-colors">Methodology Note</Link>
+            <Link href="/about" className="hover:text-stone-900 transition-colors">About & Guide</Link>
           </div>
         </div>
       </div>

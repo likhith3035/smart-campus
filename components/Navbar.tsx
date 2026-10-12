@@ -14,6 +14,7 @@ export function Navbar() {
     { label: "Interventions", href: "/interventions" },
     { label: "Data Integration", href: "/upload" },
     { label: "Methodology", href: "/methodology" },
+    { label: "About & Guide", href: "/about" },
   ];
 
   return (
