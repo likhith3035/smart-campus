@@ -47,22 +47,22 @@ export function WaterfallExplainability({ drivers, score }: WaterfallExplainabil
           <BarChart
             layout="vertical"
             data={chartData}
-            margin={{ top: 10, right: 30, left: 140, bottom: 10 }}
+            margin={{ top: 10, right: 15, left: 10, bottom: 10 }}
           >
             <CartesianGrid strokeDasharray="3 3" stroke="#EAE5DC" horizontal={false} />
             <XAxis
               type="number"
               domain={[-25, 25]}
               stroke="#78716C"
-              tick={{ fill: "#78716C", fontSize: 11 }}
-              label={{ value: "Points Impact on Success Score", position: "insideBottom", offset: -5, fill: "#57534E", fontSize: 11, fontWeight: 600 }}
+              tick={{ fill: "#78716C", fontSize: 10 }}
+              label={{ value: "Impact on S³ Score (Points)", position: "insideBottom", offset: -5, fill: "#57534E", fontSize: 10, fontWeight: 600 }}
             />
             <YAxis
               type="category"
               dataKey="factor"
               stroke="#78716C"
-              tick={{ fill: "#111827", fontSize: 11, fontWeight: 500 }}
-              width={130}
+              tick={{ fill: "#111827", fontSize: 10, fontWeight: 500 }}
+              width={100}
             />
             <Tooltip
               content={({ active, payload }) => {

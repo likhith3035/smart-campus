@@ -2,7 +2,16 @@
 
 import { useState } from "react";
 import { StudentProfile } from "@/lib/types";
-import { Eye, ArrowUpDown, ChevronRight } from "lucide-react";
+import { Eye, ArrowUpDown, ChevronRight, SlidersHorizontal, AlertTriangle, CheckCircle2 } from "lucide-react";
+import { CustomSelect, SelectOption } from "@/components/ui/CustomSelect";
+
+const mobileSortOptions: SelectOption[] = [
+  { value: "success_score", label: "S³ Score" },
+  { value: "name", label: "Name" },
+  { value: "cgpa", label: "CGPA" },
+  { value: "attendance_pct", label: "Attendance" },
+  { value: "coding_score", label: "Coding Score" },
+];
 
 interface StudentTableProps {
   students: StudentProfile[];
@@ -43,9 +52,185 @@ export function StudentTable({ students, onSelectStudent }: StudentTableProps) {
     currentPage * pageSize
   );
 
+  const getDepartmentShort = (dept: string) => {
+    return dept
+      .replace("Computer Science & Engineering", "CSE")
+      .replace("Information Technology", "IT")
+      .replace("Electronics & Communication", "ECE")
+      .replace("Data Science & AI", "AI & DS")
+      .replace("Mechanical Engineering", "MECH");
+  };
+
+  const getTierStyles = (tier: string) => {
+    if (tier === "High Risk") {
+      return {
+        badge: "bg-rose-50 text-rose-700 border-rose-200",
+        scoreText: "text-rose-600",
+        indicator: "bg-rose-500",
+      };
+    }
+    if (tier === "Moderate Risk") {
+      return {
+        badge: "bg-amber-50 text-amber-700 border-amber-200",
+        scoreText: "text-amber-600",
+        indicator: "bg-amber-500",
+      };
+    }
+    return {
+      badge: "bg-emerald-50 text-emerald-700 border-emerald-200",
+      scoreText: "text-emerald-600",
+      indicator: "bg-emerald-500",
+    };
+  };
+
   return (
     <div className="space-y-4">
-      <div className="overflow-x-auto rounded-2xl border border-[#EAE5DC] bg-white">
+      {/* ───────────────────────────────────────────────────────────
+          MOBILE SORT & COUNT CONTROLS (Visible on < md)
+      ─────────────────────────────────────────────────────────── */}
+      <div className="md:hidden flex items-center justify-between gap-2 p-3 bg-[#FAF8F5] rounded-2xl border border-[#EAE5DC] text-xs">
+        <div className="flex items-center gap-1.5 text-[#57534E] font-medium">
+          <SlidersHorizontal className="w-3.5 h-3.5 text-stone-500" />
+          <span>Sort by:</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="w-36">
+            <CustomSelect
+              value={sortField}
+              onChange={(val) => setSortField(val as keyof StudentProfile)}
+              options={mobileSortOptions}
+              buttonClassName="py-1.5 px-3 bg-white text-xs font-semibold"
+            />
+          </div>
+          <button
+            onClick={() => setSortAsc(!sortAsc)}
+            className="p-1.5 rounded-full bg-white border border-[#EAE5DC] text-stone-700 hover:bg-stone-100"
+            title="Toggle sort direction"
+          >
+            <ArrowUpDown className="w-3.5 h-3.5" />
+          </button>
+        </div>
+      </div>
+
+      {/* ───────────────────────────────────────────────────────────
+          MOBILE CARDS VIEW (Visible only on < md screens)
+      ─────────────────────────────────────────────────────────── */}
+      <div className="md:hidden space-y-3">
+        {paginatedStudents.length === 0 ? (
+          <div className="p-8 text-center text-stone-400 bg-white rounded-2xl border border-[#EAE5DC] text-xs">
+            No students match the selected filter criteria.
+          </div>
+        ) : (
+          paginatedStudents.map((s) => {
+            const styles = getTierStyles(s.overall_tier);
+            return (
+              <div
+                key={s.student_id}
+                onClick={() => onSelectStudent(s)}
+                className="p-4 rounded-2xl bg-white border border-[#EAE5DC] hover:border-stone-400 card-shadow transition-all space-y-3 cursor-pointer active:scale-[0.99]"
+              >
+                {/* Header: Student info & S3 score */}
+                <div className="flex items-start justify-between gap-3">
+                  <div className="space-y-0.5">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="font-bold text-sm text-[#111827]">{s.name}</span>
+                      <span className="text-[10px] px-1.5 py-0.5 rounded bg-stone-100 text-stone-600 font-mono">
+                        {getDepartmentShort(s.department)}
+                      </span>
+                    </div>
+                    <div className="font-mono text-[11px] text-[#78716C]">
+                      {s.student_id} • Semester {s.semester}
+                    </div>
+                  </div>
+
+                  {/* S3 Score Pill */}
+                  <div className={`px-2.5 py-1.5 rounded-xl border flex flex-col items-center justify-center font-mono shrink-0 ${styles.badge}`}>
+                    <span className="text-base font-extrabold leading-tight">{s.success_score.toFixed(1)}</span>
+                    <span className="text-[8px] font-bold tracking-wider uppercase opacity-80">S³ Score</span>
+                  </div>
+                </div>
+
+                {/* 4-Metric Grid */}
+                <div className="grid grid-cols-4 gap-1.5 p-2.5 rounded-xl bg-[#FAF8F5] border border-[#ECE7DF] text-center text-[10px]">
+                  <div>
+                    <span className="text-stone-400 block font-medium">CGPA</span>
+                    <span className="font-mono font-bold text-stone-900 text-xs">{s.cgpa.toFixed(2)}</span>
+                    {s.active_backlogs > 0 && (
+                      <span className="block text-[8px] text-rose-600 font-bold">{s.active_backlogs} BL</span>
+                    )}
+                  </div>
+                  <div>
+                    <span className="text-stone-400 block font-medium">Attendance</span>
+                    <span className={`font-mono font-bold text-xs ${s.attendance_pct < 75 ? "text-rose-600" : "text-emerald-600"}`}>
+                      {s.attendance_pct.toFixed(0)}%
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-stone-400 block font-medium">Coding</span>
+                    <span className={`font-mono font-bold text-xs ${s.coding_score < 45 ? "text-amber-600" : "text-stone-900"}`}>
+                      {s.coding_score.toFixed(0)}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-stone-400 block font-medium">Tier</span>
+                    <span className={`font-bold text-[9px] block truncate ${styles.scoreText}`}>
+                      {s.overall_tier.replace(" Risk", "")}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Badges row & Action */}
+                <div className="flex items-center justify-between gap-2 pt-1 border-t border-stone-100">
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    <span
+                      className="px-2 py-0.5 rounded-full text-[9px] font-medium border"
+                      style={{
+                        backgroundColor: `${s.segment.color}15`,
+                        color: s.segment.color,
+                        borderColor: `${s.segment.color}35`,
+                      }}
+                    >
+                      {s.segment.name}
+                    </span>
+                    {s.risk_flags.academic.status === "HIGH" && (
+                      <span className="px-1.5 py-0.2 text-[8px] font-bold rounded-full bg-rose-50 text-rose-600 border border-rose-200">
+                        ACAD
+                      </span>
+                    )}
+                    {s.risk_flags.placement.status === "HIGH" && (
+                      <span className="px-1.5 py-0.2 text-[8px] font-bold rounded-full bg-amber-50 text-amber-700 border border-amber-200">
+                        PLACE
+                      </span>
+                    )}
+                    {s.risk_flags.disengagement.status === "HIGH" && (
+                      <span className="px-1.5 py-0.2 text-[8px] font-bold rounded-full bg-purple-50 text-purple-700 border border-purple-200">
+                        LMS
+                      </span>
+                    )}
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onSelectStudent(s);
+                    }}
+                    className="inline-flex items-center gap-1 text-xs font-bold text-blue-600 hover:text-blue-800 transition-colors p-1"
+                  >
+                    <span>Inspect</span>
+                    <ChevronRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+            );
+          })
+        )}
+      </div>
+
+      {/* ───────────────────────────────────────────────────────────
+          DESKTOP TABLE VIEW (Visible on md+ screens)
+      ─────────────────────────────────────────────────────────── */}
+      <div className="hidden md:block overflow-x-auto rounded-2xl border border-[#EAE5DC] bg-white">
         <table className="w-full text-left text-xs text-[#57534E]">
           <thead className="bg-[#FAF8F5] uppercase font-semibold text-[#78716C] border-b border-[#EAE5DC]">
             <tr>
@@ -113,11 +298,7 @@ export function StudentTable({ students, onSelectStudent }: StudentTableProps) {
                     </div>
                   </td>
                   <td className="p-4 text-[#57534E]">
-                    {s.department.replace("Computer Science & Engineering", "CSE")
-                      .replace("Information Technology", "IT")
-                      .replace("Electronics & Communication", "ECE")
-                      .replace("Data Science & AI", "AI & DS")
-                      .replace("Mechanical Engineering", "MECH")}
+                    {getDepartmentShort(s.department)}
                   </td>
                   <td className="p-4 font-mono font-bold text-[#111827]">
                     {s.cgpa.toFixed(2)}
@@ -207,9 +388,11 @@ export function StudentTable({ students, onSelectStudent }: StudentTableProps) {
         </table>
       </div>
 
-      {/* Pagination */}
-      <div className="flex items-center justify-between text-xs text-[#78716C] px-2">
-        <div>
+      {/* ───────────────────────────────────────────────────────────
+          PAGINATION
+      ─────────────────────────────────────────────────────────── */}
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#78716C] px-1 sm:px-2">
+        <div className="text-center sm:text-left">
           Showing <span className="text-[#111827] font-mono font-bold">{paginatedStudents.length}</span> of{" "}
           <span className="text-[#111827] font-mono font-bold">{sortedStudents.length}</span> students
         </div>
@@ -221,7 +404,7 @@ export function StudentTable({ students, onSelectStudent }: StudentTableProps) {
           >
             Previous
           </button>
-          <span className="font-mono text-[#111827] font-bold">
+          <span className="font-mono text-[#111827] font-bold px-1">
             {currentPage} / {totalPages}
           </span>
           <button

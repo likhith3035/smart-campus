@@ -58,23 +58,30 @@ export function StudentModal({ student, onClose, onUpdateAction }: StudentModalP
       : "text-emerald-600 border-emerald-200 bg-emerald-50";
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-900/50 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl bg-white border border-[#E5E0D8] shadow-2xl text-[#121826] flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-stone-900/50 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="relative w-full max-w-4xl max-h-[92vh] sm:max-h-[90vh] overflow-y-auto rounded-t-3xl sm:rounded-3xl bg-white border border-[#E5E0D8] shadow-2xl text-[#121826] flex flex-col">
+        {/* Mobile Drag Indicator Handle */}
+        <div className="sm:hidden flex justify-center pt-2.5 pb-1 bg-[#FAF8F5]/90">
+          <div className="w-10 h-1 rounded-full bg-stone-300"></div>
+        </div>
+
         {/* Header */}
-        <div className="p-6 border-b border-[#EAE5DC] flex items-start justify-between bg-[#FAF8F5]/60">
-          <div className="flex items-start gap-4">
-            <div className={`w-16 h-16 rounded-2xl flex flex-col items-center justify-center border font-mono font-extrabold shadow-sm ${scoreColor}`}>
-              <span className="text-2xl leading-none">{student.success_score}</span>
-              <span className="text-[10px] uppercase font-bold tracking-wider opacity-80 mt-1">S³ Score</span>
+        <div className="p-4 sm:p-6 border-b border-[#EAE5DC] flex items-start justify-between bg-[#FAF8F5]/60 gap-3">
+          <div className="flex items-start gap-3 sm:gap-4 flex-1 min-w-0">
+            {/* Score Box */}
+            <div className={`w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl flex flex-col items-center justify-center border font-mono font-extrabold shadow-sm shrink-0 ${scoreColor}`}>
+              <span className="text-lg sm:text-2xl leading-none">{student.success_score}</span>
+              <span className="text-[8px] sm:text-[10px] uppercase font-bold tracking-wider opacity-80 mt-0.5 sm:mt-1">S³</span>
             </div>
-            <div>
-              <div className="flex flex-wrap items-center gap-2">
-                <h2 className="text-xl font-bold text-[#111827]">{student.name}</h2>
-                <span className="text-xs font-mono px-2 py-0.5 rounded bg-white text-stone-600 border border-stone-200">
+
+            <div className="flex-1 min-w-0">
+              <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+                <h2 className="text-base sm:text-xl font-bold text-[#111827] truncate">{student.name}</h2>
+                <span className="text-[10px] sm:text-xs font-mono px-1.5 sm:px-2 py-0.5 rounded bg-white text-stone-600 border border-stone-200">
                   {student.student_id}
                 </span>
                 <span
-                  className="text-xs font-medium px-2.5 py-0.5 rounded-full border"
+                  className="text-[10px] sm:text-xs font-medium px-2 sm:px-2.5 py-0.5 rounded-full border"
                   style={{
                     backgroundColor: `${student.segment.color}10`,
                     color: student.segment.color,
@@ -84,10 +91,10 @@ export function StudentModal({ student, onClose, onUpdateAction }: StudentModalP
                   {student.segment.name}
                 </span>
               </div>
-              <p className="text-xs text-[#78716C] mt-1">
+              <p className="text-[11px] sm:text-xs text-[#78716C] mt-0.5">
                 {student.department} • Semester {student.semester}
               </p>
-              <div className="flex flex-wrap gap-2 mt-2 text-[11px]">
+              <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mt-2 text-[10px] sm:text-[11px] bg-white sm:bg-transparent p-1.5 sm:p-0 rounded-xl sm:rounded-none border sm:border-0 border-stone-100">
                 <span className="text-[#57534E]">CGPA: <strong className="text-[#111827] font-mono">{student.cgpa}</strong></span>
                 <span className="text-stone-300">•</span>
                 <span className="text-[#57534E]">Attendance: <strong className={`font-mono ${student.attendance_pct < 75 ? "text-rose-600 font-bold" : "text-emerald-600"}`}>{student.attendance_pct}%</strong></span>
@@ -98,66 +105,68 @@ export function StudentModal({ student, onClose, onUpdateAction }: StudentModalP
               </div>
             </div>
           </div>
+
           <button
             onClick={onClose}
-            className="p-2 rounded-full text-stone-400 hover:text-stone-700 hover:bg-stone-100 transition-colors"
+            aria-label="Close modal"
+            className="p-2 rounded-full text-stone-400 hover:text-stone-700 hover:bg-stone-100 transition-colors shrink-0"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Tab Controls */}
-        <div className="px-6 border-b border-[#EAE5DC] flex gap-2 overflow-x-auto bg-[#FAF8F5]/30">
+        <div className="px-4 sm:px-6 border-b border-[#EAE5DC] flex gap-2 overflow-x-auto bg-[#FAF8F5]/30 scrollbar-none">
           <button
             onClick={() => setActiveTab("overview")}
-            className={`py-3.5 px-3 text-xs font-bold border-b-2 flex items-center gap-1.5 transition-colors whitespace-nowrap ${
+            className={`py-3 px-2.5 sm:px-3 text-xs font-bold border-b-2 flex items-center gap-1.5 transition-colors whitespace-nowrap ${
               activeTab === "overview"
                 ? "border-[#111827] text-[#111827]"
                 : "border-transparent text-[#78716C] hover:text-[#111827]"
             }`}
           >
-            <Activity className="w-4 h-4" /> Dual Risk Flags
+            <Activity className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> Dual Risk Flags
           </button>
           <button
             onClick={() => setActiveTab("radar")}
-            className={`py-3.5 px-3 text-xs font-bold border-b-2 flex items-center gap-1.5 transition-colors whitespace-nowrap ${
+            className={`py-3 px-2.5 sm:px-3 text-xs font-bold border-b-2 flex items-center gap-1.5 transition-colors whitespace-nowrap ${
               activeTab === "radar"
                 ? "border-[#111827] text-[#111827]"
                 : "border-transparent text-[#78716C] hover:text-[#111827]"
             }`}
           >
-            <Layers className="w-4 h-4" /> 7-Pillar Radar Profile
+            <Layers className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> 7-Pillar Radar
           </button>
           <button
             onClick={() => setActiveTab("explainability")}
-            className={`py-3.5 px-3 text-xs font-bold border-b-2 flex items-center gap-1.5 transition-colors whitespace-nowrap ${
+            className={`py-3.5 px-2.5 sm:px-3 text-xs font-bold border-b-2 flex items-center gap-1.5 transition-colors whitespace-nowrap ${
               activeTab === "explainability"
                 ? "border-[#111827] text-[#111827]"
                 : "border-transparent text-[#78716C] hover:text-[#111827]"
             }`}
           >
-            <Award className="w-4 h-4" /> XAI Waterfall Drivers (Bonus)
+            <Award className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> XAI Drivers
           </button>
           <button
             onClick={() => setActiveTab("actions")}
-            className={`py-3.5 px-3 text-xs font-bold border-b-2 flex items-center gap-1.5 transition-colors whitespace-nowrap ${
+            className={`py-3.5 px-2.5 sm:px-3 text-xs font-bold border-b-2 flex items-center gap-1.5 transition-colors whitespace-nowrap ${
               activeTab === "actions"
                 ? "border-[#111827] text-[#111827]"
                 : "border-transparent text-[#78716C] hover:text-[#111827]"
             }`}
           >
-            <CheckCircle2 className="w-4 h-4" /> Prescriptive Actions ({actions.length})
+            <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> Actions ({actions.length})
           </button>
         </div>
 
         {/* Content Body */}
-        <div className="p-6 flex-1 overflow-y-auto">
+        <div className="p-4 sm:p-6 flex-1 overflow-y-auto">
           {activeTab === "overview" && (
             <div className="space-y-6">
               {/* Dual Risk Summary Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
                 {/* Academic Risk */}
-                <div className={`p-5 rounded-2xl border ${
+                <div className={`p-4 sm:p-5 rounded-2xl border ${
                   student.risk_flags.academic.status === "HIGH"
                     ? "bg-rose-50/60 border-rose-200"
                     : student.risk_flags.academic.status === "MEDIUM"

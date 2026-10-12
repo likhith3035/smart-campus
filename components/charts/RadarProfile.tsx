@@ -45,12 +45,12 @@ export function RadarProfile({ studentMetrics, benchmarkMetrics }: RadarProfileP
   ];
 
   return (
-    <div className="w-full h-80 flex flex-col items-center justify-center">
+    <div className="w-full h-72 sm:h-80 flex flex-col items-center justify-center">
       <ResponsiveContainer width="100%" height="100%">
-        <RadarChart cx="50%" cy="50%" outerRadius="75%" data={data}>
+        <RadarChart cx="50%" cy="50%" outerRadius="65%" data={data}>
           <PolarGrid stroke="#EAE5DC" strokeDasharray="3 3" />
-          <PolarAngleAxis dataKey="subject" stroke="#78716C" tick={{ fill: "#57534E", fontSize: 11, fontWeight: 500 }} />
-          <PolarRadiusAxis angle={30} domain={[0, 100]} stroke="#D6D3D1" tick={{ fill: "#A8A29E", fontSize: 10 }} />
+          <PolarAngleAxis dataKey="subject" stroke="#78716C" tick={{ fill: "#57534E", fontSize: 10, fontWeight: 500 }} />
+          <PolarRadiusAxis angle={30} domain={[0, 100]} stroke="#D6D3D1" tick={{ fill: "#A8A29E", fontSize: 9 }} />
           <Radar
             name="This Student"
             dataKey="student"
