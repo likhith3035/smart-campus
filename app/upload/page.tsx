@@ -51,6 +51,73 @@ NBK006,Priya Nair,Computer Science & Engineering,6,7.6,82.4,0,67,80,88
 NBK007,Karan Joshi,Information Technology,6,6.5,74.0,2,83,62,72
 NBK008,Meera Iyer,Electronics & Communication,6,9.4,95.2,0,22,85,97`;
 
+// 14-student sample WITHOUT headers (tests automatic header injection)
+const NBKRIST_14_HEADERLESS_SAMPLE = `NBK012,deepak muppala,Information Technology,6,9.6,92.7,0,31,88,95
+NBK013,Aryan Gupta,Electronics & Communication,6,7.0,71.0,2,76,60,73
+NBK014,Ishita Malhotra,Data Science & AI,6,6.0,69.8,3,88,57,65
+NBK015,Manoj Pillai,Mechanical Engineering,6,8.5,85.6,0,40,79,90
+NBK016,Divya Sharma,Computer Science & Engineering,6,9.2,94.1,0,36,83,98
+NBK017,Aditya Menon,Information Technology,6,5.5,66.4,2,84,52,63
+NBK018,harshanth duvvuru,Electronics & Communication,6,7.8,80.2,0,72,75,87
+NBK019,Nikhil Jain,Data Science & AI,6,6.3,74.5,1,86,61,71
+NBK020,Kavya Ramesh,Mechanical Engineering,6,9.0,90.8,0,29,81,94
+NBK021,Saurabh Mishra,Computer Science & Engineering,6,5.0,67.2,3,91,50,60
+NBK022,Pooja Agarwal,Information Technology,6,8.7,89.5,0,38,78,92
+NBK023,Harsh Vardhan,Electronics & Communication,6,6.7,72.0,2,82,63,68
+NBK024,Tanya Singh,Data Science & AI,6,9.5,96.4,0,25,86,99
+NBK025,Rajat Khanna,Mechanical Engineering,6,5.9,70.7,1,87,56,66.`;
+
+/**
+ * Intelligent Header Detector
+ * Returns false if line 1 contains actual student records (numeric CGPA, attendance, roll IDs, etc.)
+ */
+function isLikelyHeaderRow(cells: string[]): boolean {
+  if (!cells || cells.length === 0) return false;
+
+  const headerKeywords = [
+    "roll", "id", "usn", "reg", "sno", "hall",
+    "name", "student", "candidate",
+    "branch", "dept", "department", "stream", "course",
+    "sem", "semester", "year", "class",
+    "cgpa", "gpa", "marks", "score", "percent", "grade",
+    "attend", "attendance", "absent", "present",
+    "backlog", "arrear", "arrears",
+    "code", "coding", "aptitude", "assign", "assignment", "lms"
+  ];
+
+  let keywordMatches = 0;
+  let numericValues = 0;
+
+  for (const raw of cells) {
+    const val = raw.trim().toLowerCase();
+    // Check if numeric (numbers like 6, 9.6, 92.7 are NOT headers)
+    if (!isNaN(Number(val)) && val !== "") {
+      numericValues++;
+    }
+    // Check keyword match
+    if (headerKeywords.some((kw) => val.includes(kw))) {
+      keywordMatches++;
+    }
+  }
+
+  // If there are multiple numeric values, it's definitely a student data row!
+  if (numericValues >= 2) {
+    return false;
+  }
+
+  // If at least 2 header keywords matched, it's a genuine header row
+  if (keywordMatches >= 2) {
+    return true;
+  }
+
+  // If 1 keyword matched and 0 numbers, likely header
+  if (keywordMatches >= 1 && numericValues === 0) {
+    return true;
+  }
+
+  return false;
+}
+
 export default function DataIntegrationPage() {
   const { setUploadedCohort, isCustomDataset, resetToDemoData } = useStudentData();
   const [currentStep, setCurrentStep] = useState<UploadStep>("upload");
@@ -84,13 +151,15 @@ export default function DataIntegrationPage() {
 
   // Error/Status message
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [autoInjectedNotice, setAutoInjectedNotice] = useState<string | null>(null);
 
   /**
    * Universal Sanitizer & Parser for Raw CSV / Text Input
-   * Handles trailing periods, spaces, tab/comma delimiters, and empty rows.
+   * Handles trailing periods, spaces, tab/comma delimiters, and headerless student data.
    */
   const handleRawCsvText = (text: string, sourceName: string = "Pasted_Student_Records.csv") => {
     setErrorMessage(null);
+    setAutoInjectedNotice(null);
 
     if (!text || text.trim().length === 0) {
       setErrorMessage("Please paste or enter student data records before parsing.");
@@ -98,21 +167,67 @@ export default function DataIntegrationPage() {
     }
 
     try {
-      // 1. Sanitize lines: trim whitespace, filter empty lines, remove trailing punctuation (e.g. "97 .")
-      const lines = text
+      // 1. Sanitize lines: trim whitespace, filter empty lines, remove trailing punctuation (e.g. "66.")
+      const rawLines = text
         .split(/\r?\n/)
         .map((l) => l.trim())
         .filter((l) => l.length > 0)
-        .map((l) => l.replace(/[\s\.;]+$/, "")); // Strip stray trailing periods, semicolons, and spaces
+        .map((l) => {
+          let line = l.replace(/[\s\.;]+$/, ""); // Strip trailing periods, semicolons, extra spaces
+          // If tab-delimited (copied from Excel), convert tabs to commas
+          if (line.includes("\t") && !line.includes(",")) {
+            line = line.replace(/\t+/g, ",");
+          } else if (line.includes(";") && !line.includes(",")) {
+            line = line.replace(/;+/g, ",");
+          } else if (line.includes("|") && !line.includes(",")) {
+            line = line.replace(/\|+/g, ",");
+          }
+          return line;
+        });
 
-      if (lines.length < 2) {
-        setErrorMessage("Please provide at least 1 header line and 1 student data record.");
+      if (rawLines.length === 0) {
+        setErrorMessage("Please enter at least one student data row.");
         return;
       }
 
-      const cleanCsvString = lines.join("\n");
+      // 2. Check if Line 1 is a Header Row or a Student Data Row
+      const firstLineCells = rawLines[0].split(",").map((c) => c.trim().replace(/^["']|["']$/g, ""));
+      const isHeader = isLikelyHeaderRow(firstLineCells);
 
-      // 2. Parse using SheetJS string reader
+      let processedLines = [...rawLines];
+
+      if (!isHeader) {
+        // Line 1 is actual student data! (e.g., "NBK012,deepak muppala,...")
+        // Automatically inject canonical column headers so student #1 is NEVER lost!
+        const colCount = firstLineCells.length;
+        let generatedHeader = "";
+
+        if (colCount >= 10) {
+          generatedHeader = "roll_no,student_name,branch,semester,cgpa,attendance_pct,active_backlogs,coding_score,aptitude_score,assignment_completion_pct";
+        } else if (colCount === 9) {
+          generatedHeader = "roll_no,student_name,branch,semester,cgpa,attendance_pct,active_backlogs,coding_score,aptitude_score";
+        } else if (colCount === 8) {
+          generatedHeader = "roll_no,student_name,branch,semester,cgpa,attendance_pct,active_backlogs,coding_score";
+        } else if (colCount === 7) {
+          generatedHeader = "roll_no,student_name,branch,semester,cgpa,attendance_pct,active_backlogs";
+        } else if (colCount === 6) {
+          generatedHeader = "roll_no,student_name,branch,cgpa,attendance_pct,active_backlogs";
+        } else if (colCount === 5) {
+          generatedHeader = "roll_no,student_name,cgpa,attendance_pct,active_backlogs";
+        } else {
+          generatedHeader = Array.from({ length: colCount }, (_, idx) => `col_${idx + 1}`).join(",");
+        }
+
+        processedLines = [generatedHeader, ...rawLines];
+        const student1Name = firstLineCells[1] || firstLineCells[0];
+        setAutoInjectedNotice(
+          `✨ Headerless data detected: CampusIQ automatically injected 10 column headers ("${generatedHeader}") so student #1 (${student1Name}) is preserved as a valid record!`
+        );
+      }
+
+      const cleanCsvString = processedLines.join("\n");
+
+      // 3. Parse using SheetJS string reader
       const workbook = XLSX.read(cleanCsvString, { type: "string" });
       const firstSheetName = workbook.SheetNames[0];
       const worksheet = workbook.Sheets[firstSheetName];
@@ -130,7 +245,7 @@ export default function DataIntegrationPage() {
       // Extract unique headers
       const headers = Object.keys(jsonData[0] || {});
       if (headers.length === 0) {
-        setErrorMessage("Could not detect any column headers in the pasted text.");
+        setErrorMessage("Could not detect any column headers in the parsed text.");
         return;
       }
 
@@ -344,6 +459,23 @@ Return ONLY the CSV text starting with the header line, no conversational text o
   };
 
   /**
+   * Prepends the standard 10-column header row if omitted
+   */
+  const handleInsertHeaderRow = () => {
+    const standardHeader = "roll_no,student_name,branch,semester,cgpa,attendance_pct,active_backlogs,coding_score,aptitude_score,assignment_completion_pct";
+    if (!pastedText.trim()) {
+      setPastedText(standardHeader + "\n");
+      return;
+    }
+    const firstLine = pastedText.trim().split(/\r?\n/)[0];
+    const cells = firstLine.split(",").map((c) => c.trim().replace(/^["']|["']$/g, ""));
+    if (isLikelyHeaderRow(cells)) {
+      return;
+    }
+    setPastedText(standardHeader + "\n" + pastedText.trim());
+  };
+
+  /**
    * User modifies column mapping for a target field
    */
   const handleMappingChange = (targetKey: string, userCol: string) => {
@@ -454,9 +586,12 @@ Return ONLY the CSV text starting with the header line, no conversational text o
   const avgScore = totalCount > 0 ? (processedStudents.reduce((a, b) => a + b.success_score, 0) / totalCount).toFixed(1) : "0";
   const placementReadyCount = processedStudents.filter((s) => s.coding_score >= 60 && s.cgpa >= 7.0 && s.active_backlogs === 0).length;
 
-  // Count pasted lines
-  const detectedLinesCount = pastedText.trim() ? pastedText.trim().split(/\r?\n/).filter(Boolean).length : 0;
-  const detectedStudentRecordCount = Math.max(0, detectedLinesCount - 1);
+  // Count pasted lines & analyze whether headers are present
+  const pastedRawLines = pastedText.trim() ? pastedText.trim().split(/\r?\n/).filter(Boolean) : [];
+  const detectedLinesCount = pastedRawLines.length;
+  const firstLineCellsPreview = pastedRawLines[0] ? pastedRawLines[0].split(",").map((c) => c.trim().replace(/^["']|["']$/g, "")) : [];
+  const hasDetectedHeader = pastedRawLines.length > 0 && isLikelyHeaderRow(firstLineCellsPreview);
+  const detectedStudentRecordCount = pastedRawLines.length === 0 ? 0 : hasDetectedHeader ? Math.max(0, pastedRawLines.length - 1) : pastedRawLines.length;
 
   return (
     <WorkspaceShell>
@@ -580,12 +715,31 @@ Return ONLY the CSV text starting with the header line, no conversational text o
                   <div className="flex flex-wrap items-center gap-2">
                     <button
                       type="button"
+                      onClick={() => setPastedText(NBKRIST_14_HEADERLESS_SAMPLE)}
+                      className="px-3 py-1.5 rounded-xl bg-purple-50 hover:bg-purple-100 text-purple-700 border border-purple-200 text-xs font-bold flex items-center gap-1.5 cursor-pointer transition-colors"
+                      title="Load the 14-student cohort (NBK012 to NBK025) without headers to test automatic header injection!"
+                    >
+                      <Zap className="w-3.5 h-3.5 text-purple-600 fill-purple-600" />
+                      <span>⚡ Load 14 Students (Headerless Test)</span>
+                    </button>
+
+                    <button
+                      type="button"
                       onClick={() => setPastedText(NBKRIST_SAMPLE_CSV)}
                       className="px-3 py-1.5 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 text-xs font-bold flex items-center gap-1.5 cursor-pointer transition-colors"
-                      title="Load the 8-student NBKRIST cohort with Likhith, Srinivas, etc."
+                      title="Load the 8-student NBKRIST cohort with Likhith, Srinivas, etc. (with headers)"
                     >
-                      <Zap className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
-                      <span>⚡ Pre-fill NBKRIST Sample (8 Students)</span>
+                      <Check className="w-3.5 h-3.5 text-blue-600" />
+                      <span>⚡ Load 8 Students (With Headers)</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={handleInsertHeaderRow}
+                      className="px-3 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 text-xs font-bold flex items-center gap-1.5 cursor-pointer transition-colors"
+                      title="Insert the standard 10-column header row at the top of your text"
+                    >
+                      <span>➕ Add Standard Header Row</span>
                     </button>
 
                     {pastedText && (
@@ -613,19 +767,35 @@ Return ONLY the CSV text starting with the header line, no conversational text o
 
                   {/* Status Bar */}
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-stone-500 px-1">
-                    <div className="flex items-center gap-3">
+                    <div className="flex flex-wrap items-center gap-3">
                       <span>
                         Detected: <strong>{detectedStudentRecordCount}</strong> student record{detectedStudentRecordCount === 1 ? "" : "s"}
                       </span>
                       {detectedLinesCount > 0 && (
                         <span className="font-mono text-[11px] text-stone-400">
-                          ({detectedLinesCount} total lines including header)
+                          ({detectedLinesCount} total lines)
                         </span>
+                      )}
+
+                      {pastedText.trim() && (
+                        <div className="flex items-center gap-1.5 font-mono text-[11px]">
+                          {hasDetectedHeader ? (
+                            <span className="text-emerald-700 font-bold flex items-center gap-1 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
+                              <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+                              <span>Valid Headers Detected ({firstLineCellsPreview.length} cols)</span>
+                            </span>
+                          ) : (
+                            <span className="text-amber-800 font-bold flex items-center gap-1 bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200">
+                              <Sparkles className="w-3 h-3 text-amber-600" />
+                              <span>Auto-Header Active ({firstLineCellsPreview.length} cols) • Header will be auto-injected so student #1 is kept!</span>
+                            </span>
+                          )}
+                        </div>
                       )}
                     </div>
 
                     <span className="text-[11px] text-stone-400">
-                      Auto-sanitizes trailing periods, spaces & empty lines
+                      Auto-sanitizes trailing periods, spaces & tabs
                     </span>
                   </div>
                 </div>
@@ -901,6 +1071,21 @@ Return ONLY the CSV text starting with the header line, no conversational text o
                 <span>Change Input / Paste Another</span>
               </button>
             </div>
+
+            {/* Smart Header Recovery Alert Banner */}
+            {autoInjectedNotice && (
+              <div className="p-4 rounded-2xl bg-purple-50 border border-purple-200 flex items-start gap-3">
+                <Sparkles className="w-5 h-5 text-purple-600 shrink-0 mt-0.5" />
+                <div className="space-y-1">
+                  <h4 className="text-xs font-bold text-purple-900">
+                    Smart Header Recovery Applied
+                  </h4>
+                  <p className="text-xs text-purple-800 leading-relaxed">
+                    {autoInjectedNotice}
+                  </p>
+                </div>
+              </div>
+            )}
 
             {/* Verification Banner */}
             <div className="p-5 rounded-2xl bg-amber-50/70 border border-amber-200/80 flex items-start gap-3">
