@@ -1,8 +1,7 @@
-"use client";
-
 import { useMemo } from "react";
 import { StudentProfile } from "@/lib/types";
 import { getCampusStats } from "@/lib/studentsData";
+import { useStudentData } from "@/components/context/StudentDataContext";
 import { 
   X, 
   Printer, 
@@ -14,7 +13,8 @@ import {
   AlertTriangle,
   Award,
   Users,
-  FileText
+  FileText,
+  Settings2
 } from "lucide-react";
 
 interface ExecutiveBriefModalProps {
@@ -23,6 +23,7 @@ interface ExecutiveBriefModalProps {
   students: StudentProfile[];
   datasetName?: string;
   isCustomDataset?: boolean;
+  onOpenInstitutionalProfile?: () => void;
 }
 
 export function ExecutiveBriefModal({
@@ -31,7 +32,9 @@ export function ExecutiveBriefModal({
   students,
   datasetName,
   isCustomDataset,
+  onOpenInstitutionalProfile,
 }: ExecutiveBriefModalProps) {
+  const { institutionProfile } = useStudentData();
   const stats = useMemo(() => getCampusStats(students), [students]);
   const debarmentCount = useMemo(() => students.filter((s) => s.attendance_pct < 75).length, [students]);
   const debarmentPct = stats.totalStudents > 0 ? Math.round((debarmentCount / stats.totalStudents) * 100) : 0;
@@ -104,12 +107,23 @@ export function ExecutiveBriefModal({
           <div className="flex items-center gap-2 text-xs font-mono">
             <FileText className="w-4 h-4 text-amber-400" />
             <span className="font-bold uppercase tracking-wider text-amber-300">
-              Executive Dean&apos;s Governance Dossier
+              Executive {institutionProfile.executiveRole}&apos;s Governance Dossier
             </span>
-            <span className="text-stone-400">• Fall 2026 Academic Term</span>
+            <span className="text-stone-400">• {institutionProfile.institutionShortName}</span>
           </div>
 
           <div className="flex items-center gap-2">
+            {onOpenInstitutionalProfile && (
+              <button
+                type="button"
+                onClick={onOpenInstitutionalProfile}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 hover:text-white text-xs font-bold transition-all border border-stone-700 cursor-pointer"
+                title="Edit College Name, Authority Role & Signatures"
+              >
+                <Settings2 className="w-3.5 h-3.5 text-amber-400" />
+                <span className="hidden sm:inline">Edit Signatures</span>
+              </button>
+            )}
             <button
               onClick={handlePrint}
               className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-stone-950 text-xs font-bold transition-all shadow-sm cursor-pointer"
@@ -139,22 +153,25 @@ export function ExecutiveBriefModal({
                   CONFIDENTIAL • BOARD OF GOVERNANCE
                 </span>
                 <span className="text-[10px] text-stone-500 font-mono">
-                  REF: UNIV-EXEC-2026-F9
+                  REF: {institutionProfile.institutionShortName.toUpperCase().replace(/\s+/g, "-")}-EXEC-2026
                 </span>
               </div>
               <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-stone-950 font-serif">
-                Campus Intelligence & Retention Brief
+                {institutionProfile.institutionName}
               </h1>
+              <div className="text-sm font-bold text-stone-800 tracking-tight">
+                Campus Intelligence & Student Retention Dossier
+              </div>
               <p className="text-xs sm:text-sm text-stone-600">
-                Institutional Quality Assurance Cell (IQAC) & Academic Risk Mitigation Directorate
+                {institutionProfile.iqacUnit} & Academic Risk Mitigation Directorate
               </p>
             </div>
 
             <div className="text-right text-xs text-stone-500 font-mono space-y-0.5 shrink-0">
               <div><strong>Audited Date:</strong> {currentDate}</div>
               <div><strong>Active Cohort:</strong> {stats.totalStudents} Enrolled Students</div>
-              <div><strong>Dataset Source:</strong> {isCustomDataset ? datasetName : "Autonomous Benchmark (600 STU)"}</div>
-              <div><strong>Accreditation Norm:</strong> UGC / NBA Tier-1 Compliance</div>
+              <div><strong>Dataset Source:</strong> {isCustomDataset ? datasetName : `${institutionProfile.institutionShortName} Benchmark`}</div>
+              <div><strong>Accreditation Norm:</strong> {institutionProfile.accreditationNorm}</div>
             </div>
           </div>
 
@@ -301,22 +318,22 @@ export function ExecutiveBriefModal({
             </div>
           </div>
 
-          {/* 5. FORMAL DEAN & IQAC ENDORSEMENT SIGN-OFF */}
+          {/* 5. FORMAL DEAN / PRINCIPAL & IQAC ENDORSEMENT SIGN-OFF */}
           <div className="pt-8 border-t border-stone-300 grid grid-cols-2 sm:grid-cols-3 gap-6 text-xs text-stone-600">
             <div className="space-y-3">
               <div className="h-10 border-b border-stone-400 flex items-end pb-1 font-serif italic text-stone-800 text-sm">
-                Dr. Arthur Vance, Ph.D.
+                {institutionProfile.executiveName}
               </div>
-              <div className="font-bold text-stone-900">Dean of Academic Affairs</div>
-              <div className="text-[10px] text-stone-500 font-mono">Academic Senate Review Committee</div>
+              <div className="font-bold text-stone-900">{institutionProfile.executiveTitle}</div>
+              <div className="text-[10px] text-stone-500 font-mono">{institutionProfile.signatoryCommittee}</div>
             </div>
 
             <div className="space-y-3">
               <div className="h-10 border-b border-stone-400 flex items-end pb-1 font-serif italic text-stone-800 text-sm">
-                Prof. M. K. Sundaram
+                {institutionProfile.secondSignatoryName}
               </div>
-              <div className="font-bold text-stone-900">Director, Quality Assurance (IQAC)</div>
-              <div className="text-[10px] text-stone-500 font-mono">Accreditation & Analytics Cell</div>
+              <div className="font-bold text-stone-900">{institutionProfile.secondSignatoryTitle}</div>
+              <div className="text-[10px] text-stone-500 font-mono">{institutionProfile.institutionShortName} Accreditation Cell</div>
             </div>
 
             <div className="space-y-3 hidden sm:block">

@@ -1,8 +1,9 @@
-"use client";
-
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSidebar } from "@/components/layout/SidebarContext";
+import { useStudentData } from "@/components/context/StudentDataContext";
+import { InstitutionalProfileModal } from "@/components/dashboard/InstitutionalProfileModal";
 import {
   Home,
   Users,
@@ -20,6 +21,8 @@ import {
 export function InstitutionalSidebar() {
   const pathname = usePathname();
   const { isCollapsed, toggleSidebar } = useSidebar();
+  const { institutionProfile } = useStudentData();
+  const [profileModalOpen, setProfileModalOpen] = useState(false);
 
   const navItems = [
     { label: "Campus Home", href: "/home", icon: Home },
@@ -146,31 +149,41 @@ export function InstitutionalSidebar() {
           </div>
         )}
 
-        {/* Administrator Profile Pill */}
+        {/* Administrator / Authority Profile Pill */}
         <div
-          title={isCollapsed ? "Dr. Priya Sharma (Administrator)" : undefined}
-          className={`rounded-2xl bg-white border border-[#EAE5DC] shadow-2xs flex items-center hover:border-stone-400 transition-colors cursor-pointer group ${
+          onClick={() => setProfileModalOpen(true)}
+          title={isCollapsed ? `${institutionProfile.executiveName} (${institutionProfile.executiveRole})` : "Click to edit College & Authority Profile"}
+          className={`rounded-2xl bg-white border border-[#EAE5DC] shadow-2xs flex items-center hover:border-blue-400 hover:shadow-xs transition-all cursor-pointer group ${
             isCollapsed ? "p-2 justify-center" : "p-2.5 justify-between"
           }`}
         >
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-full bg-[#4A154B] text-white font-bold text-xs flex items-center justify-center shadow-xs shrink-0">
-              P
+          <div className="flex items-center gap-2.5 min-w-0">
+            <div className="w-8 h-8 rounded-full bg-[#4A154B] text-white font-bold text-xs flex items-center justify-center shadow-xs shrink-0 group-hover:scale-105 transition-transform">
+              {institutionProfile.executiveName.replace(/^Dr\.\s*|^Prof\.\s*/i, "").charAt(0) || "A"}
             </div>
             {!isCollapsed && (
-              <div className="text-left truncate">
-                <div className="text-xs font-bold text-[#111827] group-hover:text-black truncate">
-                  Dr. Priya Sharma
+              <div className="text-left truncate min-w-0">
+                <div className="text-xs font-bold text-[#111827] group-hover:text-blue-600 transition-colors truncate">
+                  {institutionProfile.executiveName.split(",")[0]}
                 </div>
-                <div className="text-[10px] text-[#78716C] truncate">Administrator</div>
+                <div className="text-[10px] text-[#78716C] truncate flex items-center gap-1">
+                  <span>{institutionProfile.executiveRole}</span>
+                  <span className="text-[9px] text-blue-600 font-mono font-bold">• Edit</span>
+                </div>
               </div>
             )}
           </div>
           {!isCollapsed && (
-            <ChevronRight className="w-4 h-4 text-stone-400 group-hover:text-stone-700 transition-colors shrink-0" />
+            <ChevronRight className="w-4 h-4 text-stone-400 group-hover:text-blue-600 transition-colors shrink-0" />
           )}
         </div>
       </div>
+
+      {/* College & Authority Profile Modal */}
+      <InstitutionalProfileModal
+        isOpen={profileModalOpen}
+        onClose={() => setProfileModalOpen(false)}
+      />
     </aside>
   );
 }

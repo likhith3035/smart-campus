@@ -103,3 +103,31 @@ export interface CampusStats {
   averageCgpa: number;
   averagePlacementReadiness: number;
 }
+
+export type ExecutiveRoleType = "Dean" | "Principal" | "Director" | "Vice Chancellor" | "Head of Department";
+
+export interface InstitutionProfile {
+  institutionName: string;
+  institutionShortName: string;
+  executiveRole: ExecutiveRoleType;
+  executiveTitle: string;
+  executiveName: string;
+  signatoryCommittee: string;
+  secondSignatoryName: string;
+  secondSignatoryTitle: string;
+  accreditationNorm: string;
+  iqacUnit: string;
+}
+
+export const DEFAULT_INSTITUTION_PROFILE: InstitutionProfile = {
+  institutionName: "Apex Institute of Advanced Technology",
+  institutionShortName: "Apex Tech",
+  executiveRole: "Dean",
+  executiveTitle: "Dean of Academic Affairs",
+  executiveName: "Dr. Arthur Vance, Ph.D.",
+  signatoryCommittee: "Academic Senate Review Committee",
+  secondSignatoryName: "Prof. M. K. Sundaram",
+  secondSignatoryTitle: "Director, Quality Assurance (IQAC)",
+  accreditationNorm: "UGC / NBA Tier-1 Compliance",
+  iqacUnit: "Institutional Quality Assurance Cell (IQAC)",
+};

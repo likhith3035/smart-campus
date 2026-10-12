@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode, useMemo } from "react";
 import { initialStudents } from "@/lib/studentsData";
-import { StudentProfile } from "@/lib/types";
+import { StudentProfile, InstitutionProfile, DEFAULT_INSTITUTION_PROFILE } from "@/lib/types";
 
 interface StudentDataContextType {
   students: StudentProfile[];
@@ -13,10 +13,14 @@ interface StudentDataContextType {
   availableSemesters: number[];
   setUploadedCohort: (newStudents: StudentProfile[], sourceName: string) => void;
   resetToDemoData: () => void;
+  institutionProfile: InstitutionProfile;
+  updateInstitutionProfile: (profile: Partial<InstitutionProfile>) => void;
+  resetInstitutionProfile: () => void;
 }
 
 const STORAGE_KEY = "campusiq_custom_cohort_v1";
 const STORAGE_META_KEY = "campusiq_custom_meta_v1";
+const STORAGE_INSTITUTION_KEY = "campusiq_institution_profile_v1";
 
 const StudentDataContext = createContext<StudentDataContextType | undefined>(undefined);
 
@@ -24,8 +28,9 @@ export function StudentDataProvider({ children }: { children: ReactNode }) {
   const [students, setStudents] = useState<StudentProfile[]>(initialStudents);
   const [isCustomDataset, setIsCustomDataset] = useState<boolean>(false);
   const [datasetName, setDatasetName] = useState<string>("Standard Campus Benchmark Cohort");
+  const [institutionProfile, setInstitutionProfile] = useState<InstitutionProfile>(DEFAULT_INSTITUTION_PROFILE);
 
-  // On mount, check if user previously uploaded a custom cohort in this session/browser
+  // On mount, check if user previously uploaded a custom cohort or customized institution profile
   useEffect(() => {
     try {
       const savedData = sessionStorage.getItem(STORAGE_KEY);
@@ -41,7 +46,40 @@ export function StudentDataProvider({ children }: { children: ReactNode }) {
     } catch (err) {
       console.warn("Could not retrieve custom student dataset from session:", err);
     }
+
+    try {
+      const savedProfile = localStorage.getItem(STORAGE_INSTITUTION_KEY);
+      if (savedProfile) {
+        const parsed = JSON.parse(savedProfile);
+        if (parsed && typeof parsed === "object") {
+          setInstitutionProfile((prev) => ({ ...prev, ...parsed }));
+        }
+      }
+    } catch (err) {
+      console.warn("Could not retrieve custom institution profile from storage:", err);
+    }
   }, []);
+
+  const updateInstitutionProfile = (updates: Partial<InstitutionProfile>) => {
+    setInstitutionProfile((prev) => {
+      const updated = { ...prev, ...updates };
+      try {
+        localStorage.setItem(STORAGE_INSTITUTION_KEY, JSON.stringify(updated));
+      } catch (err) {
+        console.warn("Error saving institution profile to localStorage:", err);
+      }
+      return updated;
+    });
+  };
+
+  const resetInstitutionProfile = () => {
+    setInstitutionProfile(DEFAULT_INSTITUTION_PROFILE);
+    try {
+      localStorage.removeItem(STORAGE_INSTITUTION_KEY);
+    } catch (err) {
+      console.warn("Error resetting institution profile in localStorage:", err);
+    }
+  };
 
   const setUploadedCohort = (newStudents: StudentProfile[], sourceName: string) => {
     if (!newStudents || newStudents.length === 0) return;
@@ -103,6 +141,9 @@ export function StudentDataProvider({ children }: { children: ReactNode }) {
         availableSemesters,
         setUploadedCohort,
         resetToDemoData,
+        institutionProfile,
+        updateInstitutionProfile,
+        resetInstitutionProfile,
       }}
     >
       {children}

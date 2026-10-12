@@ -11,6 +11,7 @@ import { StudentProfile } from "@/lib/types";
 import { StudentModal } from "@/components/dashboard/StudentModal";
 import { ExecutiveBriefModal } from "@/components/dashboard/ExecutiveBriefModal";
 import { JudgeTourModal } from "@/components/dashboard/JudgeTourModal";
+import { InstitutionalProfileModal } from "@/components/dashboard/InstitutionalProfileModal";
 import { useStudentData } from "@/components/context/StudentDataContext";
 import {
   Search,
@@ -25,6 +26,8 @@ import {
   FileText,
   Zap,
   GraduationCap,
+  Building2,
+  Settings2,
 } from "lucide-react";
 
 interface WorkspaceShellProps {
@@ -39,6 +42,7 @@ function WorkspaceShellInner({ children }: WorkspaceShellProps) {
     datasetName,
     studentCount,
     resetToDemoData,
+    institutionProfile,
   } = useStudentData();
   const [selectedStudent, setSelectedStudent] = useState<StudentProfile | null>(null);
 
@@ -47,6 +51,7 @@ function WorkspaceShellInner({ children }: WorkspaceShellProps) {
   const [notificationOpen, setNotificationOpen] = useState(false);
   const [executiveBriefOpen, setExecutiveBriefOpen] = useState(false);
   const [judgeTourOpen, setJudgeTourOpen] = useState(false);
+  const [institutionalProfileOpen, setInstitutionalProfileOpen] = useState(false);
 
   // Academic term selector
   const [selectedTerm, setSelectedTerm] = useState("Fall 2026");
@@ -203,7 +208,19 @@ function WorkspaceShellInner({ children }: WorkspaceShellProps) {
                 <span>60-Second Judge Tour</span>
               </button>
 
-              {/* Dean's Brief Mobile */}
+              {/* College & Authority Profile Mobile */}
+              <button
+                onClick={() => {
+                  setMobileOpen(false);
+                  setInstitutionalProfileOpen(true);
+                }}
+                className="w-full flex items-center justify-center gap-2 py-2 rounded-xl bg-white border border-stone-200 text-stone-800 text-xs font-bold shadow-2xs"
+              >
+                <Building2 className="w-3.5 h-3.5 text-stone-500" />
+                <span>{institutionProfile.institutionShortName} Profile</span>
+              </button>
+
+              {/* Executive Brief Mobile */}
               <button
                 onClick={() => {
                   setMobileOpen(false);
@@ -212,7 +229,7 @@ function WorkspaceShellInner({ children }: WorkspaceShellProps) {
                 className="w-full flex items-center justify-center gap-2 py-2 rounded-xl bg-white border border-stone-200 text-stone-800 text-xs font-bold shadow-2xs"
               >
                 <FileText className="w-3.5 h-3.5 text-stone-500" />
-                <span>Dean&apos;s Governance Brief</span>
+                <span>{institutionProfile.executiveRole}&apos;s Governance Brief</span>
               </button>
             </div>
           </div>
@@ -375,6 +392,18 @@ function WorkspaceShellInner({ children }: WorkspaceShellProps) {
               )}
             </div>
 
+            {/* College & Authority Profile Trigger */}
+            <button
+              onClick={() => setInstitutionalProfileOpen(true)}
+              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-stone-200/90 hover:border-stone-400 text-stone-800 text-xs font-bold shadow-2xs hover:bg-stone-50 transition-all cursor-pointer"
+              title="Customize College Name, Authority Role (Principal/Dean) & Signatures"
+            >
+              <Building2 className="w-3.5 h-3.5 text-stone-500" />
+              <span className="hidden xl:inline">{institutionProfile.institutionShortName}</span>
+              <span className="xl:hidden">Campus</span>
+              <Settings2 className="w-3 h-3 text-stone-400" />
+            </button>
+
             {/* 60-Second Judge Tour Trigger */}
             <button
               onClick={() => setJudgeTourOpen(true)}
@@ -386,14 +415,14 @@ function WorkspaceShellInner({ children }: WorkspaceShellProps) {
               <span className="text-[10px] font-mono opacity-80">(60s)</span>
             </button>
 
-            {/* Executive Dean's Brief Modal Trigger */}
+            {/* Executive Authority Brief Modal Trigger */}
             <button
               onClick={() => setExecutiveBriefOpen(true)}
               className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-stone-200/90 hover:border-stone-400 text-stone-800 text-xs font-bold shadow-2xs hover:bg-stone-50 transition-all cursor-pointer"
-              title="Open Executive Dean's Governance Brief & Print PDF"
+              title={`Open Executive ${institutionProfile.executiveRole}'s Governance Brief & Print PDF`}
             >
               <FileText className="w-3.5 h-3.5 text-stone-500" />
-              <span>Dean&apos;s Brief</span>
+              <span>{institutionProfile.executiveRole}&apos;s Brief</span>
             </button>
 
             {/* Notification Bell with Badge 2 */}
@@ -438,13 +467,23 @@ function WorkspaceShellInner({ children }: WorkspaceShellProps) {
         />
       )}
 
-      {/* Executive Dean's Governance Brief Modal */}
+      {/* Executive Authority Governance Brief Modal */}
       <ExecutiveBriefModal
         isOpen={executiveBriefOpen}
         onClose={() => setExecutiveBriefOpen(false)}
         students={students}
         datasetName={datasetName}
         isCustomDataset={isCustomDataset}
+        onOpenInstitutionalProfile={() => {
+          setExecutiveBriefOpen(false);
+          setInstitutionalProfileOpen(true);
+        }}
+      />
+
+      {/* College & Authority Profile Customization Modal */}
+      <InstitutionalProfileModal
+        isOpen={institutionalProfileOpen}
+        onClose={() => setInstitutionalProfileOpen(false)}
       />
 
       {/* 60-Second Judge Rubric Tour Modal */}
