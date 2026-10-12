@@ -9,6 +9,8 @@ import { NotificationDrawer } from "@/components/home/NotificationDrawer";
 import { initialStudents, getCampusStats } from "@/lib/studentsData";
 import { StudentProfile } from "@/lib/types";
 import { StudentModal } from "@/components/dashboard/StudentModal";
+import { ExecutiveBriefModal } from "@/components/dashboard/ExecutiveBriefModal";
+import { JudgeTourModal } from "@/components/dashboard/JudgeTourModal";
 import { useStudentData } from "@/components/context/StudentDataContext";
 import {
   Search,
@@ -20,6 +22,8 @@ import {
   X,
   RotateCcw,
   Database,
+  FileText,
+  Zap,
 } from "lucide-react";
 
 interface WorkspaceShellProps {
@@ -40,6 +44,8 @@ function WorkspaceShellInner({ children }: WorkspaceShellProps) {
   // Command palette & notification states
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const [notificationOpen, setNotificationOpen] = useState(false);
+  const [executiveBriefOpen, setExecutiveBriefOpen] = useState(false);
+  const [judgeTourOpen, setJudgeTourOpen] = useState(false);
 
   // Academic term selector
   const [selectedTerm, setSelectedTerm] = useState("Fall 2026");
@@ -173,6 +179,27 @@ function WorkspaceShellInner({ children }: WorkspaceShellProps) {
               )}
             </div>
 
+            {/* 60-Second Judge Tour Trigger */}
+            <button
+              onClick={() => setJudgeTourOpen(true)}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-purple-700 hover:bg-purple-800 text-white text-xs font-bold shadow-2xs transition-all cursor-pointer group"
+              title="Quick Guided Tour for Evaluators"
+            >
+              <Zap className="w-3.5 h-3.5 text-amber-300 fill-amber-300 group-hover:scale-110 transition-transform" />
+              <span className="hidden sm:inline">Judge Tour</span>
+              <span className="text-[10px] font-mono opacity-80">(60s)</span>
+            </button>
+
+            {/* Executive Dean's Brief Modal Trigger */}
+            <button
+              onClick={() => setExecutiveBriefOpen(true)}
+              className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-stone-200/90 hover:border-stone-400 text-stone-800 text-xs font-bold shadow-2xs hover:bg-stone-50 transition-all cursor-pointer"
+              title="Open Executive Dean's Governance Brief & Print PDF"
+            >
+              <FileText className="w-3.5 h-3.5 text-stone-500" />
+              <span>Dean&apos;s Brief</span>
+            </button>
+
             {/* Notification Bell with Badge 2 */}
             <div className="relative">
               <button
@@ -214,6 +241,25 @@ function WorkspaceShellInner({ children }: WorkspaceShellProps) {
           onClose={() => setSelectedStudent(null)}
         />
       )}
+
+      {/* Executive Dean's Governance Brief Modal */}
+      <ExecutiveBriefModal
+        isOpen={executiveBriefOpen}
+        onClose={() => setExecutiveBriefOpen(false)}
+        students={students}
+        datasetName={datasetName}
+        isCustomDataset={isCustomDataset}
+      />
+
+      {/* 60-Second Judge Rubric Tour Modal */}
+      <JudgeTourModal
+        isOpen={judgeTourOpen}
+        onClose={() => setJudgeTourOpen(false)}
+        onOpenExecutiveBrief={() => {
+          setJudgeTourOpen(false);
+          setExecutiveBriefOpen(true);
+        }}
+      />
     </div>
   );
 }

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { initialStudents, getCampusStats } from "@/lib/studentsData";
 import { StudentProfile } from "@/lib/types";
 import { StudentModal } from "@/components/dashboard/StudentModal";
+import { ExecutiveBriefModal } from "@/components/dashboard/ExecutiveBriefModal";
 import { WorkspaceShell } from "@/components/layout/WorkspaceShell";
 import { useStudentData } from "@/components/context/StudentDataContext";
 import {
@@ -17,11 +18,13 @@ import {
   BarChart3,
   ChevronRight,
   Zap,
+  FileText,
 } from "lucide-react";
 
 export default function CampusHomePage() {
-  const { students } = useStudentData();
+  const { students, isCustomDataset, datasetName } = useStudentData();
   const [selectedStudent, setSelectedStudent] = useState<StudentProfile | null>(null);
+  const [executiveBriefOpen, setExecutiveBriefOpen] = useState(false);
 
   // Diagnostic filter: "all" | "attendance" | "backlogs" | "placement"
   const [diagnosticFilter, setDiagnosticFilter] = useState<
@@ -116,7 +119,16 @@ export default function CampusHomePage() {
           </div>
 
           {/* Fast Action Buttons */}
-          <div className="flex items-center gap-3 shrink-0">
+          <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 shrink-0">
+            <button
+              onClick={() => setExecutiveBriefOpen(true)}
+              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-amber-100 hover:bg-amber-200/90 text-amber-950 border border-amber-300/80 text-xs sm:text-sm font-bold transition-all shadow-2xs cursor-pointer"
+              title="Open Consulting-Grade Board Dossier"
+            >
+              <FileText className="w-4 h-4 text-amber-800" />
+              <span>Executive Dossier</span>
+            </button>
+
             <Link
               href="/faculty"
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#111827] text-white text-xs sm:text-sm font-semibold hover:bg-black transition-all shadow-sm hover:gap-2.5"
@@ -125,6 +137,7 @@ export default function CampusHomePage() {
               <span>Faculty Triage</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
+
             <Link
               href="/"
               className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-white border border-[#E5DFD4] text-xs sm:text-sm font-semibold text-[#57534E] hover:text-[#111827] hover:bg-[#F2EDE4] transition-all shadow-2xs"
@@ -590,6 +603,15 @@ export default function CampusHomePage() {
           onClose={() => setSelectedStudent(null)}
         />
       )}
+
+      {/* Executive Dean's Governance Brief Modal */}
+      <ExecutiveBriefModal
+        isOpen={executiveBriefOpen}
+        onClose={() => setExecutiveBriefOpen(false)}
+        students={students}
+        datasetName={datasetName}
+        isCustomDataset={isCustomDataset}
+      />
     </WorkspaceShell>
   );
 }
