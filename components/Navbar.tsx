@@ -10,6 +10,7 @@ import {
   X,
   ChevronRight,
 } from "lucide-react";
+import { CampusIQLogo } from "@/components/brand/CampusIQLogo";
 
 export function Navbar() {
   const pathname = usePathname();
@@ -61,11 +62,8 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-4">
         {/* Brand: Clicking CampusIQ navigates directly to the Landing Page */}
         <div className="flex items-center gap-3 shrink-0">
-          <Link href="/" title="CampusIQ Landing Page" className="flex items-center gap-2 group">
-            <span className="font-extrabold text-xl sm:text-2xl tracking-tight text-[#111827]">
-              CampusIQ
-            </span>
-            <span className="w-2 h-2 rounded-full bg-blue-600 mb-1 sm:mb-2 animate-pulse" />
+          <Link href="/" title="CampusIQ Landing Page" className="flex items-center group transition-transform hover:opacity-95">
+            <CampusIQLogo size="sm" />
           </Link>
         </div>
 

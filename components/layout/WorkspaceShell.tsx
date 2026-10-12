@@ -14,6 +14,7 @@ import { JudgeTourModal } from "@/components/dashboard/JudgeTourModal";
 import { InstitutionalProfileModal } from "@/components/dashboard/InstitutionalProfileModal";
 import { SignInModal } from "@/components/landing/SignInModal";
 import { useStudentData } from "@/components/context/StudentDataContext";
+import { CampusIQLogo } from "@/components/brand/CampusIQLogo";
 import {
   Search,
   Bell,
@@ -141,19 +142,9 @@ function WorkspaceShellInner({ children }: WorkspaceShellProps) {
                 <Link
                   href="/home"
                   onClick={() => setMobileOpen(false)}
-                  className="flex items-center gap-2.5"
+                  className="flex items-center gap-2.5 transition-transform hover:opacity-95"
                 >
-                  <div className="w-8 h-8 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-xs">
-                    <GraduationCap className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <span className="font-extrabold text-base tracking-tight text-[#111827]">
-                      CampusIQ
-                    </span>
-                    <span className="block text-[8px] font-mono tracking-widest text-stone-500 uppercase">
-                      STUDENT SUCCESS PLATFORM
-                    </span>
-                  </div>
+                  <CampusIQLogo size="sm" showSubtitle={true} />
                 </Link>
                 <button
                   onClick={() => setMobileOpen(false)}
@@ -252,16 +243,8 @@ function WorkspaceShellInner({ children }: WorkspaceShellProps) {
         >
           <header className="bg-[#FAF7F2]/95 backdrop-blur-md border-b border-[#ECE7DF] px-3.5 sm:px-5 h-14 flex items-center justify-between gap-3 w-full max-w-full">
             {/* Brand Logo & Name */}
-            <Link href="/home" className="flex items-center gap-2 shrink-0 group">
-              <div className="w-8 h-8 rounded-xl bg-stone-900 text-white flex items-center justify-center font-black text-sm tracking-tight shadow-2xs group-hover:bg-blue-600 transition-colors">
-                <GraduationCap className="w-4 h-4 stroke-[2.2]" />
-              </div>
-              <div className="flex items-baseline gap-1.5">
-                <span className="font-extrabold text-base tracking-tight text-[#111827]">
-                  CampusIQ
-                </span>
-                <span className="w-1.5 h-1.5 rounded-full bg-blue-600 animate-pulse" />
-              </div>
+            <Link href="/home" className="flex items-center gap-2 shrink-0 group transition-transform hover:opacity-95">
+              <CampusIQLogo size="sm" />
             </Link>
 
             {/* Quick Action Touch Targets (Persona, Search, Alerts, Menu) */}

@@ -4,39 +4,34 @@ import { useState } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { SignInModal } from "@/components/landing/SignInModal";
+import { CampusIQLogo } from "@/components/brand/CampusIQLogo";
 
 export function LandingNavbar() {
   const [showSignIn, setShowSignIn] = useState(false);
 
   return (
     <>
-      <header className="sticky top-0 z-40 w-full bg-[#FBF9F5]/90 backdrop-blur-md border-b border-[#ECE7DF]/80 transition-all">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-4">
-          {/* Left Brand: CampusIQ + Stacked Subtitle */}
-          <div className="flex items-center gap-3 shrink-0">
-            <Link href="/" className="flex items-center gap-2 group">
-              <span className="font-extrabold text-2xl tracking-tight text-[#111827]">
-                CampusIQ
-              </span>
-              <span className="w-2 h-2 rounded-full bg-blue-600 mb-1 animate-pulse" />
-            </Link>
-            <div className="h-6 w-px bg-stone-300 hidden sm:block" />
-            <div className="hidden sm:flex flex-col text-[9px] font-bold tracking-widest text-stone-500 uppercase leading-tight select-none">
-              <span>STUDENT SUCCESS</span>
-              <span>INTELLIGENCE</span>
-            </div>
-          </div>
+      <header className="relative z-40 w-full bg-transparent border-none">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 sm:h-24 flex items-center justify-between gap-4">
+          {/* Left Brand: Clean CampusIQ Logo (squircle icon + wordmark) */}
+          <Link
+            href="/"
+            aria-label="CampusIQ Home"
+            className="group flex items-center transition-transform hover:opacity-95"
+          >
+            <CampusIQLogo size="md" />
+          </Link>
 
           {/* Right Action: Open Platform CTA */}
-          <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
+          <div className="flex items-center shrink-0">
             <button
               id="landing-open-platform-btn"
               type="button"
               onClick={() => setShowSignIn(true)}
-              className="px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[#111827] hover:bg-black text-white text-xs sm:text-sm font-semibold transition-all shadow-xs flex items-center gap-1.5 hover:gap-2 cursor-pointer"
+              className="px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-[#111827] hover:bg-black text-white text-xs sm:text-sm font-semibold transition-all shadow-sm hover:shadow-md flex items-center gap-2 cursor-pointer active:scale-95"
             >
               <span>Open platform</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              <ArrowRight className="w-4 h-4" />
             </button>
           </div>
         </div>

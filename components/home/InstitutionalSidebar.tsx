@@ -17,6 +17,7 @@ import {
   PanelLeftClose,
   PanelLeftOpen,
 } from "lucide-react";
+import { CampusIQLogo } from "@/components/brand/CampusIQLogo";
 
 export function InstitutionalSidebar() {
   const pathname = usePathname();
@@ -44,20 +45,11 @@ export function InstitutionalSidebar() {
       <div className="space-y-6 w-full">
         {/* Brand & Toggle Row */}
         <div className={`flex items-center ${isCollapsed ? "justify-center flex-col gap-3" : "justify-between"}`}>
-          <Link href="/" className="flex items-center gap-3 group" title="Return to Public Showcase">
-            {/* Isometric Blue Mortarboard Cap Icon */}
-            <div className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform shrink-0">
-              <GraduationCap className="w-6 h-6 stroke-[2.2]" />
-            </div>
-            {!isCollapsed && (
-              <div className="overflow-hidden transition-opacity duration-200">
-                <div className="font-extrabold text-xl tracking-tight text-[#111827]">
-                  CampusIQ
-                </div>
-                <div className="text-[9px] font-bold tracking-widest text-[#78716C] uppercase leading-none mt-0.5">
-                  STUDENT SUCCESS PLATFORM
-                </div>
-              </div>
+          <Link href="/" className="flex items-center group transition-transform hover:opacity-95" title="Return to Public Showcase">
+            {isCollapsed ? (
+              <CampusIQLogo size="sm" showText={false} />
+            ) : (
+              <CampusIQLogo size="sm" showSubtitle={true} />
             )}
           </Link>
 

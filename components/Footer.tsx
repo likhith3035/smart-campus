@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ExternalLink, Github, Globe, Heart, ShieldCheck } from "lucide-react";
+import { CampusIQLogo } from "@/components/brand/CampusIQLogo";
 
 export function Footer() {
   const pathname = usePathname();
@@ -17,13 +18,8 @@ export function Footer() {
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 pb-8 border-b border-[#EAE5DC]">
           {/* Brand & Mission */}
           <div className="space-y-2 max-w-md">
-            <Link href="/" className="flex items-center gap-2 group w-fit">
-              <span className="font-extrabold text-xl text-[#111827] group-hover:text-blue-600 transition-colors">CampusIQ</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
-              <span className="text-stone-300">|</span>
-              <span className="text-[11px] font-semibold text-stone-500 uppercase tracking-wider font-mono">
-                Smart Campus Analytics
-              </span>
+            <Link href="/" className="inline-flex items-center group w-fit transition-transform hover:opacity-95">
+              <CampusIQLogo size="sm" showSubtitle={true} />
             </Link>
             <p className="text-xs text-[#57534E] leading-relaxed">
               AI-powered student analytics and decision intelligence platform built for the <strong>KPMG in India Hackathon</strong>. Predict, optimize, and improve student success across 7 collegiate data silos.
