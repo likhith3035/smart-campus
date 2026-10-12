@@ -113,8 +113,8 @@
 - **Demonstration:** Live working prototype ready for judge evaluation.
 - **Engineering Team & Presentation Contacts:**
   - **Team LEARNOVA** • **N.B.K.R. Institute of Science & Technology (NBKRIST)**
-  - **Kami Likith (Lead):** `23kb1a3035@nbkrist.org` | [Portfolio](https://devlikhith.vercel.app/)
-  - **Pulikonda Srinivas:** `23kb1a3080@nbkrist.org`
+  - **Pulikonda Srinivas (Lead):** `23kb1a3080@nbkrist.org`
+  - **Kami Likith (Architect):** `23kb1a3035@nbkrist.org` | [Portfolio](https://devlikhith.vercel.app/)
   - **Rudrakota Suchirmai:** `24kb1a3091@nbkrist.org`
   - **Bandi Mounika:** `24kb1a3008@nbkrist.org`
   - **Pallumallu Charishma:** `24kb1a3076@nbkrist.org`

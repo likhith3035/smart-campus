@@ -511,28 +511,28 @@ Return ONLY the CSV text starting with the header line, no conversational text o
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            {/* 1. Kami Likith (Team Lead) */}
+            {/* 1. Pulikonda Srinivas (Team Lead) */}
             <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 hover:border-blue-400/50 transition-colors space-y-1">
               <div className="flex items-center justify-between">
-                <span className="font-bold text-sm text-white">Kami Likith</span>
+                <span className="font-bold text-sm text-white">Pulikonda Srinivas</span>
                 <span className="px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 font-mono text-[9px] font-bold uppercase">
                   Team Lead
                 </span>
               </div>
-              <div className="text-xs text-stone-300 font-medium">System Architecture & Full-Stack</div>
-              <div className="text-[11px] text-blue-400 font-mono truncate">23kb1a3035@nbkrist.org</div>
+              <div className="text-xs text-stone-300 font-medium">ML Scoring & Analytics</div>
+              <div className="text-[11px] text-blue-400 font-mono truncate">23kb1a3080@nbkrist.org</div>
             </div>
 
-            {/* 2. Pulikonda Srinivas */}
+            {/* 2. Kami Likith */}
             <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 hover:border-indigo-400/50 transition-colors space-y-1">
               <div className="flex items-center justify-between">
-                <span className="font-bold text-sm text-white">Pulikonda Srinivas</span>
+                <span className="font-bold text-sm text-white">Kami Likith</span>
                 <span className="px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 font-mono text-[9px] font-bold uppercase">
-                  Member
+                  System Architect
                 </span>
               </div>
-              <div className="text-xs text-stone-300 font-medium">ML Scoring & Analytics</div>
-              <div className="text-[11px] text-indigo-400 font-mono truncate">23kb1a3080@nbkrist.org</div>
+              <div className="text-xs text-stone-300 font-medium">System Architecture & Full-Stack</div>
+              <div className="text-[11px] text-indigo-400 font-mono truncate">23kb1a3035@nbkrist.org</div>
             </div>
 
             {/* 3. Rudrakota Suchirmai */}

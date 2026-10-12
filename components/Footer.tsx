@@ -42,11 +42,11 @@ export function Footer() {
                   NBKRIST
                 </span>
                 <span className="text-[9px] px-2 py-0.5 rounded-full bg-purple-50 text-purple-700 border border-purple-200 font-semibold">
-                  Lead: Kami Likith
+                  Lead: Pulikonda Srinivas
                 </span>
               </div>
               <div className="text-[11px] text-stone-500 leading-tight">
-                <strong>Members:</strong> Pulikonda Srinivas, Rudrakota Suchirmai, Bandi Mounika, Pallumallu Charishma
+                <strong>Members:</strong> Kami Likith, Rudrakota Suchirmai, Bandi Mounika, Pallumallu Charishma
               </div>
               <div className="flex items-center gap-3 text-[11px] pt-0.5">
                 <a

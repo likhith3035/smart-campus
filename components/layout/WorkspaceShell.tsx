@@ -12,6 +12,7 @@ import { StudentModal } from "@/components/dashboard/StudentModal";
 import { ExecutiveBriefModal } from "@/components/dashboard/ExecutiveBriefModal";
 import { JudgeTourModal } from "@/components/dashboard/JudgeTourModal";
 import { InstitutionalProfileModal } from "@/components/dashboard/InstitutionalProfileModal";
+import { SignInModal } from "@/components/landing/SignInModal";
 import { useStudentData } from "@/components/context/StudentDataContext";
 import {
   Search,
@@ -28,6 +29,7 @@ import {
   GraduationCap,
   Building2,
   Settings2,
+  ShieldCheck,
 } from "lucide-react";
 
 interface WorkspaceShellProps {
@@ -43,6 +45,7 @@ function WorkspaceShellInner({ children }: WorkspaceShellProps) {
     studentCount,
     resetToDemoData,
     institutionProfile,
+    activePersona,
   } = useStudentData();
   const [selectedStudent, setSelectedStudent] = useState<StudentProfile | null>(null);
 
@@ -52,6 +55,7 @@ function WorkspaceShellInner({ children }: WorkspaceShellProps) {
   const [executiveBriefOpen, setExecutiveBriefOpen] = useState(false);
   const [judgeTourOpen, setJudgeTourOpen] = useState(false);
   const [institutionalProfileOpen, setInstitutionalProfileOpen] = useState(false);
+  const [personaModalOpen, setPersonaModalOpen] = useState(false);
 
   // Academic term selector
   const [selectedTerm, setSelectedTerm] = useState("Fall 2026");
@@ -260,8 +264,26 @@ function WorkspaceShellInner({ children }: WorkspaceShellProps) {
               </div>
             </Link>
 
-            {/* Quick Action Touch Targets (Search, Alerts, Menu) */}
+            {/* Quick Action Touch Targets (Persona, Search, Alerts, Menu) */}
             <div className="flex items-center gap-1.5 shrink-0">
+              {/* Mobile Role Switcher Pill */}
+              <button
+                type="button"
+                onClick={() => setPersonaModalOpen(true)}
+                aria-label="Switch institutional role persona"
+                className="px-2.5 py-1.5 rounded-xl border border-stone-200/90 bg-white hover:bg-stone-50 text-[11px] font-bold text-stone-800 flex items-center gap-1 shadow-2xs cursor-pointer"
+                title="Switch Role / Persona"
+              >
+                <ShieldCheck className="w-3.5 h-3.5 text-blue-600" />
+                <span>
+                  {activePersona === "dean"
+                    ? (institutionProfile.executiveRole || "Dean")
+                    : activePersona === "faculty"
+                    ? "Faculty"
+                    : "TPO"}
+                </span>
+              </button>
+
               {/* Quick Search Modal Trigger */}
               <button
                 type="button"
@@ -404,6 +426,26 @@ function WorkspaceShellInner({ children }: WorkspaceShellProps) {
               <Settings2 className="w-3 h-3 text-stone-400" />
             </button>
 
+            {/* 1-Click Institutional Persona Switcher Trigger */}
+            <button
+              onClick={() => setPersonaModalOpen(true)}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-stone-200/90 hover:border-stone-400 text-stone-800 text-xs font-bold shadow-2xs hover:bg-stone-50 transition-all cursor-pointer group"
+              title="Switch Institutional Role / Persona (Dean, Faculty, Placement Officer)"
+            >
+              <div className={`w-2 h-2 rounded-full ${
+                activePersona === "dean" ? "bg-stone-900" : activePersona === "faculty" ? "bg-blue-600" : "bg-purple-600"
+              }`} />
+              <span className="text-stone-500 font-normal">Role:</span>
+              <span className="text-[#111827]">
+                {activePersona === "dean"
+                  ? (institutionProfile.executiveRole || "Dean")
+                  : activePersona === "faculty"
+                  ? "Faculty"
+                  : "Placement (TPO)"}
+              </span>
+              <ChevronDown className="w-3 h-3 text-stone-400 group-hover:text-stone-700 transition-colors" />
+            </button>
+
             {/* 60-Second Judge Tour Trigger */}
             <button
               onClick={() => setJudgeTourOpen(true)}
@@ -494,6 +536,12 @@ function WorkspaceShellInner({ children }: WorkspaceShellProps) {
           setJudgeTourOpen(false);
           setExecutiveBriefOpen(true);
         }}
+      />
+
+      {/* 1-Click Institutional Persona Switcher Modal */}
+      <SignInModal
+        isOpen={personaModalOpen}
+        onClose={() => setPersonaModalOpen(false)}
       />
     </div>
   );

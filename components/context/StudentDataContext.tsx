@@ -4,6 +4,8 @@ import React, { createContext, useContext, useState, useEffect, ReactNode, useMe
 import { initialStudents } from "@/lib/studentsData";
 import { StudentProfile, InstitutionProfile, DEFAULT_INSTITUTION_PROFILE } from "@/lib/types";
 
+export type ActivePersona = "dean" | "faculty" | "tpo";
+
 interface StudentDataContextType {
   students: StudentProfile[];
   isCustomDataset: boolean;
@@ -16,11 +18,14 @@ interface StudentDataContextType {
   institutionProfile: InstitutionProfile;
   updateInstitutionProfile: (profile: Partial<InstitutionProfile>) => void;
   resetInstitutionProfile: () => void;
+  activePersona: ActivePersona;
+  setActivePersona: (persona: ActivePersona) => void;
 }
 
 const STORAGE_KEY = "campusiq_custom_cohort_v1";
 const STORAGE_META_KEY = "campusiq_custom_meta_v1";
 const STORAGE_INSTITUTION_KEY = "campusiq_institution_profile_v1";
+const STORAGE_PERSONA_KEY = "campusiq_active_persona_v1";
 
 const StudentDataContext = createContext<StudentDataContextType | undefined>(undefined);
 
@@ -29,9 +34,25 @@ export function StudentDataProvider({ children }: { children: ReactNode }) {
   const [isCustomDataset, setIsCustomDataset] = useState<boolean>(false);
   const [datasetName, setDatasetName] = useState<string>("Standard Campus Benchmark Cohort");
   const [institutionProfile, setInstitutionProfile] = useState<InstitutionProfile>(DEFAULT_INSTITUTION_PROFILE);
+  const [activePersona, setActivePersonaState] = useState<ActivePersona>("dean");
+
+  const setActivePersona = (persona: ActivePersona) => {
+    setActivePersonaState(persona);
+    try {
+      sessionStorage.setItem(STORAGE_PERSONA_KEY, persona);
+    } catch (err) {
+      console.warn("Could not save persona to session:", err);
+    }
+  };
 
   // On mount, check if user previously uploaded a custom cohort or customized institution profile
   useEffect(() => {
+    try {
+      const savedPersona = sessionStorage.getItem(STORAGE_PERSONA_KEY);
+      if (savedPersona === "dean" || savedPersona === "faculty" || savedPersona === "tpo") {
+        setActivePersonaState(savedPersona);
+      }
+    } catch {}
     try {
       const savedData = sessionStorage.getItem(STORAGE_KEY);
       const savedMeta = sessionStorage.getItem(STORAGE_META_KEY);
@@ -144,6 +165,8 @@ export function StudentDataProvider({ children }: { children: ReactNode }) {
         institutionProfile,
         updateInstitutionProfile,
         resetInstitutionProfile,
+        activePersona,
+        setActivePersona,
       }}
     >
       {children}

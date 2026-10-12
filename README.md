@@ -70,8 +70,8 @@ Or push this repository to GitHub and import it into **[vercel.com](https://verc
 
 | Member Name | Role & Responsibility | Institutional Email |
 | :--- | :--- | :--- |
-| **Kami Likith** | **Team Lead** & System Architect | `23kb1a3035@nbkrist.org` |
-| **Pulikonda Srinivas** | ML Scoring & Decision Intelligence | `23kb1a3080@nbkrist.org` |
+| **Pulikonda Srinivas** | **Team Lead** & ML Decision Analytics | `23kb1a3080@nbkrist.org` |
+| **Kami Likith** | System Architecture & Full-Stack Engine | `23kb1a3035@nbkrist.org` |
 | **Rudrakota Suchirmai** | Interventions & Behavioral Modeling | `24kb1a3091@nbkrist.org` |
 | **Bandi Mounika** | UI/UX & Responsive Engineering | `24kb1a3008@nbkrist.org` |
 | **Pallumallu Charishma** | Dataset Validation & QA Testing | `24kb1a3076@nbkrist.org` |

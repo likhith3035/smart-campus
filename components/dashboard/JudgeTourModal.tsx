@@ -198,7 +198,7 @@ export function JudgeTourModal({
             <span className="text-purple-700 font-semibold">• NBKRIST</span>
           </div>
           <span className="text-[10px] text-stone-500 font-mono hidden sm:inline">
-            Lead: Kami Likith (23kb1a3035@nbkrist.org)
+            Lead: Pulikonda Srinivas (23kb1a3080@nbkrist.org)
           </span>
         </div>
 
