@@ -28,6 +28,23 @@ const INSTITUTION_PRESETS: {
   profile: InstitutionProfile;
 }[] = [
   {
+    id: "nbkrist",
+    label: "NBKR Institute of Science & Tech",
+    badge: "Team Campus",
+    profile: {
+      institutionName: "N.B.K.R. Institute of Science & Technology (Autonomous)",
+      institutionShortName: "NBKRIST",
+      executiveRole: "Principal",
+      executiveTitle: "Principal & Head of Institution",
+      executiveName: "Dr. V. Vijaya Kumar Reddy, Ph.D.",
+      signatoryCommittee: "Institutional Academic Council & Senate",
+      secondSignatoryName: "Prof. K. Viswanath",
+      secondSignatoryTitle: "Dean, Academic Affairs & IQAC Head",
+      accreditationNorm: "NBA Tier-1 • NAAC A Grade Autonomous • Vidyanagar",
+      iqacUnit: "Internal Quality Assurance Cell (IQAC)",
+    },
+  },
+  {
     id: "bytexl",
     label: "ByteXL Institute of Technology",
     badge: "Hackathon Ready",

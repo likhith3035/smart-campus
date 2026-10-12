@@ -457,15 +457,25 @@ Return ONLY the CSV text starting with the header line, no conversational text o
       {/* ───────────────────────────────────────────────────────────
           6. DEVELOPER ATTRIBUTION & CREDITS
       ─────────────────────────────────────────────────────────── */}
-      <div className="p-8 sm:p-10 rounded-3xl bg-gradient-to-br from-stone-900 to-stone-950 text-white space-y-6">
+      {/* ───────────────────────────────────────────────────────────
+          6. TEAM LEARNOVA • PROJECT AUTHORS & CREDITS
+      ─────────────────────────────────────────────────────────── */}
+      <div className="p-8 sm:p-10 rounded-3xl bg-gradient-to-br from-stone-900 via-stone-900 to-indigo-950 text-white space-y-7">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-stone-800">
           <div>
-            <div className="text-xs font-mono uppercase tracking-widest text-stone-400 font-semibold">
-              [ SYSTEM ARCHITECT & DEVELOPER ]
+            <div className="flex items-center gap-2">
+              <span className="px-2.5 py-0.5 rounded-full bg-blue-500/20 text-blue-400 border border-blue-400/30 font-mono text-[10px] font-bold uppercase tracking-wider">
+                Hackathon Cohort • NBKRIST
+              </span>
+              <span className="text-[10px] text-stone-400 font-mono">
+                Team ID: LEARNOVA
+              </span>
             </div>
-            <h2 className="text-2xl font-extrabold mt-1">Kami Likhith</h2>
-            <p className="text-xs text-stone-400 mt-0.5">
-              Lead Developer & Analytics Architect • Built for KPMG in India Hackathon
+            <h2 className="text-2xl sm:text-3xl font-black mt-2 tracking-tight">
+              Team LEARNOVA
+            </h2>
+            <p className="text-xs sm:text-sm text-stone-300 mt-1">
+              N.B.K.R. Institute of Science & Technology • Vidyanagar
             </p>
           </div>
 
@@ -477,27 +487,96 @@ Return ONLY the CSV text starting with the header line, no conversational text o
               className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white text-stone-900 hover:bg-stone-100 text-xs font-bold transition-colors shadow-sm"
             >
               <Globe className="w-3.5 h-3.5" />
-              <span>Portfolio</span>
+              <span>Lead Portfolio</span>
               <ExternalLink className="w-3 h-3 opacity-60" />
             </a>
 
             <a
-              href="https://github.com/likhith3035"
+              href="https://github.com/likhith3035/smart-campus"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-stone-800 hover:bg-stone-700 text-white text-xs font-bold border border-stone-700 transition-colors shadow-sm"
             >
               <Github className="w-3.5 h-3.5" />
-              <span>GitHub Profile</span>
+              <span>GitHub Repo</span>
               <ExternalLink className="w-3 h-3 opacity-60" />
             </a>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs text-stone-300">
+        {/* 5-Member Team Roster Cards */}
+        <div className="space-y-3">
+          <div className="text-[11px] font-mono uppercase tracking-widest text-amber-400 font-bold">
+            Project Contributors & Engineering Roster
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {/* 1. Kami Likith (Team Lead) */}
+            <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 hover:border-blue-400/50 transition-colors space-y-1">
+              <div className="flex items-center justify-between">
+                <span className="font-bold text-sm text-white">Kami Likith</span>
+                <span className="px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 font-mono text-[9px] font-bold uppercase">
+                  Team Lead
+                </span>
+              </div>
+              <div className="text-xs text-stone-300 font-medium">System Architecture & Full-Stack</div>
+              <div className="text-[11px] text-blue-400 font-mono truncate">23kb1a3035@nbkrist.org</div>
+            </div>
+
+            {/* 2. Pulikonda Srinivas */}
+            <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 hover:border-indigo-400/50 transition-colors space-y-1">
+              <div className="flex items-center justify-between">
+                <span className="font-bold text-sm text-white">Pulikonda Srinivas</span>
+                <span className="px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 font-mono text-[9px] font-bold uppercase">
+                  Member
+                </span>
+              </div>
+              <div className="text-xs text-stone-300 font-medium">ML Scoring & Analytics</div>
+              <div className="text-[11px] text-indigo-400 font-mono truncate">23kb1a3080@nbkrist.org</div>
+            </div>
+
+            {/* 3. Rudrakota Suchirmai */}
+            <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 hover:border-purple-400/50 transition-colors space-y-1">
+              <div className="flex items-center justify-between">
+                <span className="font-bold text-sm text-white">Rudrakota Suchirmai</span>
+                <span className="px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 font-mono text-[9px] font-bold uppercase">
+                  Member
+                </span>
+              </div>
+              <div className="text-xs text-stone-300 font-medium">Interventions & Behavioral Modeling</div>
+              <div className="text-[11px] text-purple-400 font-mono truncate">24kb1a3091@nbkrist.org</div>
+            </div>
+
+            {/* 4. Bandi Mounika */}
+            <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 hover:border-emerald-400/50 transition-colors space-y-1">
+              <div className="flex items-center justify-between">
+                <span className="font-bold text-sm text-white">Bandi Mounika</span>
+                <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-mono text-[9px] font-bold uppercase">
+                  Member
+                </span>
+              </div>
+              <div className="text-xs text-stone-300 font-medium">UI/UX & Interactive Design</div>
+              <div className="text-[11px] text-emerald-400 font-mono truncate">24kb1a3008@nbkrist.org</div>
+            </div>
+
+            {/* 5. Pallumallu Charishma */}
+            <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 hover:border-amber-400/50 transition-colors space-y-1">
+              <div className="flex items-center justify-between">
+                <span className="font-bold text-sm text-white">Pallumallu Charishma</span>
+                <span className="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-mono text-[9px] font-bold uppercase">
+                  Member
+                </span>
+              </div>
+              <div className="text-xs text-stone-300 font-medium">Dataset Validation & Testing</div>
+              <div className="text-[11px] text-amber-400 font-mono truncate">24kb1a3076@nbkrist.org</div>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs text-stone-300 pt-2 border-t border-stone-800">
           <div>
             <strong className="text-white block mb-1">Challenge Statement</strong>
-            Move beyond simply building a dashboard. Use analytics and AI to convert student data into actionable insights and decision intelligence.
+            Move beyond simple dashboards. Use analytics and AI to convert student data into actionable insights and decision intelligence.
           </div>
           <div>
             <strong className="text-white block mb-1">Architecture & Stack</strong>

@@ -5,9 +5,15 @@
 
 ### Slide 1: Title & Executive Vision
 - **Platform Name:** CampusIQ — Analytics & Decision Intelligence Platform
-- **Lead Developer & System Architect:** **Kami Likhith** ([Portfolio](https://devlikhith.vercel.app/) | [GitHub](https://github.com/likhith3035))
+- **Hackathon Team:** **Team LEARNOVA** (N.B.K.R. Institute of Science & Technology • NBKRIST)
+- **Team Lead:** **Kami Likith** (`23kb1a3035@nbkrist.org` | [Portfolio](https://devlikhith.vercel.app/) | [GitHub](https://github.com/likhith3035))
+- **Team Members:**
+  - **Pulikonda Srinivas** (`23kb1a3080@nbkrist.org`)
+  - **Rudrakota Suchirmai** (`24kb1a3091@nbkrist.org`)
+  - **Bandi Mounika** (`24kb1a3008@nbkrist.org`)
+  - **Pallumallu Charishma** (`24kb1a3076@nbkrist.org`)
 - **Challenge Statement:** Move beyond simply building a dashboard. Use analytics and AI to convert student data into actionable insights and decision intelligence.
-- **Client/Sponsor Focus:** KPMG in India Education & Public Sector Advisory Practice
+- **Client/Sponsor Focus:** ByteXL Smart Campus Advisory Practice
 - **Core Value Proposition:** Transitioning colleges from *descriptive rear-view reporting* to *prescriptive, closed-loop student interventions*.
 
 ---
@@ -105,8 +111,11 @@
   - ✅ **Problem Understanding (10%):** Prescriptive interventions over static charts.
   - ✅ **Bonus Credits (+10 pts):** AI Segmentation & Explainable AI drivers.
 - **Demonstration:** Live working prototype ready for judge evaluation.
-- **Lead Developer & Contact:**
-  - **Kami Likhith**
-  - **Portfolio:** [https://devlikhith.vercel.app/](https://devlikhith.vercel.app/)
-  - **GitHub:** [https://github.com/likhith3035](https://github.com/likhith3035)
+- **Engineering Team & Presentation Contacts:**
+  - **Team LEARNOVA** • **N.B.K.R. Institute of Science & Technology (NBKRIST)**
+  - **Kami Likith (Lead):** `23kb1a3035@nbkrist.org` | [Portfolio](https://devlikhith.vercel.app/)
+  - **Pulikonda Srinivas:** `23kb1a3080@nbkrist.org`
+  - **Rudrakota Suchirmai:** `24kb1a3091@nbkrist.org`
+  - **Bandi Mounika:** `24kb1a3008@nbkrist.org`
+  - **Pallumallu Charishma:** `24kb1a3076@nbkrist.org`
   - **Repository:** [https://github.com/likhith3035/smart-campus](https://github.com/likhith3035/smart-campus)

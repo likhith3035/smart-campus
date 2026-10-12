@@ -190,6 +190,18 @@ export function JudgeTourModal({
           </div>
         </div>
 
+        {/* Team LEARNOVA Attribution Strip */}
+        <div className="px-6 py-2 bg-purple-50/80 border-t border-purple-100 flex items-center justify-between text-[11px] text-purple-950">
+          <div className="flex items-center gap-1.5 font-mono">
+            <span className="w-1.5 h-1.5 rounded-full bg-purple-600 animate-pulse" />
+            <strong>Team LEARNOVA</strong>
+            <span className="text-purple-700 font-semibold">• NBKRIST</span>
+          </div>
+          <span className="text-[10px] text-stone-500 font-mono hidden sm:inline">
+            Lead: Kami Likith (23kb1a3035@nbkrist.org)
+          </span>
+        </div>
+
         {/* Navigation & Action Footer */}
         <div className="p-4 sm:p-6 bg-stone-50 border-t border-stone-200 flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="flex items-center gap-2 w-full sm:w-auto">

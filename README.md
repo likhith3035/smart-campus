@@ -64,10 +64,19 @@ Or push this repository to GitHub and import it into **[vercel.com](https://verc
 
 ---
 
-## 👨‍💻 Project Lead & Developer
+## 👥 Hackathon Team: Team LEARNOVA
 
-**Kami Likhith**
-- 🌐 **Portfolio:** [https://devlikhith.vercel.app/](https://devlikhith.vercel.app/)
-- 🐙 **GitHub:** [@likhith3035](https://github.com/likhith3035)
-- 🏆 **Submission:** KPMG in India Hackathon — Smart Campus Analytics & AI Success Platform
+**N.B.K.R. Institute of Science & Technology (NBKRIST)** • Vidyanagar
+
+| Member Name | Role & Responsibility | Institutional Email |
+| :--- | :--- | :--- |
+| **Kami Likith** | **Team Lead** & System Architect | `23kb1a3035@nbkrist.org` |
+| **Pulikonda Srinivas** | ML Scoring & Decision Intelligence | `23kb1a3080@nbkrist.org` |
+| **Rudrakota Suchirmai** | Interventions & Behavioral Modeling | `24kb1a3091@nbkrist.org` |
+| **Bandi Mounika** | UI/UX & Responsive Engineering | `24kb1a3008@nbkrist.org` |
+| **Pallumallu Charishma** | Dataset Validation & QA Testing | `24kb1a3076@nbkrist.org` |
+
+- 🌐 **Lead Portfolio:** [https://devlikhith.vercel.app/](https://devlikhith.vercel.app/)
+- 🐙 **GitHub Repository:** [https://github.com/likhith3035/smart-campus](https://github.com/likhith3035/smart-campus)
+- 🏆 **Submission:** ByteXL / Smart Campus Hackathon — AI-Powered Student Analytics & Success Platform
 
