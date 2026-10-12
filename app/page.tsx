@@ -159,6 +159,30 @@ export default function CampusIQLandingPage() {
             1. HERO SECTION WITH EXACT ARCHITECTURAL FRAMING & MOCKUP
         ─────────────────────────────────────────────────────────── */}
         <section className="relative pt-8 sm:pt-16 pb-16 sm:pb-24 overflow-hidden">
+          {/* Left Architectural Campus Building Framing */}
+          <div
+            className="hidden lg:block absolute left-0 top-0 w-64 xl:w-80 2xl:w-[380px] h-[600px] xl:h-[720px] pointer-events-none z-0 select-none opacity-85"
+            style={{
+              backgroundImage: `url('/campus_building_left.png')`,
+              backgroundSize: "cover",
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "left top",
+              mixBlendMode: "multiply",
+            }}
+          />
+
+          {/* Right Architectural Campus Building Framing with KPMG Hackathon Engraving */}
+          <div
+            className="hidden lg:block absolute right-0 top-0 w-64 xl:w-80 2xl:w-[380px] h-[600px] xl:h-[720px] pointer-events-none z-0 select-none opacity-85"
+            style={{
+              backgroundImage: `url('/campus_building_right.png')`,
+              backgroundSize: "cover",
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "right top",
+              mixBlendMode: "multiply",
+            }}
+          />
+
           {/* Three.js Interactive Ambient Constellation Canvas Background */}
           <ThreeConstellationBackground
             particleCount={70}
