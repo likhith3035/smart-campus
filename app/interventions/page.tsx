@@ -181,13 +181,16 @@ export default function InterventionsPage() {
             No prescriptive actions match the selected filter.
           </div>
         ) : (
-          filteredActions.map((act) => (
+          filteredActions.map((act, idx) => (
             <div
               key={act.id}
               className="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-white border border-[#EAE5DC] hover:border-stone-400 card-shadow transition-all flex flex-col md:flex-row items-start md:items-center justify-between gap-3 sm:gap-4"
             >
               <div className="space-y-1.5 flex-1 w-full">
                 <div className="flex flex-wrap items-center gap-2">
+                  <span className="font-mono text-[10px] font-extrabold px-2 py-0.5 rounded-md bg-stone-100 text-stone-700 border border-stone-200">
+                    #{idx + 1}
+                  </span>
                   <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase ${
                     act.priority === "URGENT"
                       ? "bg-rose-100 text-rose-700"

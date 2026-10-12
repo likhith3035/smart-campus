@@ -34,6 +34,9 @@ export default function CampusHomePage() {
   // Selected Department Filter
   const [selectedDeptFilter, setSelectedDeptFilter] = useState<string | null>(null);
 
+  // Watchlist expanded view (show top 8 vs view all)
+  const [showAllWatchlist, setShowAllWatchlist] = useState<boolean>(false);
+
   // Campus Aggregate Telemetry
   const stats = useMemo(() => {
     return getCampusStats(students);
@@ -504,8 +507,21 @@ export default function CampusHomePage() {
                   Clear Dept ({selectedDeptFilter})
                 </button>
               )}
+              {filteredWatchlist.length > 8 && (
+                <button
+                  type="button"
+                  onClick={() => setShowAllWatchlist(!showAllWatchlist)}
+                  className={`text-xs font-semibold px-3 py-1 rounded-full border transition-all ${
+                    showAllWatchlist
+                      ? "bg-blue-600 text-white border-blue-600 shadow-2xs"
+                      : "bg-white text-stone-700 border-stone-200 hover:bg-stone-50"
+                  }`}
+                >
+                  {showAllWatchlist ? "Show Top 8" : `View All (${filteredWatchlist.length})`}
+                </button>
+              )}
               <span className="text-xs font-mono font-bold text-rose-700 bg-rose-50 px-2.5 py-1 rounded-full border border-rose-200">
-                {filteredWatchlist.length} Students Flagged
+                {filteredWatchlist.length} Flagged
               </span>
             </div>
           </div>
@@ -515,6 +531,7 @@ export default function CampusHomePage() {
               <table className="w-full text-left text-xs">
                 <thead className="bg-stone-50 border-b border-stone-200 text-[#78716C] font-semibold uppercase tracking-wider text-[10px]">
                   <tr>
+                    <th className="px-3 py-3 w-14 text-center font-mono">S.No</th>
                     <th className="px-4 py-3">Student Name &amp; ID</th>
                     <th className="px-4 py-3">Department</th>
                     <th className="px-4 py-3">Attendance</th>
@@ -525,12 +542,15 @@ export default function CampusHomePage() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-stone-100">
-                  {filteredWatchlist.slice(0, 8).map((student) => (
+                  {(showAllWatchlist ? filteredWatchlist : filteredWatchlist.slice(0, 8)).map((student, idx) => (
                     <tr
                       key={student.student_id}
                       onClick={() => setSelectedStudent(student)}
                       className="hover:bg-rose-50/40 transition-colors cursor-pointer group"
                     >
+                      <td className="px-3 py-3 text-center font-mono font-bold text-stone-500 text-xs">
+                        {idx + 1}
+                      </td>
                       <td className="px-4 py-3">
                         <div className="font-bold text-[#111827] group-hover:text-blue-600 transition-colors">
                           {student.name}
@@ -582,7 +602,7 @@ export default function CampusHomePage() {
                             e.stopPropagation();
                             setSelectedStudent(student);
                           }}
-                          className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-stone-900 hover:bg-black text-white text-[11px] font-semibold transition-all shadow-2xs"
+                          className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-stone-900 hover:bg-black text-white text-[11px] font-semibold transition-all shadow-2xs cursor-pointer"
                         >
                           <span>Profile</span>
                           <ChevronRight className="w-3 h-3" />
@@ -592,6 +612,33 @@ export default function CampusHomePage() {
                   ))}
                 </tbody>
               </table>
+            </div>
+
+            {/* Watchlist Footer */}
+            <div className="p-3 bg-stone-50 border-t border-stone-200 text-xs text-stone-600 flex flex-col sm:flex-row items-center justify-between gap-2">
+              <div>
+                Showing <span className="font-mono font-bold text-stone-900">
+                  {showAllWatchlist ? filteredWatchlist.length : Math.min(8, filteredWatchlist.length)}
+                </span> of <span className="font-mono font-bold text-stone-900">{filteredWatchlist.length}</span> flagged students
+              </div>
+              <div className="flex items-center gap-3">
+                {filteredWatchlist.length > 8 && (
+                  <button
+                    type="button"
+                    onClick={() => setShowAllWatchlist(!showAllWatchlist)}
+                    className="text-xs font-semibold text-blue-600 hover:underline cursor-pointer"
+                  >
+                    {showAllWatchlist ? "Show Top 8" : `View All (${filteredWatchlist.length})`}
+                  </button>
+                )}
+                <Link
+                  href="/faculty"
+                  className="text-xs font-semibold text-stone-700 hover:text-stone-900 hover:underline flex items-center gap-1"
+                >
+                  <span>Open Faculty Roster</span>
+                  <ArrowRight className="w-3 h-3" />
+                </Link>
+              </div>
             </div>
           </div>
         </div>

@@ -246,6 +246,7 @@ export function ExecutiveBriefModal({
               <table className="w-full text-left text-xs">
                 <thead className="bg-stone-100 text-stone-700 font-mono font-bold uppercase text-[10px] border-b border-stone-200">
                   <tr>
+                    <th className="py-2.5 px-3 w-12 text-center font-mono">S.No</th>
                     <th className="py-2.5 px-4">Academic Department</th>
                     <th className="py-2.5 px-3 text-center">Enrollment</th>
                     <th className="py-2.5 px-3 text-center">Mean S³</th>
@@ -256,8 +257,9 @@ export function ExecutiveBriefModal({
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-stone-100 font-sans">
-                  {departmentBreakdown.map((row) => (
+                  {departmentBreakdown.map((row, idx) => (
                     <tr key={row.dept} className="hover:bg-stone-50/80 transition-colors">
+                      <td className="py-2.5 px-3 text-center font-mono font-bold text-stone-500">{idx + 1}</td>
                       <td className="py-2.5 px-4 font-bold text-stone-900">{row.dept}</td>
                       <td className="py-2.5 px-3 text-center font-mono text-stone-600">{row.total}</td>
                       <td className="py-2.5 px-3 text-center font-mono font-bold text-stone-900">{row.avgScore}</td>

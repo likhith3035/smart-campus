@@ -55,6 +55,7 @@ export default function MethodologyPage() {
           <table className="w-full text-left text-xs text-[#57534E]">
             <thead className="bg-[#FAF8F5] uppercase font-semibold text-[#78716C] border-b border-[#EAE5DC]">
               <tr>
+                <th className="p-3.5 w-12 text-center font-mono">S.No</th>
                 <th className="p-3.5">Data Silo</th>
                 <th className="p-3.5">Weight (w_i)</th>
                 <th className="p-3.5">Underlying Indicators</th>
@@ -63,42 +64,49 @@ export default function MethodologyPage() {
             </thead>
             <tbody className="divide-y divide-stone-100 font-medium">
               <tr>
+                <td className="p-3.5 text-center font-mono font-bold text-stone-500">1</td>
                 <td className="p-3.5 font-bold text-[#111827]">Academic Performance</td>
                 <td className="p-3.5 font-mono text-blue-600 font-bold">30%</td>
                 <td className="p-3.5 text-stone-700">CGPA, SGPA Delta, Core Subject Marks</td>
                 <td className="p-3.5 font-mono text-stone-500">(CGPA / 10.0) × 100</td>
               </tr>
               <tr>
+                <td className="p-3.5 text-center font-mono font-bold text-stone-500">2</td>
                 <td className="p-3.5 font-bold text-[#111827]">Placement Readiness</td>
                 <td className="p-3.5 font-mono text-purple-600 font-bold">20%</td>
                 <td className="p-3.5 text-stone-700">Coding Score, Aptitude Percentile, Mock Interview</td>
                 <td className="p-3.5 font-mono text-stone-500">(Coding × 0.45) + (Apt × 0.35) + (Mock/5 × 20)</td>
               </tr>
               <tr>
+                <td className="p-3.5 text-center font-mono font-bold text-stone-500">3</td>
                 <td className="p-3.5 font-bold text-[#111827]">Classroom Attendance</td>
                 <td className="p-3.5 font-mono text-emerald-600 font-bold">15%</td>
                 <td className="p-3.5 text-stone-700">Biometric lecture & laboratory presence %</td>
                 <td className="p-3.5 font-mono text-stone-500">Min(100, Attendance %)</td>
               </tr>
               <tr>
+                <td className="p-3.5 text-center font-mono font-bold text-stone-500">4</td>
                 <td className="p-3.5 font-bold text-[#111827]">LMS Coursework</td>
                 <td className="p-3.5 font-mono text-teal-600 font-bold">15%</td>
                 <td className="p-3.5 text-stone-700">Assignment completion rate, Weekly logins</td>
                 <td className="p-3.5 font-mono text-stone-500">(Tasks % × 0.7) + (Min(20, Logins)/20 × 30)</td>
               </tr>
               <tr>
+                <td className="p-3.5 text-center font-mono font-bold text-stone-500">5</td>
                 <td className="p-3.5 font-bold text-[#111827]">Industry Skills</td>
                 <td className="p-3.5 font-mono text-amber-600 font-bold">10%</td>
                 <td className="p-3.5 text-stone-700">Verified Technical Certifications, Soft Skills</td>
                 <td className="p-3.5 font-mono text-stone-500">Min(100, (Certs × 25) + (SoftSkills × 5))</td>
               </tr>
               <tr>
+                <td className="p-3.5 text-center font-mono font-bold text-stone-500">6</td>
                 <td className="p-3.5 font-bold text-[#111827]">Extracurricular</td>
                 <td className="p-3.5 font-mono text-pink-600 font-bold">5%</td>
                 <td className="p-3.5 text-stone-700">Hackathon participations, Clubs, Campus societies</td>
                 <td className="p-3.5 font-mono text-stone-500">Min(100, (Hackathons × 30) + (Clubs × 20) + 20)</td>
               </tr>
               <tr>
+                <td className="p-3.5 text-center font-mono font-bold text-stone-500">7</td>
                 <td className="p-3.5 font-bold text-[#111827]">Faculty Feedback</td>
                 <td className="p-3.5 font-mono text-indigo-600 font-bold">5%</td>
                 <td className="p-3.5 text-stone-700">Mentor remarks & faculty sentiment rating</td>

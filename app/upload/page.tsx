@@ -43,6 +43,7 @@ export default function DataIntegrationPage() {
   // Raw file parsed data
   const [rawHeaders, setRawHeaders] = useState<string[]>([]);
   const [rawRows, setRawRows] = useState<Record<string, any>[]>([]);
+  const [previewLimit, setPreviewLimit] = useState<number | "all">(5);
 
   // Schema Mapping State: targetKey -> userColumnName (or null)
   const [columnMapping, setColumnMapping] = useState<Record<string, string | null>>({});
@@ -511,23 +512,50 @@ export default function DataIntegrationPage() {
 
           {/* Raw Data Preview Table: "This is your data what you've uploaded" */}
           <div className="p-6 rounded-3xl bg-white border border-[#EAE5DC] card-shadow space-y-3">
-            <div className="flex items-center justify-between pb-2">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2">
               <div>
-                <h3 className="text-base font-bold text-[#111827]">Raw File Data Preview (First 5 Rows)</h3>
+                <h3 className="text-base font-bold text-[#111827]">
+                  Raw File Data Preview {previewLimit === "all" ? `(All ${rawRows.length} Rows)` : `(First ${previewLimit} Rows)`}
+                </h3>
                 <p className="text-xs text-[#78716C]">
                   Direct preview of the actual records from your uploaded spreadsheet.
                 </p>
               </div>
-              <span className="text-xs font-mono text-stone-500 font-semibold">
-                Showing 5 of {rawRows.length} rows
-              </span>
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="text-xs font-mono text-stone-500 font-semibold">
+                  Showing {previewLimit === "all" ? rawRows.length : Math.min(previewLimit, rawRows.length)} of {rawRows.length} rows
+                </span>
+                <div className="flex items-center bg-stone-100 p-0.5 rounded-lg border border-stone-200 text-xs">
+                  {[5, 15, 50].map((num) => (
+                    <button
+                      key={num}
+                      type="button"
+                      onClick={() => setPreviewLimit(num)}
+                      className={`px-2 py-0.5 rounded font-mono text-[11px] font-bold transition-all ${
+                        previewLimit === num ? "bg-white text-stone-900 shadow-2xs" : "text-stone-500 hover:text-stone-900"
+                      }`}
+                    >
+                      {num}
+                    </button>
+                  ))}
+                  <button
+                    type="button"
+                    onClick={() => setPreviewLimit(previewLimit === "all" ? 5 : "all")}
+                    className={`px-2.5 py-0.5 rounded text-[11px] font-bold transition-all ${
+                      previewLimit === "all" ? "bg-blue-600 text-white shadow-2xs" : "text-stone-600 hover:text-stone-900"
+                    }`}
+                  >
+                    View All
+                  </button>
+                </div>
+              </div>
             </div>
 
-            <div className="overflow-x-auto rounded-2xl border border-[#EAE5DC]">
+            <div className="overflow-x-auto rounded-2xl border border-[#EAE5DC] max-h-96">
               <table className="w-full text-left text-xs text-[#57534E]">
-                <thead className="bg-[#FAF8F5] uppercase font-bold text-[#78716C] border-b border-[#EAE5DC]">
+                <thead className="bg-[#FAF8F5] uppercase font-bold text-[#78716C] border-b border-[#EAE5DC] sticky top-0 z-10">
                   <tr>
-                    <th className="p-3 w-10">#</th>
+                    <th className="p-3 w-14 text-center font-mono">S.No</th>
                     {rawHeaders.map((h) => (
                       <th key={h} className="p-3 whitespace-nowrap">
                         {h}
@@ -536,9 +564,9 @@ export default function DataIntegrationPage() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-stone-100 font-medium font-mono">
-                  {rawRows.slice(0, 5).map((row, idx) => (
+                  {(previewLimit === "all" ? rawRows : rawRows.slice(0, previewLimit)).map((row, idx) => (
                     <tr key={idx} className="hover:bg-stone-50/50">
-                      <td className="p-3 text-stone-400 font-sans text-[11px]">{idx + 1}</td>
+                      <td className="p-3 text-center text-stone-500 font-mono font-bold text-[11px]">{idx + 1}</td>
                       {rawHeaders.map((h) => (
                         <td key={h} className="p-3 whitespace-nowrap text-[#111827]">
                           {String(row[h] ?? "—")}
