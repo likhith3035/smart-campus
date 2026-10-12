@@ -159,36 +159,6 @@ export default function CampusIQLandingPage() {
             1. HERO SECTION WITH EXACT ARCHITECTURAL FRAMING & MOCKUP
         ─────────────────────────────────────────────────────────── */}
         <section className="relative pt-8 sm:pt-16 pb-16 sm:pb-24 overflow-hidden">
-          {/* Left Architectural Campus Building Framing */}
-          <div
-            className="hidden lg:block absolute left-0 top-0 w-52 xl:w-72 h-[580px] xl:h-[680px] pointer-events-none z-0 select-none opacity-85"
-            style={{
-              backgroundImage: `url('/campus_building_left.png')`,
-              backgroundSize: "cover",
-              backgroundRepeat: "no-repeat",
-              backgroundPosition: "left top",
-              maskImage: "linear-gradient(to right, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%), linear-gradient(to bottom, rgba(0,0,0,1) 75%, rgba(0,0,0,0) 100%)",
-              WebkitMaskImage: "linear-gradient(to right, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%), linear-gradient(to bottom, rgba(0,0,0,1) 75%, rgba(0,0,0,0) 100%)",
-              maskComposite: "intersect",
-              WebkitMaskComposite: "source-in",
-            }}
-          />
-
-          {/* Right Architectural Campus Building Framing with KPMG Hackathon Engraving */}
-          <div
-            className="hidden lg:block absolute right-0 top-0 w-52 xl:w-72 h-[580px] xl:h-[680px] pointer-events-none z-0 select-none opacity-85"
-            style={{
-              backgroundImage: `url('/campus_building_right.png')`,
-              backgroundSize: "cover",
-              backgroundRepeat: "no-repeat",
-              backgroundPosition: "right top",
-              maskImage: "linear-gradient(to left, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%), linear-gradient(to bottom, rgba(0,0,0,1) 75%, rgba(0,0,0,0) 100%)",
-              WebkitMaskImage: "linear-gradient(to left, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%), linear-gradient(to bottom, rgba(0,0,0,1) 75%, rgba(0,0,0,0) 100%)",
-              maskComposite: "intersect",
-              WebkitMaskComposite: "source-in",
-            }}
-          />
-
           {/* Three.js Interactive Ambient Constellation Canvas Background */}
           <ThreeConstellationBackground
             particleCount={70}
