@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Github } from "lucide-react";
 
 export function Navbar() {
   const pathname = usePathname();
@@ -56,10 +56,19 @@ export function Navbar() {
         </nav>
 
         {/* Right Actions */}
-        <div className="flex items-center gap-5">
+        <div className="flex items-center gap-3">
+          <a
+            href="https://github.com/likhith3035/smart-campus"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="GitHub Repository"
+            className="p-2 rounded-full hover:bg-stone-200/60 text-stone-700 transition-colors"
+          >
+            <Github className="w-4 h-4" />
+          </a>
           <Link
             href="/faculty"
-            className="hidden sm:inline-block text-sm font-medium text-[#57534E] hover:text-[#111827] transition-colors"
+            className="hidden sm:inline-block text-xs font-semibold text-[#57534E] hover:text-[#111827] transition-colors"
           >
             Sign in
           </Link>

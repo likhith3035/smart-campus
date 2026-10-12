@@ -4,7 +4,8 @@
 ---
 
 ### Slide 1: Title & Executive Vision
-- **Platform Name:** SmartCampus AI — Analytics & Decision Intelligence Platform
+- **Platform Name:** CampusIQ — Analytics & Decision Intelligence Platform
+- **Lead Developer & System Architect:** **Kami Likhith** ([Portfolio](https://devlikhith.vercel.app/) | [GitHub](https://github.com/likhith3035))
 - **Challenge Statement:** Move beyond simply building a dashboard. Use analytics and AI to convert student data into actionable insights and decision intelligence.
 - **Client/Sponsor Focus:** KPMG in India Education & Public Sector Advisory Practice
 - **Core Value Proposition:** Transitioning colleges from *descriptive rear-view reporting* to *prescriptive, closed-loop student interventions*.
@@ -98,9 +99,14 @@
 
 ### Slide 10: Institutional Impact & Hackathon Summary
 - **Evaluation Criteria Alignment:**
-  - ✅ **Data Integration (30%):** 7 silos harmonized with live CSV ingestion.
+  - ✅ **Data Integration (30%):** 7 silos harmonized with live CSV & Excel ingestion.
   - ✅ **Success Score & Risk Identification (25%):** Non-linear $S^3$ score + dual risk triggers.
-  - ✅ **Dashboard & Visualization (25%):** Modern, interactive, responsive UI.
+  - ✅ **Dashboard & Visualization (25%):** Modern, interactive, responsive CampusIQ UI.
   - ✅ **Problem Understanding (10%):** Prescriptive interventions over static charts.
   - ✅ **Bonus Credits (+10 pts):** AI Segmentation & Explainable AI drivers.
 - **Demonstration:** Live working prototype ready for judge evaluation.
+- **Lead Developer & Contact:**
+  - **Kami Likhith**
+  - **Portfolio:** [https://devlikhith.vercel.app/](https://devlikhith.vercel.app/)
+  - **GitHub:** [https://github.com/likhith3035](https://github.com/likhith3035)
+  - **Repository:** [https://github.com/likhith3035/smart-campus](https://github.com/likhith3035/smart-campus)

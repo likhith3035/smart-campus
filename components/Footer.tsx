@@ -1,0 +1,89 @@
+import Link from "next/link";
+import { ExternalLink, Github, Globe, Heart, ShieldCheck } from "lucide-react";
+
+export function Footer() {
+  return (
+    <footer className="border-t border-[#EAE5DC] bg-[#FAF7F2] py-14 text-xs text-[#78716C]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 pb-8 border-b border-[#EAE5DC]">
+          {/* Brand & Mission */}
+          <div className="space-y-2 max-w-md">
+            <div className="flex items-center gap-2">
+              <span className="font-extrabold text-xl text-[#111827]">CampusIQ</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+              <span className="text-stone-300">|</span>
+              <span className="text-[11px] font-semibold text-stone-500 uppercase tracking-wider font-mono">
+                Smart Campus Analytics
+              </span>
+            </div>
+            <p className="text-xs text-[#57534E] leading-relaxed">
+              AI-powered student analytics and decision intelligence platform built for the <strong>KPMG in India Hackathon</strong>. Predict, optimize, and improve student success across 7 collegiate data silos.
+            </p>
+          </div>
+
+          {/* Developer Card Badge */}
+          <div className="p-4 rounded-2xl bg-white border border-[#EAE5DC] card-shadow flex items-center gap-4">
+            <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-stone-900 to-stone-700 text-white flex items-center justify-center font-bold text-base shadow-sm">
+              KL
+            </div>
+            <div className="space-y-1">
+              <div className="flex items-center gap-1.5">
+                <span className="text-xs font-bold text-[#111827]">Kami Likhith</span>
+                <span className="text-[9px] px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-semibold">
+                  Developer & Architect
+                </span>
+              </div>
+              <div className="flex items-center gap-3 text-[11px]">
+                <a
+                  href="https://devlikhith.vercel.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-stone-900 hover:text-blue-600 font-semibold transition-colors"
+                >
+                  <Globe className="w-3 h-3 text-stone-500" />
+                  <span>Portfolio</span>
+                  <ExternalLink className="w-2.5 h-2.5 opacity-60" />
+                </a>
+                <span className="text-stone-300">•</span>
+                <a
+                  href="https://github.com/likhith3035"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-stone-900 hover:text-blue-600 font-semibold transition-colors"
+                >
+                  <Github className="w-3 h-3 text-stone-500" />
+                  <span>GitHub</span>
+                  <ExternalLink className="w-2.5 h-2.5 opacity-60" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Row */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#78716C]">
+          <div className="flex items-center gap-2">
+            <span>Designed & Engineered by</span>
+            <a
+              href="https://devlikhith.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-bold text-[#111827] hover:underline"
+            >
+              Kami Likhith
+            </a>
+            <span>for KPMG in India Hackathon</span>
+          </div>
+
+          <div className="flex items-center gap-6 text-[#57534E]">
+            <Link href="/faculty" className="hover:text-stone-900 transition-colors">Faculty Workspace</Link>
+            <Link href="/segmentation" className="hover:text-stone-900 transition-colors">AI Segmentation</Link>
+            <Link href="/interventions" className="hover:text-stone-900 transition-colors">Interventions</Link>
+            <Link href="/upload" className="hover:text-stone-900 transition-colors">Data Ingestion</Link>
+            <Link href="/methodology" className="hover:text-stone-900 transition-colors">Methodology Note</Link>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}

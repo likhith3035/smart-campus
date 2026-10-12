@@ -56,8 +56,18 @@ Or push this repository to GitHub and import it into **[vercel.com](https://verc
 ## 🛠️ Architecture & Tech Stack
 
 - **Frontend & App Framework:** Next.js 14 (App Router) + TypeScript
-- **Design System:** Tailwind CSS + dark glassmorphic corporate aesthetic
+- **Design System:** CampusIQ warm cream editorial aesthetic (`#FAF7F2`), Plus Jakarta Sans + Playfair Display typography
 - **Visualization:** Recharts (Radar, 4-Quadrant Scatter, Waterfall, Histogram, Bar)
-- **Data Ingestion:** Client-side CSV/Excel parsing (`lib/scoring.ts`)
-- **Machine Learning & Pipeline:** Python `scikit-learn` K-Means clustering + embedded zero-latency TypeScript inference engine
+- **Data Ingestion:** Universal Client-side CSV/Excel parsing (`xlsx` SheetJS + fuzzy schema mapper)
+- **Machine Learning & Pipeline:** Python `scikit-learn` K-Means clustering ($k=4$) + embedded zero-latency TypeScript inference engine
 - **Zero Cost:** $0.00 required, no API keys, no paid dependencies.
+
+---
+
+## 👨‍💻 Project Lead & Developer
+
+**Kami Likhith**
+- 🌐 **Portfolio:** [https://devlikhith.vercel.app/](https://devlikhith.vercel.app/)
+- 🐙 **GitHub:** [@likhith3035](https://github.com/likhith3035)
+- 🏆 **Submission:** KPMG in India Hackathon — Smart Campus Analytics & AI Success Platform
+
