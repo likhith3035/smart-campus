@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { initialStudents } from "@/lib/studentsData";
 import { StudentProfile } from "@/lib/types";
 import { ScatterQuadrants } from "@/components/charts/ScatterQuadrants";
@@ -15,13 +15,15 @@ import {
   AlertOctagon, 
   Target
 } from "lucide-react";
+import { WorkspaceShell } from "@/components/layout/WorkspaceShell";
+import { useStudentData } from "@/components/context/StudentDataContext";
 
 export default function SegmentationPage() {
-  const [students] = useState<StudentProfile[]>(initialStudents);
+  const { students } = useStudentData();
   const [selectedStudent, setSelectedStudent] = useState<StudentProfile | null>(null);
   const [activeSegmentFilter, setActiveSegmentFilter] = useState<string>("all");
 
-  const archetypes = [
+  const archetypes = useMemo(() => [
     {
       name: "The Scholar",
       tagline: "High Academics, Low Placement & Coding Readiness",
@@ -66,7 +68,7 @@ export default function SegmentationPage() {
       traits: "Compound deficits: Attendance < 75%, 1-3 active backlogs, low LMS login frequency, bottom quartile placement score.",
       strategy: "Immediate Dean/HOD intervention, 1-on-1 Faculty Mentor assignment, parental alert, and structured attendance recovery plan.",
     },
-  ];
+  ], [students]);
 
   const filteredStudents =
     activeSegmentFilter === "all"
@@ -74,13 +76,14 @@ export default function SegmentationPage() {
       : students.filter((s) => s.segment.name === activeSegmentFilter);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-in fade-in duration-300">
+    <WorkspaceShell>
+      <div className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 py-5 sm:py-8 space-y-6 sm:space-y-8 animate-in fade-in duration-300">
       {/* Header */}
       <div className="space-y-2">
-        <div className="text-xs font-mono uppercase tracking-widest text-[#78716C] font-semibold">
+        <div className="text-[10px] sm:text-xs font-mono uppercase tracking-widest text-[#78716C] font-semibold">
           [ KPMG BONUS CREDIT: AI SEGMENTATION ]
         </div>
-        <h1 className="text-3xl font-extrabold text-[#111827] tracking-tight">
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-[#111827] tracking-tight">
           Unsupervised Clustering & Student Archetype Matrix
         </h1>
         <p className="text-xs text-[#57534E] max-w-3xl">
@@ -89,17 +92,17 @@ export default function SegmentationPage() {
       </div>
 
       {/* 4-Quadrant Scatter Plot */}
-      <div className="p-7 rounded-3xl bg-white border border-[#EAE5DC] card-shadow space-y-4">
+      <div className="p-3.5 sm:p-7 rounded-2xl sm:rounded-3xl bg-white border border-[#EAE5DC] card-shadow space-y-4">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
           <div>
-            <h2 className="text-base font-bold text-[#111827]">4-Quadrant Student Segmentation Matrix</h2>
+            <h2 className="text-sm sm:text-base font-bold text-[#111827]">4-Quadrant Student Segmentation Matrix</h2>
             <p className="text-xs text-[#78716C]">
               Y-Axis: Academic CGPA (0-10) vs X-Axis: Placement Readiness (0-100). Click any node to inspect profile.
             </p>
           </div>
           <button
             onClick={() => setActiveSegmentFilter("all")}
-            className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${
+            className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all self-end sm:self-auto ${
               activeSegmentFilter === "all"
                 ? "bg-[#111827] text-white"
                 : "bg-white text-stone-700 border border-[#E5E0D8] hover:bg-stone-50"
@@ -200,6 +203,7 @@ export default function SegmentationPage() {
           onClose={() => setSelectedStudent(null)}
         />
       )}
-    </div>
+      </div>
+    </WorkspaceShell>
   );
 }

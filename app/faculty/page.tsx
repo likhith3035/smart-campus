@@ -5,16 +5,81 @@ import { initialStudents, filterStudents, getCampusStats } from "@/lib/studentsD
 import { StudentProfile } from "@/lib/types";
 import { StudentTable } from "@/components/dashboard/StudentTable";
 import { StudentModal } from "@/components/dashboard/StudentModal";
+import Link from "next/link";
 import { 
   Users, 
   Search, 
   Download, 
-  RotateCcw
+  RotateCcw,
+  UploadCloud,
+  CheckCircle2
 } from "lucide-react";
+import { CustomSelect, SelectOption } from "@/components/ui/CustomSelect";
+import { WorkspaceShell } from "@/components/layout/WorkspaceShell";
+import { useStudentData } from "@/components/context/StudentDataContext";
+
+const departmentOptions: SelectOption[] = [
+  { value: "all", label: "All Departments" },
+  { value: "Computer Science & Engineering", label: "Computer Science (CSE)" },
+  { value: "Information Technology", label: "Information Tech (IT)" },
+  { value: "Electronics & Communication", label: "Electronics (ECE)" },
+  { value: "Data Science & AI", label: "Data Science & AI" },
+  { value: "Mechanical Engineering", label: "Mechanical Eng" },
+];
+
+const semesterOptions: SelectOption[] = [
+  { value: "all", label: "All Semesters" },
+  { value: "4", label: "Semester 4" },
+  { value: "6", label: "Semester 6 (Pre-Placement)" },
+  { value: "8", label: "Semester 8 (Final Year)" },
+];
+
+const riskOptions: SelectOption[] = [
+  { value: "all", label: "All Risk Tiers" },
+  { value: "High Risk", label: "High Risk", dotColor: "bg-rose-500", badge: "Critical", badgeColor: "bg-rose-100 text-rose-700" },
+  { value: "Moderate Risk", label: "Moderate Risk", dotColor: "bg-amber-500", badge: "Watch", badgeColor: "bg-amber-100 text-amber-700" },
+  { value: "Thriving", label: "Thriving", dotColor: "bg-emerald-500", badge: "Optimal", badgeColor: "bg-emerald-100 text-emerald-700" },
+];
+
+const segmentOptions: SelectOption[] = [
+  { value: "all", label: "All AI Segments" },
+  { value: "The Scholar", label: "The Scholar", badge: "Research", badgeColor: "bg-blue-100 text-blue-700" },
+  { value: "Practical Builder", label: "Practical Builder", badge: "Coding", badgeColor: "bg-purple-100 text-purple-700" },
+  { value: "Consistent All-Rounder", label: "Consistent All-Rounder", badge: "Balanced", badgeColor: "bg-emerald-100 text-emerald-700" },
+  { value: "Critical Multi-Risk", label: "Critical Multi-Risk", badge: "Triage", badgeColor: "bg-rose-100 text-rose-700" },
+];
 
 export default function FacultyWorkspacePage() {
-  const [students] = useState<StudentProfile[]>(initialStudents);
+  const {
+    students,
+    isCustomDataset,
+    datasetName,
+    resetToDemoData,
+    availableDepartments,
+    availableSemesters,
+  } = useStudentData();
   const [selectedStudent, setSelectedStudent] = useState<StudentProfile | null>(null);
+
+  // Dynamic Department & Semester Options derived from active students
+  const dynamicDepartmentOptions: SelectOption[] = useMemo(() => {
+    return [
+      { value: "all", label: "All Departments" },
+      ...availableDepartments.map((dept) => ({
+        value: dept,
+        label: dept,
+      })),
+    ];
+  }, [availableDepartments]);
+
+  const dynamicSemesterOptions: SelectOption[] = useMemo(() => {
+    return [
+      { value: "all", label: "All Semesters" },
+      ...availableSemesters.map((sem) => ({
+        value: String(sem),
+        label: `Semester ${sem}`,
+      })),
+    ];
+  }, [availableSemesters]);
 
   // Filters
   const [selectedDept, setSelectedDept] = useState<string>("all");
@@ -36,6 +101,13 @@ export default function FacultyWorkspacePage() {
   const stats = useMemo(() => {
     return getCampusStats(filteredStudents);
   }, [filteredStudents]);
+
+  const [showMobileFilters, setShowMobileFilters] = useState<boolean>(false);
+
+  const activeFiltersCount = (selectedDept !== "all" ? 1 : 0) +
+    (selectedSem !== "all" ? 1 : 0) +
+    (selectedRisk !== "all" ? 1 : 0) +
+    (selectedSegment !== "all" ? 1 : 0);
 
   const handleResetFilters = () => {
     setSelectedDept("all");
@@ -65,24 +137,32 @@ export default function FacultyWorkspacePage() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6 animate-in fade-in duration-300">
+    <WorkspaceShell>
+      <div className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 py-5 sm:py-8 space-y-5 sm:space-y-6 animate-in fade-in duration-300">
       {/* Page Title */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
         <div>
-          <div className="text-xs font-mono uppercase tracking-widest text-[#78716C] font-semibold mb-1">
+          <div className="text-[10px] sm:text-xs font-mono uppercase tracking-widest text-[#78716C] font-semibold mb-1">
             [ INSTITUTIONAL COHORT TRIAGE ]
           </div>
-          <h1 className="text-3xl font-extrabold text-[#111827] flex items-center gap-2">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#111827] flex items-center gap-2">
             <span>Faculty & Department Workspace</span>
           </h1>
-          <p className="text-xs text-[#57534E] mt-1">
+          <p className="text-xs text-[#57534E] mt-1 max-w-2xl">
             Filter, triage, and inspect individual student trajectories across integrated academic, attendance, LMS, and placement parameters.
           </p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 w-full sm:w-auto">
+          <Link
+            href="/upload"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-full bg-[#111827] hover:bg-black text-xs font-semibold text-white shadow-sm transition-colors"
+          >
+            <UploadCloud className="w-4 h-4" />
+            <span>Upload Custom Data</span>
+          </Link>
           <button
             onClick={handleExportCSV}
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white hover:bg-stone-50 text-xs font-semibold text-[#111827] border border-[#E5E0D8] shadow-sm transition-colors"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-full bg-white hover:bg-stone-50 text-xs font-semibold text-[#111827] border border-[#E5E0D8] shadow-sm transition-colors"
           >
             <Download className="w-4 h-4 text-stone-500" />
             <span>Export CSV</span>
@@ -90,11 +170,32 @@ export default function FacultyWorkspacePage() {
         </div>
       </div>
 
+      {/* Active Custom Dataset Banner (shows when user uploaded their own data) */}
+      {isCustomDataset && (
+        <div className="p-3.5 sm:p-4 rounded-2xl bg-emerald-50 border border-emerald-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-emerald-950 shadow-2xs animate-in fade-in">
+          <div className="flex items-center gap-2.5">
+            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+            <div>
+              <span className="font-bold">Active Custom Dataset:</span>{" "}
+              <span className="font-mono text-emerald-800 font-semibold">{datasetName}</span>{" "}
+              <span>({students.length} students loaded across {availableDepartments.length} departments)</span>
+            </div>
+          </div>
+          <button
+            onClick={resetToDemoData}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-emerald-300 hover:bg-emerald-100 text-emerald-800 font-bold text-xs transition-colors shadow-2xs shrink-0 cursor-pointer"
+          >
+            <RotateCcw className="w-3.5 h-3.5" />
+            <span>Revert to Demo Data</span>
+          </button>
+        </div>
+      )}
+
       {/* Filter Toolbar */}
-      <div className="p-5 rounded-3xl bg-white border border-[#EAE5DC] card-shadow space-y-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
-          {/* Search Input */}
-          <div className="relative">
+      <div className="p-4 sm:p-5 rounded-2xl sm:rounded-3xl bg-white border border-[#EAE5DC] card-shadow space-y-3 sm:space-y-4">
+        {/* Top Search & Mobile Filter Toggle */}
+        <div className="flex items-center gap-2">
+          <div className="relative flex-1">
             <Search className="w-4 h-4 text-stone-400 absolute left-3.5 top-3" />
             <input
               type="text"
@@ -104,69 +205,69 @@ export default function FacultyWorkspacePage() {
               className="w-full pl-9 pr-3.5 py-2.5 rounded-full bg-[#FAF8F5] border border-[#EAE5DC] text-xs text-[#111827] placeholder-stone-400 focus:outline-none focus:border-stone-900 transition-colors"
             />
           </div>
+          <button
+            type="button"
+            onClick={() => setShowMobileFilters(!showMobileFilters)}
+            className={`sm:hidden flex items-center gap-1.5 px-3.5 py-2.5 rounded-full text-xs font-bold border transition-colors ${
+              activeFiltersCount > 0 || showMobileFilters
+                ? "bg-[#111827] text-white border-[#111827]"
+                : "bg-[#FAF8F5] text-stone-700 border-[#EAE5DC]"
+            }`}
+          >
+            <span>Filters</span>
+            {activeFiltersCount > 0 && (
+              <span className="w-4 h-4 rounded-full bg-blue-500 text-white text-[10px] flex items-center justify-center">
+                {activeFiltersCount}
+              </span>
+            )}
+          </button>
+        </div>
 
-          {/* Department Filter */}
+        {/* Custom Dropdown Filters Grid */}
+        <div className={`${showMobileFilters ? "grid" : "hidden sm:grid"} grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3 pt-1 relative z-30`}>
+          {/* Department Filter (Dynamically adapts to uploaded file) */}
           <div>
-            <select
+            <CustomSelect
               value={selectedDept}
-              onChange={(e) => setSelectedDept(e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-full bg-[#FAF8F5] border border-[#EAE5DC] text-xs text-[#111827] focus:outline-none focus:border-stone-900"
-            >
-              <option value="all">All Departments</option>
-              <option value="Computer Science & Engineering">Computer Science (CSE)</option>
-              <option value="Information Technology">Information Tech (IT)</option>
-              <option value="Electronics & Communication">Electronics (ECE)</option>
-              <option value="Data Science & AI">Data Science & AI</option>
-              <option value="Mechanical Engineering">Mechanical Eng</option>
-            </select>
+              onChange={setSelectedDept}
+              options={dynamicDepartmentOptions}
+              placeholder="Department"
+            />
           </div>
 
-          {/* Semester Filter */}
+          {/* Semester Filter (Dynamically adapts to uploaded file) */}
           <div>
-            <select
+            <CustomSelect
               value={selectedSem}
-              onChange={(e) => setSelectedSem(e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-full bg-[#FAF8F5] border border-[#EAE5DC] text-xs text-[#111827] focus:outline-none focus:border-stone-900"
-            >
-              <option value="all">All Semesters</option>
-              <option value="4">Semester 4</option>
-              <option value="6">Semester 6 (Pre-Placement)</option>
-              <option value="8">Semester 8 (Final Year)</option>
-            </select>
+              onChange={setSelectedSem}
+              options={dynamicSemesterOptions}
+              placeholder="Semester"
+            />
           </div>
 
           {/* Risk Tier Filter */}
           <div>
-            <select
+            <CustomSelect
               value={selectedRisk}
-              onChange={(e) => setSelectedRisk(e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-full bg-[#FAF8F5] border border-[#EAE5DC] text-xs text-[#111827] focus:outline-none focus:border-stone-900"
-            >
-              <option value="all">All Risk Tiers</option>
-              <option value="High Risk">🔴 High Risk</option>
-              <option value="Moderate Risk">🟡 Moderate Risk</option>
-              <option value="Thriving">🟢 Thriving</option>
-            </select>
+              onChange={setSelectedRisk}
+              options={riskOptions}
+              placeholder="Risk Tier"
+            />
           </div>
 
           {/* Segment Filter */}
           <div>
-            <select
+            <CustomSelect
               value={selectedSegment}
-              onChange={(e) => setSelectedSegment(e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-full bg-[#FAF8F5] border border-[#EAE5DC] text-xs text-[#111827] focus:outline-none focus:border-stone-900"
-            >
-              <option value="all">All AI Segments</option>
-              <option value="The Scholar">The Scholar</option>
-              <option value="Practical Builder">Practical Builder</option>
-              <option value="Consistent All-Rounder">Consistent All-Rounder</option>
-              <option value="Critical Multi-Risk">Critical Multi-Risk</option>
-            </select>
+              onChange={setSelectedSegment}
+              options={segmentOptions}
+              placeholder="AI Segment"
+            />
           </div>
         </div>
 
         {/* Filter Summary & Reset */}
-        <div className="flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-stone-100 text-xs text-[#78716C]">
+        <div className="flex flex-wrap items-center justify-between gap-2 pt-2.5 sm:pt-3 border-t border-stone-100 text-xs text-[#78716C]">
           <div className="flex items-center gap-3">
             <span>
               Matching: <strong className="text-[#111827] font-mono">{filteredStudents.length}</strong> students
@@ -207,6 +308,7 @@ export default function FacultyWorkspacePage() {
           onClose={() => setSelectedStudent(null)}
         />
       )}
-    </div>
+      </div>
+    </WorkspaceShell>
   );
 }

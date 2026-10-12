@@ -9,25 +9,27 @@ import {
   ShieldAlert,
   Layers
 } from "lucide-react";
+import { WorkspaceShell } from "@/components/layout/WorkspaceShell";
 
 export default function MethodologyPage() {
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10 animate-in fade-in duration-300">
+    <WorkspaceShell>
+      <div className="max-w-5xl mx-auto px-3.5 sm:px-6 lg:px-8 py-5 sm:py-8 space-y-6 sm:space-y-10 animate-in fade-in duration-300">
       {/* Header */}
-      <div className="space-y-3">
-        <div className="text-xs font-mono uppercase tracking-widest text-[#78716C] font-semibold">
+      <div className="space-y-2 sm:space-y-3">
+        <div className="text-[10px] sm:text-xs font-mono uppercase tracking-widest text-[#78716C] font-semibold">
           [ KPMG DELIVERABLE 2: EXPLANATORY METHODOLOGY NOTE ]
         </div>
-        <h1 className="text-4xl sm:text-5xl font-extrabold text-[#111827] tracking-tight">
+        <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-[#111827] tracking-tight">
           Student Success Score (S³) Formulation & AI Architecture
         </h1>
-        <p className="text-sm text-[#57534E] leading-relaxed">
+        <p className="text-xs sm:text-sm text-[#57534E] leading-relaxed">
           Comprehensive documentation of mathematical indicator normalization, non-linear statutory penalties, dual risk classification vectors, and unsupervised persona segmentation.
         </p>
       </div>
 
       {/* 1. Mathematical Formulation */}
-      <div className="p-8 rounded-3xl bg-white border border-[#EAE5DC] card-shadow space-y-6">
+      <div className="p-4 sm:p-8 rounded-2xl sm:rounded-3xl bg-white border border-[#EAE5DC] card-shadow space-y-5 sm:space-y-6">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-2xl bg-stone-100 text-stone-900 flex items-center justify-center border border-stone-200">
             <Scale className="w-5 h-5" />
@@ -213,6 +215,7 @@ export default function MethodologyPage() {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </WorkspaceShell>
   );
 }

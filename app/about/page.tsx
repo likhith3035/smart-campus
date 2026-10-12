@@ -22,6 +22,8 @@ import {
   HelpCircle,
   Code2,
 } from "lucide-react";
+import { CustomSelect, SelectOption } from "@/components/ui/CustomSelect";
+import { WorkspaceShell } from "@/components/layout/WorkspaceShell";
 
 export default function AboutPage() {
   const [copiedPrompt, setCopiedPrompt] = useState(false);
@@ -153,18 +155,19 @@ Return ONLY the CSV text starting with the header line, no conversational text o
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12 animate-in fade-in duration-300">
+    <WorkspaceShell>
+      <div className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 py-6 sm:py-10 space-y-8 sm:space-y-12 animate-in fade-in duration-300">
       {/* ───────────────────────────────────────────────────────────
           1. HEADER & MISSION STATEMENT
       ─────────────────────────────────────────────────────────── */}
-      <div className="space-y-4 max-w-4xl">
-        <div className="text-xs font-mono uppercase tracking-widest text-[#78716C] font-semibold">
+      <div className="space-y-3 sm:space-y-4 max-w-4xl">
+        <div className="text-[10px] sm:text-xs font-mono uppercase tracking-widest text-[#78716C] font-semibold">
           [ ABOUT CAMPUSTIQ & PLATFORM GUIDE ]
         </div>
-        <h1 className="text-4xl sm:text-5xl font-extrabold text-[#111827] tracking-tight">
+        <h1 className="text-2xl sm:text-5xl font-extrabold text-[#111827] tracking-tight">
           Turning Student Data into <span className="font-serif italic text-stone-900 font-normal">Brighter Futures.</span>
         </h1>
-        <p className="text-sm sm:text-base text-[#57534E] leading-relaxed">
+        <p className="text-xs sm:text-base text-[#57534E] leading-relaxed">
           CampusIQ is an AI-powered student success & prescriptive decision intelligence platform built for the <strong>KPMG in India Hackathon</strong>. It solves the fundamental limitation of traditional college dashboards by predicting at-risk students months before exams and generating automated, closed-loop interventions.
         </p>
       </div>
@@ -172,8 +175,8 @@ Return ONLY the CSV text starting with the header line, no conversational text o
       {/* ───────────────────────────────────────────────────────────
           2. THE PROBLEM VS THE SOLUTION
       ─────────────────────────────────────────────────────────── */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="p-8 rounded-3xl bg-white border border-[#EAE5DC] card-shadow space-y-3">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+        <div className="p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-white border border-[#EAE5DC] card-shadow space-y-3">
           <div className="flex items-center gap-2 text-rose-600 font-bold text-xs uppercase tracking-wider font-mono">
             <span className="w-2 h-2 rounded-full bg-rose-500"></span>
             <span>The Traditional College Problem</span>
@@ -365,30 +368,32 @@ Return ONLY the CSV text starting with the header line, no conversational text o
           </div>
 
           <div>
-            <label className="text-[11px] font-bold text-[#78716C] uppercase">Student Count</label>
-            <select
-              value={studentCount}
-              onChange={(e) => setStudentCount(Number(e.target.value))}
-              className="w-full mt-1 px-3 py-1.5 rounded-xl border border-stone-200 text-xs text-[#111827] focus:outline-none focus:border-stone-900 font-medium"
-            >
-              <option value="25">25 Students (Quick Test)</option>
-              <option value="50">50 Students (Standard Cohort)</option>
-              <option value="100">100 Students (Full Department)</option>
-              <option value="200">200 Students (Multi-Department)</option>
-            </select>
+            <label className="text-[11px] font-bold text-[#78716C] uppercase mb-1 block">Student Count</label>
+            <CustomSelect
+              value={String(studentCount)}
+              onChange={(val) => setStudentCount(Number(val))}
+              options={[
+                { value: "25", label: "25 Students (Quick Test)" },
+                { value: "50", label: "50 Students (Standard Cohort)" },
+                { value: "100", label: "100 Students (Full Department)" },
+                { value: "200", label: "200 Students (Multi-Department)" },
+              ]}
+              buttonClassName="py-2 rounded-xl"
+            />
           </div>
 
           <div>
-            <label className="text-[11px] font-bold text-[#78716C] uppercase">Risk Ratio Scenario</label>
-            <select
+            <label className="text-[11px] font-bold text-[#78716C] uppercase mb-1 block">Risk Ratio Scenario</label>
+            <CustomSelect
               value={riskMix}
-              onChange={(e) => setRiskMix(e.target.value as any)}
-              className="w-full mt-1 px-3 py-1.5 rounded-xl border border-stone-200 text-xs text-[#111827] focus:outline-none focus:border-stone-900 font-medium"
-            >
-              <option value="realistic">Realistic Mix (~18% At-Risk)</option>
-              <option value="high">Stress Test (~40% High Risk)</option>
-              <option value="thriving">High Achievers (~5% At-Risk)</option>
-            </select>
+              onChange={(val) => setRiskMix(val as "realistic" | "high" | "thriving")}
+              options={[
+                { value: "realistic", label: "Realistic Mix (~18% At-Risk)", dotColor: "bg-blue-500" },
+                { value: "high", label: "Stress Test (~40% High Risk)", dotColor: "bg-rose-500" },
+                { value: "thriving", label: "High Achievers (~5% At-Risk)", dotColor: "bg-emerald-500" },
+              ]}
+              buttonClassName="py-2 rounded-xl"
+            />
           </div>
         </div>
 
@@ -504,6 +509,7 @@ Return ONLY the CSV text starting with the header line, no conversational text o
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </WorkspaceShell>
   );
 }

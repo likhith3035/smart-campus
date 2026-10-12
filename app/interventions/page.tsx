@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { initialStudents } from "@/lib/studentsData";
 import { PrescriptiveAction, StudentProfile } from "@/lib/types";
 import { StudentModal } from "@/components/dashboard/StudentModal";
@@ -12,28 +12,34 @@ import {
   UserCheck, 
   Eye 
 } from "lucide-react";
+import { CustomSelect, SelectOption } from "@/components/ui/CustomSelect";
+import { WorkspaceShell } from "@/components/layout/WorkspaceShell";
+import { useStudentData } from "@/components/context/StudentDataContext";
 
 interface ActionItemWithStudent extends PrescriptiveAction {
   student: StudentProfile;
 }
 
 export default function InterventionsPage() {
-  const [students] = useState<StudentProfile[]>(initialStudents);
+  const { students } = useStudentData();
   const [selectedStudent, setSelectedStudent] = useState<StudentProfile | null>(null);
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [priorityFilter, setPriorityFilter] = useState<string>("all");
 
-  const initialActionList: ActionItemWithStudent[] = [];
-  students.forEach((s) => {
-    s.prescriptive_actions.forEach((act) => {
-      initialActionList.push({
-        ...act,
-        student: s,
+  const [actions, setActions] = useState<ActionItemWithStudent[]>([]);
+
+  useEffect(() => {
+    const list: ActionItemWithStudent[] = [];
+    students.forEach((s) => {
+      s.prescriptive_actions.forEach((act) => {
+        list.push({
+          ...act,
+          student: s,
+        });
       });
     });
-  });
-
-  const [actions, setActions] = useState<ActionItemWithStudent[]>(initialActionList);
+    setActions(list);
+  }, [students]);
 
   const handleStatusChange = (actionId: string, currentStatus: PrescriptiveAction["status"]) => {
     const nextStatus: PrescriptiveAction["status"] =
@@ -74,23 +80,24 @@ export default function InterventionsPage() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6 animate-in fade-in duration-300">
+    <WorkspaceShell>
+      <div className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 py-5 sm:py-8 space-y-5 sm:space-y-6 animate-in fade-in duration-300">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
         <div>
-          <div className="text-xs font-mono uppercase tracking-widest text-[#78716C] font-semibold mb-1">
+          <div className="text-[10px] sm:text-xs font-mono uppercase tracking-widest text-[#78716C] font-semibold mb-1">
             [ CLOSED-LOOP DECISION INTELLIGENCE ]
           </div>
-          <h1 className="text-3xl font-extrabold text-[#111827]">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#111827]">
             Prescriptive Interventions & Action Tracker
           </h1>
-          <p className="text-xs text-[#57534E] mt-1">
+          <p className="text-xs text-[#57534E] mt-1 max-w-2xl">
             Transform predictive indicators into closed-loop administrative actions: Attendance alerts, remedial tutoring, and placement bootcamps.
           </p>
         </div>
         <button
           onClick={handleExportCSV}
-          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white hover:bg-stone-50 text-xs font-semibold text-[#111827] border border-[#E5E0D8] shadow-sm transition-colors"
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-full bg-white hover:bg-stone-50 text-xs font-semibold text-[#111827] border border-[#E5E0D8] shadow-sm transition-colors"
         >
           <Download className="w-4 h-4 text-stone-500" />
           <span>Export Action Plan CSV</span>
@@ -131,34 +138,34 @@ export default function InterventionsPage() {
       </div>
 
       {/* Filter Row */}
-      <div className="p-4 rounded-3xl bg-white border border-[#EAE5DC] card-shadow flex flex-wrap items-center justify-between gap-3 text-xs">
-        <div className="flex flex-wrap items-center gap-4">
-          <div className="flex items-center gap-2">
-            <span className="text-[#78716C] font-medium">Status:</span>
-            <select
+      <div className="p-4 rounded-3xl bg-white border border-[#EAE5DC] card-shadow flex flex-wrap items-center justify-between gap-3 text-xs relative z-30">
+        <div className="flex flex-wrap items-center gap-3">
+          <div className="w-52">
+            <CustomSelect
               value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
-              className="px-3 py-1.5 rounded-full bg-[#FAF8F5] border border-[#EAE5DC] text-[#111827] focus:outline-none focus:border-stone-900 font-medium"
-            >
-              <option value="all">All Statuses ({actions.length})</option>
-              <option value="Pending">Pending ({pendingCount})</option>
-              <option value="In Progress">In Progress ({inProgressCount})</option>
-              <option value="Completed">Completed ({completedCount})</option>
-            </select>
+              onChange={setStatusFilter}
+              options={[
+                { value: "all", label: `All Statuses (${actions.length})` },
+                { value: "Pending", label: `Pending (${pendingCount})`, dotColor: "bg-amber-500" },
+                { value: "In Progress", label: `In Progress (${inProgressCount})`, dotColor: "bg-blue-500" },
+                { value: "Completed", label: `Completed (${completedCount})`, dotColor: "bg-emerald-500" },
+              ]}
+              buttonClassName="py-2"
+            />
           </div>
 
-          <div className="flex items-center gap-2">
-            <span className="text-[#78716C] font-medium">Priority:</span>
-            <select
+          <div className="w-48">
+            <CustomSelect
               value={priorityFilter}
-              onChange={(e) => setPriorityFilter(e.target.value)}
-              className="px-3 py-1.5 rounded-full bg-[#FAF8F5] border border-[#EAE5DC] text-[#111827] focus:outline-none focus:border-stone-900 font-medium"
-            >
-              <option value="all">All Priorities</option>
-              <option value="URGENT">URGENT</option>
-              <option value="HIGH">HIGH</option>
-              <option value="MEDIUM">MEDIUM</option>
-            </select>
+              onChange={setPriorityFilter}
+              options={[
+                { value: "all", label: "All Priorities" },
+                { value: "URGENT", label: "URGENT", badge: "Critical", badgeColor: "bg-rose-100 text-rose-700" },
+                { value: "HIGH", label: "HIGH", badge: "High", badgeColor: "bg-amber-100 text-amber-700" },
+                { value: "MEDIUM", label: "MEDIUM", badge: "Medium", badgeColor: "bg-blue-100 text-blue-700" },
+              ]}
+              buttonClassName="py-2"
+            />
           </div>
         </div>
 
@@ -177,9 +184,9 @@ export default function InterventionsPage() {
           filteredActions.map((act) => (
             <div
               key={act.id}
-              className="p-6 rounded-3xl bg-white border border-[#EAE5DC] hover:border-stone-400 card-shadow transition-all flex flex-col md:flex-row items-start md:items-center justify-between gap-4"
+              className="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-white border border-[#EAE5DC] hover:border-stone-400 card-shadow transition-all flex flex-col md:flex-row items-start md:items-center justify-between gap-3 sm:gap-4"
             >
-              <div className="space-y-1.5 flex-1">
+              <div className="space-y-1.5 flex-1 w-full">
                 <div className="flex flex-wrap items-center gap-2">
                   <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase ${
                     act.priority === "URGENT"
@@ -196,7 +203,7 @@ export default function InterventionsPage() {
 
                 <p className="text-xs text-[#57534E] leading-relaxed">{act.details}</p>
 
-                <div className="flex flex-wrap items-center gap-4 text-xs text-stone-500 pt-1">
+                <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-xs text-stone-500 pt-1">
                   <div>
                     Student:{" "}
                     <button
@@ -206,11 +213,11 @@ export default function InterventionsPage() {
                       {act.student.name} ({act.student.student_id})
                     </button>
                   </div>
-                  <div>•</div>
+                  <span className="hidden sm:inline">•</span>
                   <div>
                     Dept: <span className="text-stone-700">{act.student.department}</span>
                   </div>
-                  <div>•</div>
+                  <span className="hidden sm:inline">•</span>
                   <div>
                     Assigned Lead: <strong className="text-stone-900">{act.assigned_to}</strong>
                   </div>
@@ -218,10 +225,10 @@ export default function InterventionsPage() {
               </div>
 
               {/* Status Toggle & Inspection */}
-              <div className="flex items-center gap-3 self-end md:self-center">
+              <div className="flex items-center justify-between w-full md:w-auto gap-3 pt-2 md:pt-0 border-t md:border-t-0 border-stone-100">
                 <button
                   onClick={() => handleStatusChange(act.id, act.status)}
-                  className={`px-4 py-1.5 rounded-full text-xs font-semibold border transition-all ${
+                  className={`flex-1 md:flex-initial px-4 py-2 sm:py-1.5 rounded-full text-xs font-semibold border transition-all text-center ${
                     act.status === "Completed"
                       ? "bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100"
                       : act.status === "In Progress"
@@ -235,7 +242,7 @@ export default function InterventionsPage() {
 
                 <button
                   onClick={() => setSelectedStudent(act.student)}
-                  className="p-2 rounded-full bg-[#FAF8F5] border border-[#EAE5DC] text-stone-600 hover:text-stone-900 hover:bg-stone-100 transition-colors"
+                  className="p-2 sm:p-2 rounded-full bg-[#FAF8F5] border border-[#EAE5DC] text-stone-600 hover:text-stone-900 hover:bg-stone-100 transition-colors shrink-0"
                   title="Inspect Student 360 Profile"
                 >
                   <Eye className="w-4 h-4" />
@@ -253,6 +260,7 @@ export default function InterventionsPage() {
           onClose={() => setSelectedStudent(null)}
         />
       )}
-    </div>
+      </div>
+    </WorkspaceShell>
   );
 }
