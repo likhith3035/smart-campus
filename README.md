@@ -146,15 +146,18 @@
 - **3-Stage Workflow:** Kanban lifecycle (*Pending Review* $\to$ *In Progress / Dispatched* $\to$ *Resolved*).
 - **Categorized Streams:** Academic Tutoring, Placement Bootcamps, Attendance Counseling, and Faculty Mentorship.
 
-### 15. Universal Data Ingestion & Smart Schema Mapper (`/upload`)
-- **Format Agnostic:** Drag-and-drop CSV, XLSX, and XLS file ingestion powered by SheetJS.
+### 15. Universal Data Ingestion & Direct Raw CSV Paste (`/upload`)
+- **Direct Raw Text Paste Mode:** Paste raw comma-separated or tab-delimited text directly into the web console. Automatic sanitization strips trailing punctuation (e.g., `97 .`), handles commas/tabs, and removes empty rows.
+- **1-Click Sample Pre-Fill:** Built-in `⚡ Pre-fill NBKRIST Sample (8 Students)` button for instantaneous evaluator testing.
+- **Format Agnostic File Upload:** Drag-and-drop CSV, XLSX, and XLS file ingestion powered by SheetJS.
 - **Fuzzy Alias Recognition:** Maps non-standard aliases (e.g., `usn`, `arrears`, `rollno`, `marks`) to canonical headers.
 - **Dynamic Weight Normalization:** Re-balances scoring weights to 100% if datasets lack specific columns (e.g., LMS tracking).
 
-### 16. Synthetic Dataset Generator & Prompt Studio (`/about`)
-- **In-Browser CSV Synthesis:** Generates 25 to 200 realistic student records with correlated collegiate distributions in 1 click.
-- **Scenario Options:** Realistic Mix (18% at-risk), Stress Test (40% high risk), and Thriving Cohort (5% at-risk).
-- **LLM Prompt Studio:** Tailored, copy-ready prompts for ChatGPT, Claude, and DeepSeek.
+### 16. Integrated AI Dataset Prompt Studio & Generator (`/upload` & `/about`)
+- **3-in-1 Ingestion Switcher:** Available directly on the Ingestion Portal (`/upload`) and About page (`/about`).
+- **1-Click Direct In-Memory Ingest:** Click `⚡ Ingest Directly in Memory` to synthesize and hydrate 25 to 200 student records instantly with zero file download friction.
+- **In-Browser CSV Synthesis:** Generates realistic collegiate distributions (Realistic 18% at-risk, Stress Test 40%, Thriving Cohort 5%).
+- **LLM Prompt Studio:** Tailored, copy-ready prompt generator for ChatGPT, Claude, and DeepSeek.
 
 ### 17. PWA Offline Resilience & Network Guard (`/offline`)
 - **Service Worker Caching:** Caches the core app shell and sample cohort data locally in browser storage.
