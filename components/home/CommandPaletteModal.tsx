@@ -101,8 +101,14 @@ export function CommandPaletteModal({
   ];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4 bg-black/50 backdrop-blur-xs animate-in fade-in duration-150">
-      <div className="relative w-full max-w-2xl bg-white rounded-2xl shadow-2xl border border-stone-200 overflow-hidden">
+    <div
+      onClick={onClose}
+      className="fixed inset-0 z-50 flex items-start justify-center pt-16 sm:pt-20 px-3 sm:px-4 bg-black/50 backdrop-blur-xs animate-in fade-in duration-150 cursor-pointer"
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="relative w-full max-w-2xl bg-white rounded-2xl shadow-2xl border border-stone-200 overflow-hidden cursor-default"
+      >
         {/* Search Input Bar */}
         <div className="flex items-center gap-3 px-4 py-3.5 border-b border-stone-100 bg-[#FAF8F5]">
           <Search className="w-5 h-5 text-stone-400 shrink-0" />
@@ -114,18 +120,29 @@ export function CommandPaletteModal({
             placeholder="Search students, roll numbers, departments, or actions..."
             className="w-full bg-transparent text-sm text-[#111827] placeholder-stone-400 focus:outline-none"
           />
-          {query ? (
+          <div className="flex items-center gap-1.5 shrink-0">
+            {query && (
+              <button
+                type="button"
+                onClick={() => setQuery("")}
+                className="p-1 rounded-md text-stone-400 hover:text-stone-700 cursor-pointer"
+                title="Clear search text"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            )}
             <button
-              onClick={() => setQuery("")}
-              className="p-1 rounded-md text-stone-400 hover:text-stone-700"
+              type="button"
+              onClick={onClose}
+              className="p-1.5 rounded-lg text-stone-400 hover:text-stone-700 hover:bg-stone-200/60 transition-colors cursor-pointer"
+              title="Close search popup (ESC or click outside)"
             >
               <X className="w-4 h-4" />
             </button>
-          ) : (
             <kbd className="hidden sm:inline-flex items-center gap-0.5 px-2 py-0.5 rounded text-[10px] font-mono text-stone-400 bg-stone-200/60 border border-stone-300/80">
               ESC
             </kbd>
-          )}
+          </div>
         </div>
 
         {/* Content area */}

@@ -98,9 +98,15 @@ export function ExecutiveBriefModal({
   });
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-0 sm:p-4 bg-stone-900/60 backdrop-blur-sm animate-in fade-in duration-200 print:p-0 print:bg-white print:static">
+    <div
+      onClick={onClose}
+      className="fixed inset-0 z-50 flex items-center justify-center p-0 sm:p-4 bg-stone-900/60 backdrop-blur-sm animate-in fade-in duration-200 print:p-0 print:bg-white print:static cursor-pointer"
+    >
       {/* Modal Container */}
-      <div className="relative w-full max-w-4xl max-h-[94vh] overflow-y-auto rounded-3xl bg-white border border-stone-300 shadow-2xl flex flex-col text-[#111827] print:border-none print:shadow-none print:max-h-none print:w-full print:rounded-none">
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="relative w-full max-w-4xl max-h-[94vh] overflow-y-auto rounded-3xl bg-white border border-stone-300 shadow-2xl flex flex-col text-[#111827] print:border-none print:shadow-none print:max-h-none print:w-full print:rounded-none cursor-default"
+      >
         
         {/* Screen-Only Top Control Bar */}
         <div className="sticky top-0 z-20 px-6 py-3.5 bg-stone-900 text-white flex items-center justify-between border-b border-stone-800 print:hidden">

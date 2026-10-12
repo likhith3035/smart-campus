@@ -123,8 +123,14 @@ export function StudentModal({ student, onClose, onUpdateAction }: StudentModalP
   const deltaScore = simResult ? Number((simResult.success_score - student.success_score).toFixed(1)) : 0;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-stone-900/50 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="relative w-full max-w-4xl max-h-[92vh] sm:max-h-[90vh] overflow-y-auto rounded-t-3xl sm:rounded-3xl bg-white border border-[#E5E0D8] shadow-2xl text-[#121826] flex flex-col">
+    <div
+      onClick={onClose}
+      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-stone-900/50 backdrop-blur-sm animate-in fade-in duration-200 cursor-pointer"
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="relative w-full max-w-4xl max-h-[92vh] sm:max-h-[90vh] overflow-y-auto rounded-t-3xl sm:rounded-3xl bg-white border border-[#E5E0D8] shadow-2xl text-[#121826] flex flex-col cursor-default"
+      >
         {/* Mobile Drag Indicator Handle */}
         <div className="sm:hidden flex justify-center pt-2.5 pb-1 bg-[#FAF8F5]/90">
           <div className="w-10 h-1 rounded-full bg-stone-300"></div>
