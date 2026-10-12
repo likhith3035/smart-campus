@@ -156,7 +156,10 @@ function WorkspaceShellInner({ children }: WorkspaceShellProps) {
                   <X className="w-4 h-4" />
                 </button>
               </div>
-              <InstitutionalSidebar />
+              <InstitutionalSidebar
+                isMobileDrawer={true}
+                onItemClick={() => setMobileOpen(false)}
+              />
             </div>
 
             {/* Mobile Drawer Institutional Utilities */}

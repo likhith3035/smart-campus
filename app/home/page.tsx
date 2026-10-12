@@ -417,10 +417,11 @@ export default function CampusHomePage() {
             </Link>
           </div>
 
-          {/* 3 Department Cards Row */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-            {departmentBreakdown.map((d) => {
+          {/* 3 Department Cards Row (1-col mobile, 2-col tablet, 3-col desktop) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+            {departmentBreakdown.map((d, idx) => {
               const isSelected = selectedDeptFilter === d.dept;
+              const isLastOdd = idx === 2;
               return (
                 <div
                   key={d.dept}
@@ -428,19 +429,21 @@ export default function CampusHomePage() {
                     setSelectedDeptFilter(isSelected ? null : d.dept)
                   }
                   className={`p-3.5 rounded-xl border transition-all cursor-pointer group flex flex-col justify-between ${
+                    isLastOdd ? "md:col-span-2 lg:col-span-1" : ""
+                  } ${
                     isSelected
                       ? "bg-stone-50 border-stone-800 shadow-md ring-2 ring-stone-900"
                       : "bg-white border-stone-200/90 hover:border-stone-400 shadow-2xs"
                   }`}
                 >
                   <div>
-                    <div className="flex items-center justify-between gap-2 mb-3">
-                      <div className="flex items-center gap-2.5">
-                        <div className="w-9 h-9 rounded-xl bg-stone-100 border border-stone-200 flex items-center justify-center font-bold text-xs text-stone-800 font-mono">
+                    <div className="flex items-start justify-between gap-2 mb-3">
+                      <div className="flex items-center gap-2.5 min-w-0">
+                        <div className="w-9 h-9 rounded-xl bg-stone-100 border border-stone-200 flex items-center justify-center font-bold text-xs text-stone-800 font-mono shrink-0">
                           {d.code}
                         </div>
-                        <div>
-                          <h3 className="font-extrabold text-sm text-[#111827] group-hover:text-blue-600 transition-colors">
+                        <div className="min-w-0">
+                          <h3 className="font-extrabold text-sm text-[#111827] group-hover:text-blue-600 transition-colors truncate" title={d.dept}>
                             {d.dept}
                           </h3>
                           <span className="text-[11px] text-[#78716C]">
@@ -449,8 +452,8 @@ export default function CampusHomePage() {
                         </div>
                       </div>
 
-                      <div className="flex items-center gap-1.5">
-                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold border bg-rose-50 text-rose-600 border-rose-200">
+                      <div className="flex items-center gap-1.5 shrink-0">
+                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold border bg-rose-50 text-rose-600 border-rose-200 whitespace-nowrap">
                           {d.status}
                         </span>
                         <ChevronRight className="w-3.5 h-3.5 text-stone-400 group-hover:translate-x-0.5 transition-transform" />
@@ -536,6 +539,11 @@ export default function CampusHomePage() {
           </div>
 
           <div className="bg-white rounded-2xl border border-stone-200/90 shadow-2xs overflow-hidden">
+            {/* Mobile Horizontal Scroll Affordance Indicator */}
+            <div className="sm:hidden px-3.5 py-1.5 bg-stone-50 border-b border-stone-200/80 text-[10.5px] text-stone-500 font-medium flex items-center justify-between">
+              <span>← Swipe table horizontally for all metrics →</span>
+              <span className="text-[9.5px] font-bold text-blue-600 font-mono uppercase bg-blue-50 px-1.5 py-0.5 rounded border border-blue-200/60">Scrollable</span>
+            </div>
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
                 <thead className="bg-stone-50 border-b border-stone-200 text-[#78716C] font-semibold uppercase tracking-wider text-[10px]">

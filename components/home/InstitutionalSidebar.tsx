@@ -19,7 +19,15 @@ import {
 } from "lucide-react";
 import { CampusIQLogo } from "@/components/brand/CampusIQLogo";
 
-export function InstitutionalSidebar() {
+interface InstitutionalSidebarProps {
+  isMobileDrawer?: boolean;
+  onItemClick?: () => void;
+}
+
+export function InstitutionalSidebar({
+  isMobileDrawer = false,
+  onItemClick,
+}: InstitutionalSidebarProps) {
   const pathname = usePathname();
   const { isCollapsed, toggleSidebar } = useSidebar();
   const { institutionProfile } = useStudentData();
@@ -38,35 +46,40 @@ export function InstitutionalSidebar() {
 
   return (
     <aside
-      className={`bg-[#FAF7F2] border-r border-[#EAE5DC] flex flex-col justify-between shrink-0 h-screen sticky top-0 select-none overflow-y-auto transition-all duration-300 ease-in-out z-40 ${
-        isCollapsed ? "w-16 p-2 items-center" : "w-56 p-3.5"
+      className={`bg-[#FAF7F2] select-none flex flex-col justify-between transition-all duration-300 ease-in-out z-40 ${
+        isMobileDrawer
+          ? "w-full p-3.5 space-y-4"
+          : isCollapsed
+          ? "w-16 p-2 items-center border-r border-[#EAE5DC] shrink-0 h-screen sticky top-0 overflow-y-auto"
+          : "w-56 p-3.5 border-r border-[#EAE5DC] shrink-0 h-screen sticky top-0 overflow-y-auto"
       }`}
     >
-      {/* ─── Top Brand Header ─── */}
+      {/* ─── Top Brand Header (Hidden in Mobile Drawer since Drawer already has its own Header) ─── */}
       <div className="space-y-4 w-full">
-        {/* Brand & Toggle Row */}
-        <div className={`flex items-center ${isCollapsed ? "justify-center flex-col gap-2" : "justify-between"}`}>
-          <Link href="/" className="flex items-center group transition-transform hover:opacity-95" title="Return to Public Showcase">
-            {isCollapsed ? (
-              <CampusIQLogo size="sm" showText={false} />
-            ) : (
-              <CampusIQLogo size="sm" showSubtitle={true} />
-            )}
-          </Link>
+        {!isMobileDrawer && (
+          <div className={`flex items-center ${isCollapsed ? "justify-center flex-col gap-2" : "justify-between"}`}>
+            <Link href="/" className="flex items-center group transition-transform hover:opacity-95" title="Return to Public Showcase">
+              {isCollapsed ? (
+                <CampusIQLogo size="sm" showText={false} />
+              ) : (
+                <CampusIQLogo size="sm" showSubtitle={true} />
+              )}
+            </Link>
 
-          {/* Collapse/Expand Toggle Button */}
-          <button
-            onClick={toggleSidebar}
-            title={isCollapsed ? "Expand Sidebar (Open)" : "Collapse Sidebar (Close)"}
-            className="p-1 rounded-lg border border-stone-200/80 bg-white hover:bg-stone-100 text-stone-600 hover:text-black transition-colors shadow-2xs cursor-pointer shrink-0"
-          >
-            {isCollapsed ? (
-              <PanelLeftOpen className="w-3.5 h-3.5 text-blue-600" />
-            ) : (
-              <PanelLeftClose className="w-3.5 h-3.5 text-stone-500" />
-            )}
-          </button>
-        </div>
+            {/* Collapse/Expand Toggle Button */}
+            <button
+              onClick={toggleSidebar}
+              title={isCollapsed ? "Expand Sidebar (Open)" : "Collapse Sidebar (Close)"}
+              className="p-1 rounded-lg border border-stone-200/80 bg-white hover:bg-stone-100 text-stone-600 hover:text-black transition-colors shadow-2xs cursor-pointer shrink-0"
+            >
+              {isCollapsed ? (
+                <PanelLeftOpen className="w-3.5 h-3.5 text-blue-600" />
+              ) : (
+                <PanelLeftClose className="w-3.5 h-3.5 text-stone-500" />
+              )}
+            </button>
+          </div>
+        )}
 
         {/* ─── Navigation List ─── */}
         <nav className="space-y-1 w-full">
@@ -77,8 +90,9 @@ export function InstitutionalSidebar() {
               <div key={item.href} className="relative group">
                 <Link
                   href={item.href}
+                  onClick={onItemClick}
                   className={`w-full flex items-center rounded-xl text-xs font-semibold transition-all ${
-                    isCollapsed
+                    isCollapsed && !isMobileDrawer
                       ? "justify-center p-2.5"
                       : "justify-between px-3 py-2"
                   } ${
