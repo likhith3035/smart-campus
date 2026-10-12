@@ -288,7 +288,7 @@ function WorkspaceShellInner({ children }: WorkspaceShellProps) {
                 type="button"
                 onClick={() => setNotificationOpen(!notificationOpen)}
                 aria-label="Institutional Alerts"
-                className="p-2 rounded-xl border border-stone-200/90 bg-white text-stone-700 hover:bg-stone-50 transition-colors relative shadow-2xs"
+                className="p-2 rounded-xl border border-stone-200/90 bg-white text-stone-700 hover:bg-stone-50 transition-colors relative shadow-2xs cursor-pointer"
               >
                 <Bell className="w-4 h-4 text-stone-600" />
                 <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-rose-500 text-white font-mono text-[9px] font-bold flex items-center justify-center border-2 border-white">
@@ -448,30 +448,29 @@ function WorkspaceShellInner({ children }: WorkspaceShellProps) {
             </button>
 
             {/* Notification Bell */}
-            <div className="relative">
-              <button
-                onClick={() => setNotificationOpen(!notificationOpen)}
-                className="p-2 rounded-lg bg-white border border-stone-200/90 text-stone-700 hover:bg-stone-50 transition-all relative shadow-2xs cursor-pointer"
-                title="Institutional Alerts"
-              >
-                <Bell className="w-3.5 h-3.5" />
-                <span className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-rose-500 text-white font-mono text-[8px] font-bold flex items-center justify-center border border-white">
-                  2
-                </span>
-              </button>
-
-              <NotificationDrawer
-                isOpen={notificationOpen}
-                onClose={() => setNotificationOpen(false)}
-                debarmentCount={debarmentCount}
-              />
-            </div>
+            <button
+              onClick={() => setNotificationOpen(!notificationOpen)}
+              className="p-2 rounded-lg bg-white border border-stone-200/90 text-stone-700 hover:bg-stone-50 transition-all relative shadow-2xs cursor-pointer"
+              title="Institutional Alerts"
+            >
+              <Bell className="w-3.5 h-3.5" />
+              <span className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-rose-500 text-white font-mono text-[8px] font-bold flex items-center justify-center border border-white">
+                2
+              </span>
+            </button>
           </div>
         </header>
 
         {/* Main Page Content */}
         <div className="flex-1">{children}</div>
       </div>
+
+      {/* Global Institutional Alerts Drawer (Works seamlessly on mobile & desktop) */}
+      <NotificationDrawer
+        isOpen={notificationOpen}
+        onClose={() => setNotificationOpen(false)}
+        debarmentCount={debarmentCount}
+      />
 
       {/* Global Command Palette Modal (works on every page!) */}
       <CommandPaletteModal
