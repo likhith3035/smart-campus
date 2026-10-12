@@ -1,0 +1,35 @@
+{
+  "cluster_info": {
+    "0": {
+      "name": "Consistent All-Rounder",
+      "tagline": "High Academics, Strong Placement Readiness, Active Leader",
+      "color": "#8B5CF6",
+      "strategy": "Fast-track for Tier-1 dream company recruitment, peer mentoring leadership roles"
+    },
+    "1": {
+      "name": "Critical Multi-Risk",
+      "tagline": "Low Academic Foundation, Attendance Breach & Placement Deficits",
+      "color": "#EF4444",
+      "strategy": "Immediate Dean/HOD intervention, 1-on-1 faculty mentor assignment, attendance remediation plan"
+    },
+    "2": {
+      "name": "The Scholar",
+      "tagline": "High Academics, Low Placement/Coding Readiness",
+      "color": "#3B82F6",
+      "strategy": "Enroll in DSA bootcamps, mock interview workshops, and coding challenges"
+    },
+    "3": {
+      "name": "Practical Builder",
+      "tagline": "Exceptional Coding & Projects, Fragile Academic Base",
+      "color": "#10B981",
+      "strategy": "Provide fast-track academic tutoring to clear backlogs and maintain minimum recruitment CGPA cutoffs"
+    }
+  },
+  "total_students": 600,
+  "cluster_counts": {
+    "Consistent All-Rounder": 122,
+    "Critical Multi-Risk": 133,
+    "The Scholar": 223,
+    "Practical Builder": 122
+  }
+}
