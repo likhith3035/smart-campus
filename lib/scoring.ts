@@ -1,6 +1,17 @@
 import { StudentProfile, ExplainabilityDriver, PrescriptiveAction, StudentSegment } from "./types";
 
-export function calculateStudentSuccessScore(s: Partial<StudentProfile>): {
+export function calculateStudentSuccessScore(
+  s: Partial<StudentProfile>,
+  adaptiveWeights?: {
+    academic: number;
+    placement: number;
+    attendance: number;
+    lms: number;
+    skills: number;
+    extracurricular: number;
+    feedback: number;
+  }
+): {
   success_score: number;
   overall_tier: "Thriving" | "Moderate Risk" | "High Risk";
   risk_flags: StudentProfile["risk_flags"];
@@ -33,15 +44,25 @@ export function calculateStudentSuccessScore(s: Partial<StudentProfile>): {
   const c_eng = Math.min(100.0, (hackathons_participated * 30.0) + (clubs_count * 20.0) + 20.0);
   const c_feed = faculty_sentiment * 100.0;
 
-  // 2. Linear Weighted Composite
+  // 2. Linear Weighted Composite (Default or Adaptive)
+  const w = adaptiveWeights ?? {
+    academic: 0.30,
+    placement: 0.20,
+    attendance: 0.15,
+    lms: 0.15,
+    skills: 0.10,
+    extracurricular: 0.05,
+    feedback: 0.05,
+  };
+
   const raw_weighted = (
-    0.30 * c_acad +
-    0.20 * c_place +
-    0.15 * c_attd +
-    0.15 * c_lms +
-    0.10 * c_skills +
-    0.05 * c_eng +
-    0.05 * c_feed
+    w.academic * c_acad +
+    w.placement * c_place +
+    w.attendance * c_attd +
+    w.lms * c_lms +
+    w.skills * c_skills +
+    w.extracurricular * c_eng +
+    w.feedback * c_feed
   );
 
   // 3. Statutory Non-Linear Penalties

@@ -1,0 +1,11 @@
+roll_no,student_name,branch,class_year,percentage_marks,attendance_pct,arrears,coding_score
+2024-CSE-001,Aarav Patel,Computer Science,4,88.5,92.0,0,85
+2024-CSE-002,Bhavna Rao,Computer Science,4,62.0,68.5,2,35
+2024-ECE-105,Chirag Reddy,Electronics & Comm,3,74.5,81.0,0,45
+2024-IT-044,Divya Sharma,Information Tech,3,56.0,62.0,3,25
+2024-MECH-012,Farhan Khan,Mechanical Eng,4,69.0,79.0,1,30
+2024-AI-088,Ishita Nair,AI & Data Science,3,91.0,94.5,0,92
+2024-CSE-077,Karan Joshi,Computer Science,4,58.0,59.0,2,20
+2024-IT-102,Meera Iyer,Information Tech,3,84.0,88.0,0,78
+2024-ECE-039,Nikhil Verma,Electronics & Comm,4,66.0,71.0,1,40
+2024-MECH-055,Pooja Hegde,Mechanical Eng,3,78.5,85.0,0,55
