@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, ReactNode } from "react";
+import { useState, useEffect, useRef, ReactNode } from "react";
 import Link from "next/link";
 import { SidebarProvider, useSidebar } from "./SidebarContext";
 import { InstitutionalSidebar } from "@/components/home/InstitutionalSidebar";
@@ -62,6 +62,50 @@ function WorkspaceShellInner({ children }: WorkspaceShellProps) {
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
+  // Smart Mobile Header: Hide on scroll down, instantly reveal on scroll up
+  const [mobileHeaderVisible, setMobileHeaderVisible] = useState(true);
+
+  useEffect(() => {
+    let lastY = window.scrollY;
+    let ticking = false;
+
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const currentY = window.scrollY;
+
+          // Always show when near the top
+          if (currentY <= 30) {
+            setMobileHeaderVisible(true);
+            lastY = currentY;
+            ticking = false;
+            return;
+          }
+
+          const diff = currentY - lastY;
+
+          // Ignore micro-movements < 6px
+          if (Math.abs(diff) >= 6) {
+            if (diff > 0) {
+              // Scrolling DOWN -> hide header smoothly
+              setMobileHeaderVisible(false);
+            } else {
+              // Scrolling UP -> reveal header immediately!
+              setMobileHeaderVisible(true);
+            }
+            lastY = currentY;
+          }
+
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   const debarmentCount = students.filter((s) => s.attendance_pct < 75).length;
@@ -178,76 +222,84 @@ function WorkspaceShellInner({ children }: WorkspaceShellProps) {
       {/* ───────────────────────────────────────────────────────────
           2. MAIN WORKSPACE CONTAINER
       ─────────────────────────────────────────────────────────── */}
-      <div className="flex-1 min-w-0 flex flex-col overflow-y-auto overflow-x-hidden w-full max-w-full">
-        
-        {/* ─── Mobile Dedicated Sticky Header (< lg screens) ─── */}
-        <header className="lg:hidden sticky top-0 z-40 bg-[#FAF7F2]/95 backdrop-blur-md border-b border-[#ECE7DF] px-3.5 sm:px-5 h-14 flex items-center justify-between gap-3 w-full max-w-full">
-          {/* Brand Logo & Name */}
-          <Link href="/home" className="flex items-center gap-2 shrink-0 group">
-            <div className="w-8 h-8 rounded-xl bg-stone-900 text-white flex items-center justify-center font-black text-sm tracking-tight shadow-2xs group-hover:bg-blue-600 transition-colors">
-              <GraduationCap className="w-4 h-4 stroke-[2.2]" />
+      <div className="flex-1 min-w-0 flex flex-col overflow-x-hidden w-full max-w-full">
+        {/* ─── Mobile Smart Scroll-Direction Fixed Header (< lg screens) ─── */}
+        <div
+          className={`lg:hidden fixed top-0 inset-x-0 z-40 w-full transition-transform duration-300 ease-in-out will-change-transform ${
+            mobileHeaderVisible ? "translate-y-0 shadow-2xs" : "-translate-y-full pointer-events-none"
+          }`}
+        >
+          <header className="bg-[#FAF7F2]/95 backdrop-blur-md border-b border-[#ECE7DF] px-3.5 sm:px-5 h-14 flex items-center justify-between gap-3 w-full max-w-full">
+            {/* Brand Logo & Name */}
+            <Link href="/home" className="flex items-center gap-2 shrink-0 group">
+              <div className="w-8 h-8 rounded-xl bg-stone-900 text-white flex items-center justify-center font-black text-sm tracking-tight shadow-2xs group-hover:bg-blue-600 transition-colors">
+                <GraduationCap className="w-4 h-4 stroke-[2.2]" />
+              </div>
+              <div className="flex items-baseline gap-1.5">
+                <span className="font-extrabold text-base tracking-tight text-[#111827]">
+                  CampusIQ
+                </span>
+                <span className="w-1.5 h-1.5 rounded-full bg-blue-600 animate-pulse" />
+              </div>
+            </Link>
+
+            {/* Quick Action Touch Targets (Search, Alerts, Menu) */}
+            <div className="flex items-center gap-1.5 shrink-0">
+              {/* Quick Search Modal Trigger */}
+              <button
+                type="button"
+                onClick={() => setCommandPaletteOpen(true)}
+                aria-label="Search students & departments"
+                className="p-2 rounded-xl border border-stone-200/90 bg-white text-stone-700 hover:bg-stone-50 transition-colors shadow-2xs"
+              >
+                <Search className="w-4 h-4 text-stone-600" />
+              </button>
+
+              {/* Notification Bell */}
+              <button
+                type="button"
+                onClick={() => setNotificationOpen(!notificationOpen)}
+                aria-label="Institutional Alerts"
+                className="p-2 rounded-xl border border-stone-200/90 bg-white text-stone-700 hover:bg-stone-50 transition-colors relative shadow-2xs"
+              >
+                <Bell className="w-4 h-4 text-stone-600" />
+                <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-rose-500 text-white font-mono text-[9px] font-bold flex items-center justify-center border-2 border-white">
+                  2
+                </span>
+              </button>
+
+              {/* Mobile Drawer Menu Toggle */}
+              <button
+                type="button"
+                onClick={() => setMobileOpen(true)}
+                aria-label="Open institutional menu"
+                className="p-2 rounded-xl border border-stone-200/90 bg-stone-900 text-white hover:bg-black transition-colors shadow-2xs"
+              >
+                <Menu className="w-4 h-4" />
+              </button>
             </div>
-            <div className="flex items-baseline gap-1.5">
-              <span className="font-extrabold text-base tracking-tight text-[#111827]">
-                CampusIQ
-              </span>
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-600 animate-pulse" />
+          </header>
+
+          {/* Mobile Custom Dataset Sub-strip if active */}
+          {isCustomDataset && (
+            <div className="px-3.5 py-1.5 bg-emerald-50 border-b border-emerald-200/80 text-[11px] text-emerald-800 flex items-center justify-between w-full">
+              <div className="flex items-center gap-1.5 truncate">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+                <span className="font-semibold truncate max-w-[200px]">{datasetName}</span>
+                <span className="text-[10px] text-emerald-600 font-mono">({studentCount})</span>
+              </div>
+              <button
+                onClick={resetToDemoData}
+                className="px-2 py-0.5 rounded-md bg-white border border-emerald-300 text-[10px] font-bold text-emerald-700 shrink-0"
+              >
+                Reset
+              </button>
             </div>
-          </Link>
+          )}
+        </div>
 
-          {/* Quick Action Touch Targets (Search, Alerts, Menu) */}
-          <div className="flex items-center gap-1.5 shrink-0">
-            {/* Quick Search Modal Trigger */}
-            <button
-              type="button"
-              onClick={() => setCommandPaletteOpen(true)}
-              aria-label="Search students & departments"
-              className="p-2 rounded-xl border border-stone-200/90 bg-white text-stone-700 hover:bg-stone-50 transition-colors shadow-2xs"
-            >
-              <Search className="w-4 h-4 text-stone-600" />
-            </button>
-
-            {/* Notification Bell */}
-            <button
-              type="button"
-              onClick={() => setNotificationOpen(!notificationOpen)}
-              aria-label="Institutional Alerts"
-              className="p-2 rounded-xl border border-stone-200/90 bg-white text-stone-700 hover:bg-stone-50 transition-colors relative shadow-2xs"
-            >
-              <Bell className="w-4 h-4 text-stone-600" />
-              <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-rose-500 text-white font-mono text-[9px] font-bold flex items-center justify-center border-2 border-white">
-                2
-              </span>
-            </button>
-
-            {/* Mobile Drawer Menu Toggle */}
-            <button
-              type="button"
-              onClick={() => setMobileOpen(true)}
-              aria-label="Open institutional menu"
-              className="p-2 rounded-xl border border-stone-200/90 bg-stone-900 text-white hover:bg-black transition-colors shadow-2xs"
-            >
-              <Menu className="w-4 h-4" />
-            </button>
-          </div>
-        </header>
-
-        {/* Mobile Custom Dataset Sub-strip if active */}
-        {isCustomDataset && (
-          <div className="lg:hidden px-3.5 py-1.5 bg-emerald-50 border-b border-emerald-200/80 text-[11px] text-emerald-800 flex items-center justify-between w-full">
-            <div className="flex items-center gap-1.5 truncate">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-              <span className="font-semibold truncate max-w-[200px]">{datasetName}</span>
-              <span className="text-[10px] text-emerald-600 font-mono">({studentCount})</span>
-            </div>
-            <button
-              onClick={resetToDemoData}
-              className="px-2 py-0.5 rounded-md bg-white border border-emerald-300 text-[10px] font-bold text-emerald-700 shrink-0"
-            >
-              Reset
-            </button>
-          </div>
-        )}
+        {/* Mobile Header Spacer to maintain natural page flow */}
+        <div className={`lg:hidden shrink-0 ${isCustomDataset ? "h-[86px]" : "h-14"}`} />
 
         {/* ─── Desktop Dedicated Top Bar (>= lg screens) ─── */}
         <header className="hidden lg:flex sticky top-0 z-30 bg-[#FAF7F2]/95 backdrop-blur-md border-b border-[#ECE7DF] px-6 xl:px-8 py-3.5 items-center justify-between gap-4 w-full">
