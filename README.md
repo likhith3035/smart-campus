@@ -271,12 +271,12 @@ CampusIQ operates on standard collegiate records. Sample dataset available at [`
 | Team Member | Role & Architectural Responsibilities | Institutional Email |
 | :--- | :--- | :--- |
 | **Pulikonda Srinivas** | **Team Lead** & ML Decision Analytics | `23kb1a3080@nbkrist.org` |
-| **Kami Likith** | System Architecture & Full-Stack Engine | `23kb1a3035@nbkrist.org` |
+| **Kami Likhith** | System Architecture & Full-Stack Engine | `23kb1a3035@nbkrist.org` |
 | **Rudrakota Suchirmai** | Interventions & Behavioral Modeling | `24kb1a3091@nbkrist.org` |
 | **Bandi Mounika** | UI/UX & Responsive Engineering | `24kb1a3008@nbkrist.org` |
 | **Pallumallu Charishma** | Dataset Validation & QA Testing | `24kb1a3076@nbkrist.org` |
 
-- 🌐 **Lead Developer Portfolio:** [https://devlikhith.vercel.app/](https://devlikhith.vercel.app/)
+- 🌐 **Developer Portfolio:** [https://devlikhith.vercel.app/](https://devlikhith.vercel.app/)
 - 🐙 **GitHub Repository:** [https://github.com/likhith3035/smart-campus](https://github.com/likhith3035/smart-campus)
 - 🏆 **Submission Track:** KPMG in India Hackathon — AI-Powered Student Analytics, Decision Intelligence & Success Platform
 
