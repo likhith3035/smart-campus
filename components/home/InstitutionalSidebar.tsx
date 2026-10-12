@@ -32,7 +32,8 @@ export function InstitutionalSidebar() {
     { label: "Interventions", href: "/interventions", icon: Calendar },
     { label: "Data Ingest", href: "/upload", icon: Database },
     { label: "Methodology", href: "/methodology", icon: FileText },
-    { label: "Guide", href: "/about", icon: BookOpen },
+    { label: "Guide", href: "/guide", icon: BookOpen },
+    { label: "About & Team", href: "/about", icon: GraduationCap },
   ];
 
   return (

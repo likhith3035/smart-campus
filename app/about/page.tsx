@@ -172,6 +172,28 @@ Return ONLY the CSV text starting with the header line, no conversational text o
         </p>
       </div>
 
+      {/* ── Feature Guide Navigation Banner ── */}
+      <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-stone-900 to-indigo-950 text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xs">
+        <div className="space-y-0.5">
+          <div className="flex items-center gap-2">
+            <span className="px-2 py-0.5 rounded-full bg-amber-400 text-stone-900 font-mono text-[9px] font-bold uppercase">
+              17 Capabilities Active
+            </span>
+            <span className="text-xs font-bold text-white">Looking for the Complete Platform Feature Directory?</span>
+          </div>
+          <p className="text-[11px] text-stone-300">
+            Explore all 17 capabilities, architecture workflows, micro-previews, and evaluator scoring alignments.
+          </p>
+        </div>
+        <Link
+          href="/guide"
+          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white text-stone-900 hover:bg-stone-100 font-bold text-xs transition-all shrink-0 shadow-2xs hover:scale-105 cursor-pointer"
+        >
+          <span>Open Interactive Feature Guide</span>
+          <ArrowRight className="w-3.5 h-3.5" />
+        </Link>
+      </div>
+
       {/* ───────────────────────────────────────────────────────────
           2. THE PROBLEM VS THE SOLUTION
       ─────────────────────────────────────────────────────────── */}
