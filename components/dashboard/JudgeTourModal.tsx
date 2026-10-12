@@ -107,7 +107,7 @@ export function JudgeTourModal({
       <div className="relative w-full max-w-2xl rounded-3xl bg-white border border-stone-200 shadow-2xl overflow-hidden flex flex-col text-[#111827]">
         
         {/* Header */}
-        <div className="p-6 bg-linear-to-r from-stone-900 via-stone-900 to-purple-950 text-white flex items-center justify-between">
+        <div className="p-6 bg-gradient-to-r from-stone-900 via-stone-900 to-purple-950 text-white flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-xl bg-purple-500/20 border border-purple-400/30 flex items-center justify-center text-purple-300">
               <Zap className="w-4 h-4 text-amber-400" />

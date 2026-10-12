@@ -191,7 +191,7 @@ export default function CampusIQLandingPage() {
           />
 
           {/* Ambient Glow */}
-          <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-linear-to-tr from-blue-100/25 via-amber-100/20 to-emerald-100/15 blur-3xl rounded-full pointer-events-none -z-10" />
+          <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-gradient-to-tr from-blue-100/25 via-amber-100/20 to-emerald-100/15 blur-3xl rounded-full pointer-events-none -z-10" />
 
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 sm:space-y-12">
             
@@ -666,121 +666,127 @@ export default function CampusIQLandingPage() {
           4. INTERACTIVE MATHEMATICAL PENALTY SANDBOX
       ─────────────────────────────────────────────────────────── */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="p-6 sm:p-10 rounded-3xl bg-linear-to-br from-stone-900 to-stone-800 text-white card-shadow-lg space-y-8 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="p-6 sm:p-10 rounded-3xl bg-white border border-[#EAE5DC] card-shadow-lg space-y-8 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl pointer-events-none" />
 
-          <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 border-b border-stone-700">
+          <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 border-b border-stone-200">
             <div>
-              <div className="text-[10px] sm:text-xs font-mono uppercase tracking-widest text-stone-400 font-semibold">
+              <div className="text-[10px] sm:text-xs font-mono uppercase tracking-widest text-[#78716C] font-semibold">
                 [ LIVE MATHEMATICAL SANDBOX ]
               </div>
-              <h2 className="text-3xl sm:text-4xl font-extrabold mt-1 text-white">
+              <h2 className="text-3xl sm:text-4xl font-extrabold mt-1 text-[#111827]">
                 Interactive Non-Linear Penalty Simulator
               </h2>
-              <p className="text-xs sm:text-sm text-stone-300 mt-1">
+              <p className="text-xs sm:text-sm text-[#57534E] mt-1">
                 Drag the sliders to see how real-world academic statutes damp the composite student score.
               </p>
             </div>
 
             <div className="flex items-center gap-2 text-xs font-mono">
-              <span className="px-2.5 py-1 rounded-full bg-stone-800 border border-stone-700 text-stone-300">
-                Formula: S³ = [ ∑ wᵢ · Iᵢ ] × Penalty_Attd × Penalty_Backlogs
+              <span className="px-3.5 py-1.5 rounded-full bg-[#FAF9F6] border border-stone-200 text-stone-700 font-medium shadow-2xs">
+                Formula: <span className="font-semibold text-stone-900">S³ = [ ∑ wᵢ · Iᵢ ] × Penalty_Attd × Penalty_Backlogs</span>
               </span>
             </div>
           </div>
 
           {/* Interactive Controls & Real-Time Output */}
-          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
             
             {/* Control 1: Attendance Slider */}
-            <div className="p-5 rounded-2xl bg-stone-800/80 border border-stone-700 space-y-3">
-              <div className="flex justify-between items-center text-xs">
-                <span className="font-bold text-stone-200">Biometric Attendance:</span>
-                <span className={`font-mono text-base font-extrabold ${isDebarred ? "text-rose-400" : "text-emerald-400"}`}>
-                  {sandboxAttendance}%
-                </span>
-              </div>
-              <input
-                type="range"
-                min="50"
-                max="100"
-                value={sandboxAttendance}
-                onChange={(e) => setSandboxAttendance(Number(e.target.value))}
-                className="w-full accent-blue-500 h-2 bg-stone-700 rounded-lg cursor-pointer"
-              />
-              <div className="flex justify-between text-[10px] text-stone-400 font-mono">
-                <span>50%</span>
-                <span className="text-amber-400 font-bold">75% Cutoff</span>
-                <span>100%</span>
+            <div className="p-5 sm:p-6 rounded-2xl bg-[#FAF9F6] border border-stone-200/90 space-y-4 flex flex-col justify-between">
+              <div className="space-y-3">
+                <div className="flex justify-between items-center text-xs">
+                  <span className="font-bold text-stone-800">Biometric Attendance:</span>
+                  <span className={`font-mono text-lg font-black ${isDebarred ? "text-rose-600" : "text-emerald-700"}`}>
+                    {sandboxAttendance}%
+                  </span>
+                </div>
+                <input
+                  type="range"
+                  min="50"
+                  max="100"
+                  value={sandboxAttendance}
+                  onChange={(e) => setSandboxAttendance(Number(e.target.value))}
+                  className="w-full accent-blue-600 h-2 bg-stone-200 rounded-lg cursor-pointer"
+                />
+                <div className="flex justify-between text-[10px] text-stone-500 font-mono">
+                  <span>50%</span>
+                  <span className="text-amber-700 font-bold">75% Cutoff</span>
+                  <span>100%</span>
+                </div>
               </div>
 
               {isDebarred ? (
-                <div className="p-2 rounded-xl bg-rose-500/20 border border-rose-500/40 text-rose-300 text-[11px] font-semibold flex items-center gap-1.5 animate-pulse">
-                  <AlertOctagon className="w-3.5 h-3.5 shrink-0" />
+                <div className="p-2.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-[11px] font-semibold flex items-center gap-2">
+                  <AlertOctagon className="w-4 h-4 text-rose-600 shrink-0" />
                   <span>Statutory Gate: 0.85× Penalty Enforced!</span>
                 </div>
               ) : (
-                <div className="p-2 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[11px] font-semibold flex items-center gap-1.5">
-                  <Check className="w-3.5 h-3.5 shrink-0" />
+                <div className="p-2.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-[11px] font-semibold flex items-center gap-2">
+                  <Check className="w-4 h-4 text-emerald-600 shrink-0" />
                   <span>Exams Eligible (1.00× Multiplier)</span>
                 </div>
               )}
             </div>
 
             {/* Control 2: Backlogs Counter */}
-            <div className="p-5 rounded-2xl bg-stone-800/80 border border-stone-700 space-y-3">
-              <div className="flex justify-between items-center text-xs">
-                <span className="font-bold text-stone-200">Active Course Backlogs:</span>
-                <span className="font-mono text-base font-extrabold text-amber-400">
-                  {sandboxBacklogs} {sandboxBacklogs === 1 ? "Subject" : "Subjects"}
-                </span>
+            <div className="p-5 sm:p-6 rounded-2xl bg-[#FAF9F6] border border-stone-200/90 space-y-4 flex flex-col justify-between">
+              <div className="space-y-3">
+                <div className="flex justify-between items-center text-xs">
+                  <span className="font-bold text-stone-800">Active Course Backlogs:</span>
+                  <span className="font-mono text-lg font-black text-amber-700">
+                    {sandboxBacklogs} {sandboxBacklogs === 1 ? "Subject" : "Subjects"}
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-4 gap-2 pt-1">
+                  {[0, 1, 2, 3].map((num) => (
+                    <button
+                      key={num}
+                      type="button"
+                      onClick={() => setSandboxBacklogs(num)}
+                      className={`py-2 rounded-xl text-xs font-mono font-bold transition-all ${
+                        sandboxBacklogs === num
+                          ? "bg-stone-900 text-white shadow-xs"
+                          : "bg-white border border-stone-200 text-stone-700 hover:bg-stone-100"
+                      }`}
+                    >
+                      {num}
+                    </button>
+                  ))}
+                </div>
               </div>
 
-              <div className="grid grid-cols-4 gap-2 pt-1">
-                {[0, 1, 2, 3].map((num) => (
-                  <button
-                    key={num}
-                    type="button"
-                    onClick={() => setSandboxBacklogs(num)}
-                    className={`py-2 rounded-xl text-xs font-mono font-bold transition-all ${
-                      sandboxBacklogs === num
-                        ? "bg-blue-600 text-white shadow-xs"
-                        : "bg-stone-700 text-stone-300 hover:bg-stone-600"
-                    }`}
-                  >
-                    {num}
-                  </button>
-                ))}
-              </div>
-
-              <div className="p-2 rounded-xl bg-stone-700/60 border border-stone-600 text-stone-300 text-[11px] font-mono flex items-center justify-between">
+              <div className="p-2.5 rounded-xl bg-stone-100/90 border border-stone-200 text-stone-700 text-[11px] font-mono flex items-center justify-between">
                 <span>Dampening (0.90^{sandboxBacklogs}):</span>
-                <strong className="text-white">{backlogDampener}×</strong>
+                <strong className="text-stone-900 font-bold">{backlogDampener}×</strong>
               </div>
             </div>
 
-            {/* Output Card */}
-            <div className="p-5 rounded-2xl bg-gradient-to-br from-stone-800 to-stone-900 border border-stone-600 space-y-4">
-              <div className="text-xs font-bold uppercase tracking-wider text-stone-400">
-                Composite Multiplier Result
+            {/* Output Card: High-Contrast Engine Display */}
+            <div className="p-5 sm:p-6 rounded-2xl bg-stone-900 text-white border border-stone-800 space-y-4 shadow-md flex flex-col justify-between">
+              <div>
+                <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-stone-400">
+                  COMPOSITE MULTIPLIER RESULT
+                </div>
+
+                <div className="mt-3 space-y-2">
+                  <div className="flex items-baseline justify-between">
+                    <span className="text-xs text-stone-400">Total Penalty Multiplier:</span>
+                    <span className="font-mono text-2xl font-black text-white">
+                      {compositePenalty}×
+                    </span>
+                  </div>
+                  <div className="flex items-baseline justify-between text-xs">
+                    <span className="text-stone-400">Score Impact (82.0 Base):</span>
+                    <span className="font-mono text-2xl font-black text-amber-400">
+                      {penalizedScoreSample} <span className="text-xs text-stone-500 font-normal">/ 100</span>
+                    </span>
+                  </div>
+                </div>
               </div>
 
-              <div className="space-y-1">
-                <div className="flex items-baseline justify-between">
-                  <span className="text-xs text-stone-400">Total Penalty Multiplier:</span>
-                  <span className="font-mono text-2xl font-black text-white">
-                    {compositePenalty}×
-                  </span>
-                </div>
-                <div className="flex items-baseline justify-between text-xs">
-                  <span className="text-stone-400">Score Impact (82.0 Base):</span>
-                  <span className="font-mono text-xl font-bold text-amber-400">
-                    {penalizedScoreSample} <span className="text-xs text-stone-500 font-normal">/ 100</span>
-                  </span>
-                </div>
-              </div>
-
-              <div className="text-[11px] text-stone-400 border-t border-stone-700/80 pt-2 leading-tight">
+              <div className="text-[11px] text-stone-400 border-t border-stone-800 pt-3 leading-relaxed">
                 {isDebarred || sandboxBacklogs > 0
                   ? `Math protects the institution: score reduced by ${Math.round((1 - compositePenalty) * 100)}% due to active academic risk gates.`
                   : "Zero statutory penalties active. Student operating at 100% potential."}
@@ -953,7 +959,7 @@ export default function CampusIQLandingPage() {
           6. INSTITUTIONAL COHORT IMPACT CALCULATOR WITH PRESETS
       ─────────────────────────────────────────────────────────── */}
       <section id="calculator" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="p-6 sm:p-10 rounded-3xl bg-linear-to-br from-[#FAF7F2] to-white border border-[#EAE5DC] card-shadow-lg space-y-8">
+        <div className="p-6 sm:p-10 rounded-3xl bg-gradient-to-br from-[#FAF7F2] to-white border border-[#EAE5DC] card-shadow-lg space-y-8">
           
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 border-b border-stone-200">
             <div>
