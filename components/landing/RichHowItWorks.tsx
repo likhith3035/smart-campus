@@ -3,76 +3,108 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import {
-  FileSpreadsheet,
+  Database,
+  GitFork,
+  ShieldCheck,
   CheckCircle2,
+  FileSpreadsheet,
+  ArrowRight,
+  Upload,
   Sparkles,
   ShieldAlert,
-  ArrowRight,
-  TrendingUp,
-  Cpu,
-  Zap,
   Play,
   Pause,
-  SlidersHorizontal,
-  ChevronRight,
-  BarChart3,
-  Users,
-  AlertTriangle,
-  RotateCcw,
   Check,
+  Info,
+  ChevronRight,
+  Smartphone,
+  Cpu,
+  Zap,
 } from "lucide-react";
 
 export function RichHowItWorks() {
   const [activeStep, setActiveStep] = useState<number>(0);
-  const [isPlaying, setIsPlaying] = useState<boolean>(true);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
 
-  // Step 2 interactive sandbox attendance inside preview
-  const [demoAttendance, setDemoAttendance] = useState<number>(72);
+  // Step 2 interactive fuzzy mapping simulation
+  const [step2Filter, setStep2Filter] = useState<string>("all");
+
+  // Step 3 interactive attendance slider
+  const [demoAttendance, setDemoAttendance] = useState<number>(71);
   const isDebarred = demoAttendance < 75;
 
-  // Step 4 interactive recovery simulation
-  const [recoverySimulated, setRecoverySimulated] = useState<boolean>(false);
+  // Step 4 interactive recovery toggle
+  const [recoveryApplied, setRecoveryApplied] = useState<boolean>(false);
 
+  // 4 Workflow Steps matching the exact inspiration architecture
   const steps = [
     {
-      stepNumber: "01",
-      badge: "DATA INGESTION",
-      badgeColor: "bg-blue-100 text-blue-700 border-blue-200",
-      title: "Universal Ingestion & Fuzzy Schema Mapping",
-      subtitle:
-        "Upload any college spreadsheet without reformatting. The engine matches non-standard column headers automatically.",
-      metric: "99.4% Auto-Map Accuracy",
-      icon: FileSpreadsheet,
+      id: "import",
+      number: 1,
+      tabTitle: "1. Import & Validate",
+      icon: Database,
+      stepBadge: "STEP 1",
+      title: "Import & Validate Your Student Data",
+      description:
+        "Upload your institutional data files (CSV or Excel), and let CampusIQ validate, clean, and prepare the records for analysis.",
+      bullets: [
+        "Support for CSV, XLS, and XLSX formats with universal fallback",
+        "Automatic data validation, missing value detection, and type inference",
+        "Encrypted local processing with zero external data leakage",
+      ],
+      primaryCta: { label: "Upload Data File", href: "/upload" },
+      secondaryCta: { label: "Try a Sample CSV →", href: "/home" },
     },
     {
-      stepNumber: "02",
-      badge: "MATHEMATICAL ENGINE",
-      badgeColor: "bg-amber-100 text-amber-800 border-amber-200",
-      title: "Non-Linear Statutory Scoring & Penalty Gates",
-      subtitle:
-        "Standard averages fail because a 9.5 CGPA student with 60% attendance is legally debarred. CampusIQ enforces statutory multipliers.",
-      metric: "0.85× Statutory Multiplier",
-      icon: Cpu,
+      id: "map",
+      number: 2,
+      tabTitle: "2. Map Data Fields",
+      icon: GitFork,
+      stepBadge: "STEP 2",
+      title: "Universal Schema & Fuzzy Auto-Mapping",
+      description:
+        "Every college formats column names differently. Our fuzzy Levenshtein engine auto-maps disparate headers to canonical pillars.",
+      bullets: [
+        "Fuzzy string distance & synonym detection across 7 collegiate silos",
+        "Dynamic weight re-normalization when optional columns are absent",
+        "Zero schema-break crashes — statistically consistent composite scoring",
+      ],
+      primaryCta: { label: "View Schema Mapper", href: "/methodology" },
+      secondaryCta: { label: "Review Canonical Specs →", href: "/methodology" },
     },
     {
-      stepNumber: "03",
-      badge: "EXPLAINABLE TRIAGE",
-      badgeColor: "bg-purple-100 text-purple-700 border-purple-200",
-      title: "360° Student Diagnostics & SHAP Risk Drivers",
-      subtitle:
-        "Mentors don't just see a score; they see why. Positive and negative driving signals identify the exact bottleneck.",
-      metric: "7 Unified Collegiate Silos",
-      icon: Sparkles,
+      id: "risks",
+      number: 3,
+      tabTitle: "3. Understand Risks",
+      icon: ShieldCheck,
+      stepBadge: "STEP 3",
+      title: "Statutory Debarment & Multi-Silo Scoring",
+      description:
+        "Traditional averages fail because a 9.2 CGPA student below 75% attendance is legally debarred. CampusIQ enforces statutory multiplier gates.",
+      bullets: [
+        "Non-linear 0.85× multiplier gate triggered immediately below 75% attendance",
+        "Exponential backlog dampening: compound penalty for active theory arrears",
+        "Explainable SHAP driver attribution: transparent positive and negative factors",
+      ],
+      primaryCta: { label: "Explore Risk Directory", href: "/faculty" },
+      secondaryCta: { label: "Read Academic Statutes →", href: "/methodology" },
     },
     {
-      stepNumber: "04",
-      badge: "PRESCRIPTIVE ACTION",
-      badgeColor: "bg-emerald-100 text-emerald-800 border-emerald-200",
+      id: "support",
+      number: 4,
+      tabTitle: "4. Plan & Track Support",
+      icon: CheckCircle2,
+      stepBadge: "STEP 4",
       title: "Closed-Loop Dispatch & What-If Recovery",
-      subtitle:
-        "Simulate counterfactual recovery before intervening. Preview score uplift from attendance remedies and DSA bootcamps.",
-      metric: "+24.5% Placement Uplift",
-      icon: Zap,
+      description:
+        "Move from diagnostic insight to prescriptive recovery. Mentors simulate projected score recovery before dispatching interventions.",
+      bullets: [
+        "Counterfactual What-If Simulator: preview attendance make-up & DSA training",
+        "1-Click Automated Mentor Assignment with HOD and Dean escalations",
+        "Export prescriptive intervention logs directly into university ERP portals",
+      ],
+      primaryCta: { label: "Open Faculty Workspace", href: "/faculty" },
+      secondaryCta: { label: "Launch Executive Brief →", href: "/home" },
     },
   ];
 
@@ -81,38 +113,46 @@ export function RichHowItWorks() {
     if (!isPlaying) return;
     const timer = setInterval(() => {
       setActiveStep((prev) => (prev + 1) % steps.length);
-    }, 6500);
+    }, 7000);
     return () => clearInterval(timer);
   }, [isPlaying, steps.length]);
 
   return (
-    <section id="how-it-works" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-4 sm:scroll-mt-6">
+    <section
+      id="how-it-works"
+      className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-4 sm:scroll-mt-6"
+    >
       <div className="rounded-3xl sm:rounded-[36px] bg-white border border-[#EAE5DC] p-6 sm:p-10 lg:p-12 shadow-xl space-y-8 sm:space-y-10 relative overflow-hidden">
-        {/* Ambient decorative glow */}
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-br from-blue-100/30 via-indigo-100/20 to-transparent rounded-full blur-3xl pointer-events-none -z-0" />
+        {/* Subtle ambient lighting */}
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-blue-100/30 rounded-full blur-3xl pointer-events-none -z-0" />
 
-        {/* Section Header */}
+        {/* ── Section Header matching the reference design ── */}
         <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-stone-200/80">
-          <div className="space-y-2 max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200/80 text-[11px] font-mono font-bold text-blue-700 tracking-wider uppercase">
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-600 animate-pulse" />
-              <span>Real-Time Engine Walkthrough</span>
+          <div className="space-y-3 max-w-2xl">
+            {/* Blue pill badge: ● OUR WORKFLOW */}
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200/90 text-[11px] font-mono font-bold text-blue-700 tracking-wider uppercase">
+              <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse" />
+              <span>OUR WORKFLOW</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-black tracking-tight text-[#111827] leading-tight">
-              How CampusIQ Works in 4 Steps
+
+            {/* Main Headline */}
+            <h2 className="text-3xl sm:text-4xl lg:text-[44px] font-black tracking-tight text-[#111827] leading-tight">
+              From Campus Data <br className="hidden sm:inline" />
+              to Meaningful Action
             </h2>
-            <p className="text-sm sm:text-base text-stone-600 leading-relaxed">
-              Explore how raw institutional spreadsheets are transformed into early debarment alerts and measurable student success.
+
+            {/* Subtitle */}
+            <p className="text-sm sm:text-base text-stone-600 leading-relaxed max-w-xl">
+              A transparent and intelligent workflow to understand student success and plan timely interventions.
             </p>
           </div>
 
-          {/* Auto-Play Toggle & Step Selector */}
+          {/* Controls: Auto-tour & Workspace shortcut */}
           <div className="flex items-center gap-3 shrink-0">
             <button
               type="button"
               onClick={() => setIsPlaying(!isPlaying)}
-              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full border border-stone-200 bg-[#FAF8F5] hover:bg-stone-100 text-xs font-semibold text-stone-700 transition-all cursor-pointer shadow-2xs"
-              title={isPlaying ? "Pause auto-walkthrough" : "Play auto-walkthrough"}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-stone-200 bg-[#FAF8F5] hover:bg-stone-100 text-xs font-semibold text-stone-700 transition-all cursor-pointer shadow-2xs"
             >
               {isPlaying ? (
                 <>
@@ -122,194 +162,231 @@ export function RichHowItWorks() {
               ) : (
                 <>
                   <Play className="w-3.5 h-3.5 text-stone-600 fill-current" />
-                  <span className="font-mono text-[11px]">Resume Tour</span>
+                  <span className="font-mono text-[11px]">Auto Tour</span>
                 </>
               )}
             </button>
+            <Link
+              href="/home"
+              className="px-4 py-2 rounded-full bg-[#111827] hover:bg-black text-white text-xs font-semibold inline-flex items-center gap-1.5 shadow-xs transition-all"
+            >
+              <span>Try Live Platform</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
           </div>
         </div>
 
-        {/* 4 Interactive Step Navigation Cards (Horizontal Grid) */}
-        <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+        {/* ── 4 Connected Workflow Pill Tabs (Exact Reference Style) ── */}
+        <div className="relative z-10 flex flex-wrap items-center gap-2.5 sm:gap-3">
           {steps.map((st, idx) => {
             const isActive = activeStep === idx;
             const Icon = st.icon;
             return (
               <button
-                key={st.stepNumber}
+                key={st.id}
                 type="button"
                 onClick={() => {
                   setActiveStep(idx);
                   setIsPlaying(false);
                 }}
-                className={`p-4 sm:p-5 rounded-2xl text-left border transition-all cursor-pointer flex flex-col justify-between gap-3 relative overflow-hidden ${
+                className={`flex items-center gap-2.5 px-4 sm:px-5 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm font-bold transition-all cursor-pointer active:scale-95 ${
                   isActive
-                    ? "bg-[#111827] text-white border-[#111827] shadow-lg shadow-black/10 scale-[1.01]"
-                    : "bg-[#FAF8F5] text-stone-700 border-[#EAE5DC] hover:border-stone-400 hover:bg-stone-50"
+                    ? "bg-[#0B1528] text-white shadow-md shadow-black/15"
+                    : "bg-white text-stone-700 border border-stone-200/90 hover:border-stone-400 hover:bg-stone-50"
                 }`}
               >
-                {/* Active Step Top Progress Bar Indicator */}
-                {isActive && (
-                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-500" />
-                )}
-
-                <div className="flex items-center justify-between">
-                  <span
-                    className={`font-mono text-xs font-black tracking-wider ${
-                      isActive ? "text-sky-300" : "text-stone-400"
-                    }`}
-                  >
-                    STEP {st.stepNumber}
-                  </span>
-                  <div
-                    className={`p-2 rounded-xl border ${
-                      isActive
-                        ? "bg-white/10 border-white/20 text-white"
-                        : "bg-white border-stone-200 text-stone-700"
-                    }`}
-                  >
-                    <Icon className="w-4 h-4" />
-                  </div>
-                </div>
-
-                <div>
-                  <h3
-                    className={`font-bold text-sm leading-snug line-clamp-2 ${
-                      isActive ? "text-white" : "text-[#111827]"
-                    }`}
-                  >
-                    {st.title}
-                  </h3>
-                  <div
-                    className={`text-[11px] font-mono mt-1 ${
-                      isActive ? "text-stone-300" : "text-blue-600 font-semibold"
-                    }`}
-                  >
-                    {st.metric}
-                  </div>
-                </div>
+                <Icon
+                  className={`w-4 h-4 ${
+                    isActive ? "text-sky-300" : "text-stone-500"
+                  }`}
+                />
+                <span>{st.tabTitle}</span>
+                {isActive && <ArrowRight className="w-3.5 h-3.5 ml-0.5 text-sky-400" />}
               </button>
             );
           })}
         </div>
 
-        {/* ── Active Step Rich Interactive Showcase Stage ── */}
-        <div className="relative z-10 rounded-2xl sm:rounded-3xl bg-[#FAF8F5] border border-[#EAE5DC] p-5 sm:p-8 lg:p-10 transition-all">
-          {/* STEP 1: Universal Ingestion & Fuzzy Schema Mapping */}
-          {activeStep === 0 && (
-            <div className="space-y-6 animate-in fade-in duration-300">
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-5 border-b border-stone-200/80">
-                <div>
-                  <span className="px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-700 text-[10px] font-mono font-bold uppercase tracking-wider">
-                    Stage 01 • Ingestion Intelligence
-                  </span>
-                  <h3 className="text-xl sm:text-2xl font-black text-[#111827] mt-1">
-                    Universal Schema Engine with Fuzzy Levenshtein Auto-Mapping
-                  </h3>
-                  <p className="text-xs sm:text-sm text-stone-600 mt-1 max-w-2xl">
-                    Every college uses different spreadsheets: one says &quot;Attnd_Pct&quot;, another &quot;Biometric_Hrs&quot;. CampusIQ matches them instantly without forcing data cleaning.
-                  </p>
-                </div>
-                <Link
-                  href="/upload"
-                  className="px-4 py-2 rounded-full bg-[#111827] hover:bg-black text-white text-xs font-semibold shrink-0 inline-flex items-center gap-1.5 shadow-xs"
-                >
-                  <span>Test with Custom CSV</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
+        {/* ── Main Dual Showcase: Interactive Step Card (Left) + Phone Mockup (Right) ── */}
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
+          
+          {/* ── LEFT: The Interactive Step Container (7 or 8 columns on desktop) ── */}
+          <div className="lg:col-span-7 xl:col-span-8 rounded-3xl bg-[#FAF8F5] border border-[#EAE5DC] p-5 sm:p-8 flex flex-col justify-between space-y-6">
+            
+            {/* Step Top Heading & Bullets */}
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <span className="px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-[10px] font-mono font-bold tracking-wider uppercase">
+                  {steps[activeStep].stepBadge}
+                </span>
+                <span className="font-mono text-xs text-stone-400 font-semibold">
+                  Phase 0{steps[activeStep].number} of 04
+                </span>
               </div>
 
-              {/* Interactive Visual Mapping Table */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="p-4 rounded-xl bg-white border border-stone-200 space-y-3">
-                  <div className="flex items-center justify-between text-xs font-bold text-stone-800 pb-2 border-b border-stone-100">
-                    <span className="font-mono text-stone-500">Raw College Header</span>
-                    <span className="text-emerald-700">Auto-Mapped Canonical Pillar</span>
-                  </div>
+              <div>
+                <h3 className="text-xl sm:text-2xl font-black text-[#111827] tracking-tight">
+                  {steps[activeStep].title}
+                </h3>
+                <p className="text-xs sm:text-sm text-stone-600 mt-2 leading-relaxed">
+                  {steps[activeStep].description}
+                </p>
+              </div>
 
-                  {[
-                    { raw: "Roll_No / StudentID", canon: "student_id", conf: "100%", status: "Exact Key" },
-                    { raw: "Biometric_Attnd_%", canon: "attendance_pct", conf: "99.4%", status: "Fuzzy Match" },
-                    { raw: "Curr_CGPA_Score", canon: "cgpa", conf: "98.9%", status: "Fuzzy Match" },
-                    { raw: "Active_Arrears_Count", canon: "backlogs", conf: "99.1%", status: "Synonym Match" },
-                    { raw: "Hackathon_Contests", canon: "coding_score", conf: "96.5%", status: "Levenshtein" },
-                  ].map((row, i) => (
-                    <div
-                      key={i}
-                      className="flex items-center justify-between text-xs py-1.5 px-2 rounded-lg bg-stone-50 border border-stone-200/60 font-mono"
-                    >
-                      <span className="text-stone-700 font-medium truncate max-w-[150px]">{row.raw}</span>
-                      <div className="flex items-center gap-2">
-                        <span className="text-blue-700 font-bold">→ {row.canon}</span>
-                        <span className="px-1.5 py-0.5 bg-emerald-100 text-emerald-800 text-[10px] rounded font-bold">
-                          {row.conf}
-                        </span>
-                      </div>
+              {/* 3 Checkmark Bullet Points */}
+              <div className="space-y-2 pt-1">
+                {steps[activeStep].bullets.map((b, i) => (
+                  <div key={i} className="flex items-start gap-2.5 text-xs text-stone-700 leading-snug">
+                    <div className="p-0.5 rounded-full bg-blue-600 text-white shrink-0 mt-0.5">
+                      <Check className="w-2.5 h-2.5 stroke-[3]" />
                     </div>
-                  ))}
-                </div>
-
-                {/* Adaptive Rebalancing Callout */}
-                <div className="p-5 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 flex flex-col justify-between space-y-4">
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2 text-xs font-black text-blue-900 uppercase tracking-wider font-mono">
-                      <Sparkles className="w-4 h-4 text-blue-600" />
-                      <span>Adaptive Weight Normalization</span>
-                    </div>
-                    <p className="text-xs text-blue-950 leading-relaxed">
-                      If an uploaded college dataset does not include LMS or psychometric columns, CampusIQ dynamically re-balances the remaining weights to strictly sum to <strong>1.00</strong>.
-                    </p>
+                    <span>{b}</span>
                   </div>
-                  <div className="p-3 rounded-lg bg-white/80 border border-blue-200/80 text-[11px] font-mono text-stone-700 space-y-1">
-                    <div className="flex justify-between">
-                      <span>∑ w_active = 0.85</span>
-                      <span className="font-bold text-blue-700">w_norm = w_i / ∑ w_active</span>
-                    </div>
-                    <div className="text-stone-500 text-[10px]">Zero crashes • Always statistically valid</div>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
-          )}
 
-          {/* STEP 2: Non-Linear Statutory Scoring & Penalty Gates */}
-          {activeStep === 1 && (
-            <div className="space-y-6 animate-in fade-in duration-300">
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-5 border-b border-stone-200/80">
-                <div>
-                  <span className="px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[10px] font-mono font-bold uppercase tracking-wider">
-                    Stage 02 • Mathematical Modeling
+            {/* ── Step-Specific Interactive Previews ── */}
+
+            {/* STEP 1: Validation Preview Table (Exact from reference) */}
+            {activeStep === 0 && (
+              <div className="rounded-2xl bg-white border border-stone-200/90 p-4 sm:p-5 shadow-xs space-y-4 animate-in fade-in duration-200">
+                <div className="flex items-center justify-between pb-2 border-b border-stone-100">
+                  <div className="flex items-center gap-2">
+                    <FileSpreadsheet className="w-4 h-4 text-blue-600" />
+                    <span className="text-xs sm:text-sm font-extrabold text-[#111827]">
+                      Validation Preview
+                    </span>
+                  </div>
+                  <span className="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold font-mono inline-flex items-center gap-1">
+                    <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+                    <span>File Validated</span>
                   </span>
-                  <h3 className="text-xl sm:text-2xl font-black text-[#111827] mt-1">
-                    Statutory Attendance Multipliers &amp; Compound Dampening
-                  </h3>
-                  <p className="text-xs sm:text-sm text-stone-600 mt-1 max-w-2xl">
-                    Universities enforce hard legal attendance floors. Drag the slider below to test the instant non-linear multiplier effect on student scores.
-                  </p>
                 </div>
-                <Link
-                  href="/methodology"
-                  className="px-4 py-2 rounded-full bg-[#111827] hover:bg-black text-white text-xs font-semibold shrink-0 inline-flex items-center gap-1.5 shadow-xs"
-                >
-                  <span>Read Formulations</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
-              </div>
 
-              {/* Interactive Sandbox Slider */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <div className="p-5 rounded-xl bg-white border border-stone-200 space-y-4">
+                {/* Data Table */}
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-xs">
+                    <thead>
+                      <tr className="border-b border-stone-100 text-[10px] font-mono uppercase text-stone-400">
+                        <th className="pb-2 font-bold">Column Name</th>
+                        <th className="pb-2 font-bold">Mapped To</th>
+                        <th className="pb-2 font-bold text-right">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-stone-100/80 font-mono text-[11px]">
+                      {[
+                        { col: "Roll_No", mapped: "Student ID", status: "Mapped" },
+                        { col: "Name", mapped: "Student Name", status: "Mapped" },
+                        { col: "Attendance_Percent", mapped: "Attendance %", status: "Mapped" },
+                        { col: "CGPA", mapped: "CGPA", status: "Mapped" },
+                        { col: "Placement_Status", mapped: "Placement Status", status: "Mapped" },
+                      ].map((r, i) => (
+                        <tr key={i} className="hover:bg-stone-50/60 transition-colors">
+                          <td className="py-1.5 font-medium text-stone-700">{r.col}</td>
+                          <td className="py-1.5 text-blue-700 font-bold">{r.mapped}</td>
+                          <td className="py-1.5 text-right">
+                            <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/60">
+                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                              {r.status}
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
+                {/* Bottom Footer Note + Next Step Button */}
+                <div className="pt-2 border-t border-stone-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+                  <div className="flex items-center gap-1.5 text-stone-600 text-[11px]">
+                    <Info className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                    <span>Your data is ready. Click next to continue with mapping.</span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setActiveStep(1)}
+                    className="px-4 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs inline-flex items-center justify-center gap-1.5 transition-all shadow-xs cursor-pointer"
+                  >
+                    <span>Next Step</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* STEP 2: Fuzzy Schema Mapping Preview */}
+            {activeStep === 1 && (
+              <div className="rounded-2xl bg-white border border-stone-200/90 p-4 sm:p-5 shadow-xs space-y-4 animate-in fade-in duration-200">
+                <div className="flex items-center justify-between pb-2 border-b border-stone-100">
+                  <div className="flex items-center gap-2">
+                    <GitFork className="w-4 h-4 text-purple-600" />
+                    <span className="text-xs sm:text-sm font-extrabold text-[#111827]">
+                      Fuzzy Levenshtein Confidence Matrix
+                    </span>
+                  </div>
+                  <span className="px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-800 text-[10px] font-bold font-mono">
+                    99.4% Mean Confidence
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono">
+                  <div className="p-3 rounded-xl bg-stone-50 border border-stone-200/80 space-y-1.5">
+                    <div className="text-[10px] text-stone-500 font-bold uppercase">Non-Standard Raw</div>
+                    <div className="text-stone-900 font-bold">&quot;Biometric_Attnd_Hrs&quot;</div>
+                    <div className="text-emerald-700 text-[11px] font-bold">→ attendance_pct (99.4% Match)</div>
+                  </div>
+                  <div className="p-3 rounded-xl bg-stone-50 border border-stone-200/80 space-y-1.5">
+                    <div className="text-[10px] text-stone-500 font-bold uppercase">Arrears Header</div>
+                    <div className="text-stone-900 font-bold">&quot;Active_Backlog_Ct&quot;</div>
+                    <div className="text-emerald-700 text-[11px] font-bold">→ backlogs (99.1% Synonym)</div>
+                  </div>
+                </div>
+
+                <div className="pt-2 border-t border-stone-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+                  <span className="text-[11px] text-stone-500">
+                    Adaptive weights automatically re-balanced to 1.00.
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => setActiveStep(2)}
+                    className="px-4 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs inline-flex items-center justify-center gap-1.5 transition-all shadow-xs cursor-pointer"
+                  >
+                    <span>Next: Risk Engine</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* STEP 3: Statutory Multiplier Sandbox */}
+            {activeStep === 2 && (
+              <div className="rounded-2xl bg-white border border-stone-200/90 p-4 sm:p-5 shadow-xs space-y-4 animate-in fade-in duration-200">
+                <div className="flex items-center justify-between pb-2 border-b border-stone-100">
+                  <div className="flex items-center gap-2">
+                    <ShieldAlert className="w-4 h-4 text-amber-600" />
+                    <span className="text-xs sm:text-sm font-extrabold text-[#111827]">
+                      Statutory Penalty Gate Simulator
+                    </span>
+                  </div>
+                  <span
+                    className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold font-mono ${
+                      isDebarred
+                        ? "bg-rose-100 text-rose-800 border border-rose-200"
+                        : "bg-emerald-100 text-emerald-800"
+                    }`}
+                  >
+                    {isDebarred ? "0.85× Penalty Enforced" : "1.00× Eligible"}
+                  </span>
+                </div>
+
+                <div className="space-y-3">
                   <div className="flex justify-between items-center text-xs">
-                    <span className="font-bold text-stone-800">Adjust Attendance:</span>
-                    <span
-                      className={`font-mono text-xl font-black ${
-                        isDebarred ? "text-rose-600" : "text-emerald-700"
-                      }`}
-                    >
+                    <span className="font-bold text-stone-800">Biometric Attendance:</span>
+                    <span className={`font-mono text-lg font-black ${isDebarred ? "text-rose-600" : "text-emerald-700"}`}>
                       {demoAttendance}%
                     </span>
                   </div>
-
                   <input
                     type="range"
                     min="55"
@@ -318,247 +395,153 @@ export function RichHowItWorks() {
                     onChange={(e) => setDemoAttendance(Number(e.target.value))}
                     className="w-full accent-blue-600 h-2 bg-stone-200 rounded-lg cursor-pointer"
                   />
-
-                  <div className="flex justify-between text-[10px] font-mono text-stone-500">
+                  <div className="flex justify-between text-[10px] font-mono text-stone-400">
                     <span>55%</span>
-                    <span className="text-rose-600 font-bold">75% Statutory Cutoff</span>
+                    <span className="text-amber-700 font-bold">75% Statutory Floor</span>
                     <span>95%</span>
                   </div>
-
-                  {isDebarred ? (
-                    <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs font-semibold flex items-center gap-2.5">
-                      <ShieldAlert className="w-4 h-4 text-rose-600 shrink-0" />
-                      <div>
-                        <strong>Statutory Debarment Gate Active:</strong> Score multiplied by <strong>0.85×</strong>. Student flagged for HOD review.
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold flex items-center gap-2.5">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                      <div>
-                        <strong>Statutory Compliant:</strong> Full 1.00× multiplier applied. Student eligible for semester examinations.
-                      </div>
-                    </div>
-                  )}
                 </div>
 
-                {/* Score Impact Display */}
-                <div className="p-5 rounded-xl bg-white border border-stone-200 space-y-3 font-mono text-xs flex flex-col justify-between">
-                  <div className="space-y-2">
-                    <span className="text-[10px] font-bold text-stone-400 uppercase tracking-widest">
-                      CALCULATED SCORE IMPACT ($S^3$)
+                <div className="pt-2 border-t border-stone-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+                  <span className="text-[11px] text-stone-500 font-mono">
+                    Score: {isDebarred ? "84.0 × 0.85 = 71.4 (Flagged)" : "84.0 × 1.00 = 84.0 (Normal)"}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => setActiveStep(3)}
+                    className="px-4 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs inline-flex items-center justify-center gap-1.5 transition-all shadow-xs cursor-pointer"
+                  >
+                    <span>Next: Intervention</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* STEP 4: Closed-Loop Recovery Simulation */}
+            {activeStep === 3 && (
+              <div className="rounded-2xl bg-white border border-stone-200/90 p-4 sm:p-5 shadow-xs space-y-4 animate-in fade-in duration-200">
+                <div className="flex items-center justify-between pb-2 border-b border-stone-100">
+                  <div className="flex items-center gap-2">
+                    <Zap className="w-4 h-4 text-emerald-600" />
+                    <span className="text-xs sm:text-sm font-extrabold text-[#111827]">
+                      What-If Counterfactual Recovery
                     </span>
-                    <div className="flex items-baseline justify-between pt-1">
-                      <span className="text-stone-600">Base Weighted Score:</span>
-                      <span className="text-base font-bold text-stone-850">84.0 / 100</span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setRecoveryApplied(!recoveryApplied)}
+                    className={`px-3 py-1 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                      recoveryApplied
+                        ? "bg-emerald-600 text-white"
+                        : "bg-stone-200 hover:bg-stone-300 text-stone-800"
+                    }`}
+                  >
+                    {recoveryApplied ? "✓ Interventions Active" : "Click to Apply Plan"}
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                  <div className="p-3 rounded-xl bg-stone-50 border border-stone-200/80 space-y-1">
+                    <div className="font-mono text-[10px] text-stone-400 font-bold uppercase">Before Intervention</div>
+                    <div className="text-rose-600 font-mono font-black text-lg">42.8 / 100</div>
+                    <div className="text-stone-500 text-[11px]">Debarment Risk • Low Coding</div>
+                  </div>
+                  <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 space-y-1">
+                    <div className="font-mono text-[10px] text-emerald-700 font-bold uppercase">Simulated Recovery</div>
+                    <div className="text-emerald-700 font-mono font-black text-lg">
+                      {recoveryApplied ? "78.5 / 100 (+35.7 pts)" : "Waiting for activation..."}
                     </div>
-                    <div className="flex items-baseline justify-between">
-                      <span className="text-stone-600">Statutory Multiplier:</span>
-                      <span className={`font-bold ${isDebarred ? "text-rose-600" : "text-emerald-700"}`}>
-                        {isDebarred ? "× 0.85 (Debarred)" : "× 1.00 (Eligible)"}
-                      </span>
+                    <div className="text-emerald-800 text-[11px] font-semibold">
+                      {recoveryApplied ? "✓ Debarment Cleared • Tier-1 Ready" : "Simulate 4-week remedial plan"}
                     </div>
-                    <div className="pt-2 border-t border-stone-200 flex items-baseline justify-between text-sm">
-                      <span className="font-bold text-stone-900">Final Composite S³:</span>
-                      <span
-                        className={`text-2xl font-black ${
-                          isDebarred ? "text-rose-600" : "text-emerald-700"
-                        }`}
-                      >
-                        {isDebarred ? "71.4 / 100" : "84.0 / 100"}
-                      </span>
-                    </div>
+                  </div>
+                </div>
+
+                <div className="pt-2 border-t border-stone-100 flex items-center justify-between text-xs">
+                  <span className="text-[11px] text-stone-500">Auto-dispatched to Mentor &amp; HOD.</span>
+                  <Link
+                    href="/faculty"
+                    className="px-4 py-1.5 rounded-xl bg-[#111827] hover:bg-black text-white font-bold text-xs inline-flex items-center gap-1.5 shadow-xs"
+                  >
+                    <span>Open Faculty Roster</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
+              </div>
+            )}
+
+            {/* Step Action Buttons on Bottom of Card */}
+            <div className="pt-2 flex flex-wrap items-center gap-3">
+              <Link
+                href={steps[activeStep].primaryCta.href}
+                className="px-5 py-2.5 rounded-xl bg-[#0B1528] hover:bg-black text-white text-xs font-bold inline-flex items-center gap-2 shadow-xs transition-all active:scale-95"
+              >
+                <Upload className="w-3.5 h-3.5" />
+                <span>{steps[activeStep].primaryCta.label}</span>
+              </Link>
+              <Link
+                href={steps[activeStep].secondaryCta.href}
+                className="text-xs font-bold text-blue-600 hover:text-blue-800 transition-colors"
+              >
+                {steps[activeStep].secondaryCta.label}
+              </Link>
+            </div>
+          </div>
+
+          {/* ── RIGHT: Realistic Smartphone Device Mockup with User's Live Mobile Screen ── */}
+          <div className="lg:col-span-5 xl:col-span-4 flex flex-col items-center justify-center">
+            
+            {/* Phone Container Card */}
+            <div className="relative w-full max-w-[310px] sm:max-w-[330px]">
+              {/* Outer Phone Frame (Matte Titanium Chassis with Apple-Grade Elevation) */}
+              <div className="relative rounded-[48px] p-3.5 bg-gradient-to-b from-stone-900 via-stone-950 to-stone-900 border-[3.5px] border-stone-800/90 shadow-2xl shadow-stone-900/40">
+                
+                {/* Subtle side button accents on chassis */}
+                <div className="absolute -left-[5px] top-24 w-[3px] h-10 bg-stone-700 rounded-l-xs" />
+                <div className="absolute -left-[5px] top-38 w-[3px] h-10 bg-stone-700 rounded-l-xs" />
+                <div className="absolute -right-[5px] top-28 w-[3px] h-14 bg-stone-700 rounded-r-xs" />
+
+                {/* Inner Screen Bezel with curved corners */}
+                <div className="relative rounded-[38px] overflow-hidden bg-black aspect-[462/1000] shadow-inner select-none">
+                  
+                  {/* Real Mobile Screenshot of CampusIQ */}
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/mobile_screen_user.png"
+                    alt="CampusIQ Mobile Experience on learnonva.vercel.app"
+                    className="w-full h-full object-cover object-top transition-transform duration-300 hover:scale-[1.02]"
+                  />
+
+                  {/* Soft diagonal glossy glass reflection */}
+                  <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent pointer-events-none" />
+
+                  {/* Dynamic Island pill floating at top */}
+                  <div className="absolute top-2.5 left-1/2 -translate-x-1/2 w-20 h-4 bg-black rounded-full flex items-center justify-end pr-2 pointer-events-none z-30 shadow-xs">
+                    <span className="w-1.5 h-1.5 rounded-full bg-blue-900/60" />
                   </div>
 
-                  <div className="text-[10px] text-stone-500 font-sans">
-                    CampusIQ catches students before semester exams, allowing timely attendance make-up before debarment is finalized.
-                  </div>
+                  {/* Bottom iOS Home Indicator Bar */}
+                  <div className="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-24 h-1 bg-white/70 rounded-full pointer-events-none z-30" />
+                </div>
+              </div>
+
+              {/* Bottom Attribution Badge under phone */}
+              <div className="mt-4 text-center space-y-1">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-stone-200/90 shadow-2xs text-[11px] font-mono font-bold text-stone-800">
+                  <Smartphone className="w-3.5 h-3.5 text-blue-600" />
+                  <span>learnonva.vercel.app</span>
+                </div>
+                <div className="text-[10px] text-stone-500 font-medium">
+                  Verified responsive mobile web cockpit
                 </div>
               </div>
             </div>
-          )}
 
-          {/* STEP 3: 360° Student Diagnostics & SHAP Risk Drivers */}
-          {activeStep === 2 && (
-            <div className="space-y-6 animate-in fade-in duration-300">
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-5 border-b border-stone-200/80">
-                <div>
-                  <span className="px-2.5 py-0.5 rounded-full bg-purple-100 text-purple-700 text-[10px] font-mono font-bold uppercase tracking-wider">
-                    Stage 03 • Explainable AI
-                  </span>
-                  <h3 className="text-xl sm:text-2xl font-black text-[#111827] mt-1">
-                    Explainable SHAP Waterfall: Understanding the &quot;Why&quot;
-                  </h3>
-                  <p className="text-xs sm:text-sm text-stone-600 mt-1 max-w-2xl">
-                    Faculty mentors cannot act on opaque risk labels. CampusIQ details the precise positive and negative drivers contributing to the risk score.
-                  </p>
-                </div>
-                <Link
-                  href="/faculty"
-                  className="px-4 py-2 rounded-full bg-[#111827] hover:bg-black text-white text-xs font-semibold shrink-0 inline-flex items-center gap-1.5 shadow-xs"
-                >
-                  <span>Open Faculty Roster</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
-              </div>
+          </div>
 
-              {/* Sample Profile Triage Breakdown */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="p-4 rounded-xl bg-white border border-stone-200 space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-mono font-bold text-stone-500">STU-0431</span>
-                    <span className="px-2 py-0.5 rounded-full bg-rose-100 text-rose-800 text-[10px] font-bold">
-                      Critical Triage
-                    </span>
-                  </div>
-                  <div>
-                    <h4 className="font-extrabold text-base text-[#111827]">Divya Bhat</h4>
-                    <p className="text-xs text-stone-500">CSE • Sem 6 • Section B</p>
-                  </div>
-                  <div className="pt-2 border-t border-stone-100 flex justify-between items-baseline">
-                    <span className="text-xs text-stone-600">Composite S³:</span>
-                    <span className="text-xl font-mono font-black text-rose-600">42.8 / 100</span>
-                  </div>
-                </div>
-
-                {/* Top Negative Risk Factors */}
-                <div className="p-4 rounded-xl bg-white border border-stone-200 space-y-2">
-                  <span className="text-[10px] font-mono font-bold text-rose-700 uppercase tracking-wider">
-                    Top Negative Drag Factors
-                  </span>
-                  <div className="space-y-1.5 text-xs">
-                    <div className="flex justify-between items-center p-2 rounded-lg bg-rose-50 border border-rose-100">
-                      <span className="text-rose-950 font-medium">Attendance 68.4% &lt; 75%</span>
-                      <span className="font-mono font-bold text-rose-700">-14.2 pts</span>
-                    </div>
-                    <div className="flex justify-between items-center p-2 rounded-lg bg-rose-50 border border-rose-100">
-                      <span className="text-rose-950 font-medium">2 Active Theory Backlogs</span>
-                      <span className="font-mono font-bold text-rose-700">-8.5 pts</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Top Positive Factors */}
-                <div className="p-4 rounded-xl bg-white border border-stone-200 space-y-2">
-                  <span className="text-[10px] font-mono font-bold text-emerald-700 uppercase tracking-wider">
-                    Top Positive Buffer Factors
-                  </span>
-                  <div className="space-y-1.5 text-xs">
-                    <div className="flex justify-between items-center p-2 rounded-lg bg-emerald-50 border border-emerald-100">
-                      <span className="text-emerald-950 font-medium">Hackathon &amp; Coding Aptitude</span>
-                      <span className="font-mono font-bold text-emerald-700">+12.1 pts</span>
-                    </div>
-                    <div className="flex justify-between items-center p-2 rounded-lg bg-emerald-50 border border-emerald-100">
-                      <span className="text-emerald-950 font-medium">CGPA (7.8 SGPA Baseline)</span>
-                      <span className="font-mono font-bold text-emerald-700">+6.4 pts</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* STEP 4: Closed-Loop Dispatch & What-If Recovery */}
-          {activeStep === 3 && (
-            <div className="space-y-6 animate-in fade-in duration-300">
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-5 border-b border-stone-200/80">
-                <div>
-                  <span className="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-mono font-bold uppercase tracking-wider">
-                    Stage 04 • Actionable Prescriptions
-                  </span>
-                  <h3 className="text-xl sm:text-2xl font-black text-[#111827] mt-1">
-                    Closed-Loop Recovery Simulation
-                  </h3>
-                  <p className="text-xs sm:text-sm text-stone-600 mt-1 max-w-2xl">
-                    Faculty mentors simulate recovery outcomes before reaching out. See how timely interventions lift the student out of statutory danger.
-                  </p>
-                </div>
-                <Link
-                  href="/interventions"
-                  className="px-4 py-2 rounded-full bg-[#111827] hover:bg-black text-white text-xs font-semibold shrink-0 inline-flex items-center gap-1.5 shadow-xs"
-                >
-                  <span>Open Placement Pipeline</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
-              </div>
-
-              {/* Before vs After Simulation Toggle */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 items-center">
-                <div className="p-5 rounded-xl bg-white border border-stone-200 space-y-4">
-                  <div className="flex justify-between items-center">
-                    <span className="text-xs font-bold text-stone-800">Interactive Intervention Simulation:</span>
-                    <button
-                      type="button"
-                      onClick={() => setRecoverySimulated(!recoverySimulated)}
-                      className={`px-3 py-1 rounded-full text-xs font-bold transition-all cursor-pointer ${
-                        recoverySimulated
-                          ? "bg-emerald-600 text-white"
-                          : "bg-stone-200 hover:bg-stone-300 text-stone-800"
-                      }`}
-                    >
-                      {recoverySimulated ? "✓ Interventions Applied" : "Click to Apply Recovery"}
-                    </button>
-                  </div>
-
-                  <div className="space-y-2 text-xs">
-                    <div className="flex items-center gap-2 text-stone-700">
-                      <span className={`w-2 h-2 rounded-full ${recoverySimulated ? "bg-emerald-500" : "bg-stone-300"}`} />
-                      <span>4-Week Remedial Lab Hours (+8% Attendance)</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-stone-700">
-                      <span className={`w-2 h-2 rounded-full ${recoverySimulated ? "bg-emerald-500" : "bg-stone-300"}`} />
-                      <span>DSA LeetCode Placement Bootcamp Enrollment</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-stone-700">
-                      <span className={`w-2 h-2 rounded-full ${recoverySimulated ? "bg-emerald-500" : "bg-stone-300"}`} />
-                      <span>1-on-1 Faculty Mentorship Scheduled</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Projected Outcome Card */}
-                <div
-                  className={`p-5 rounded-xl border transition-all ${
-                    recoverySimulated
-                      ? "bg-emerald-50/70 border-emerald-300 text-emerald-950"
-                      : "bg-white border-stone-200 text-stone-700"
-                  }`}
-                >
-                  <div className="flex justify-between items-baseline">
-                    <span className="text-xs font-mono font-bold uppercase tracking-wider">
-                      {recoverySimulated ? "Projected Post-Intervention" : "Current Baseline Status"}
-                    </span>
-                    <span
-                      className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
-                        recoverySimulated
-                          ? "bg-emerald-200 text-emerald-900"
-                          : "bg-rose-100 text-rose-800"
-                      }`}
-                    >
-                      {recoverySimulated ? "Debarment Cleared" : "Statutory Risk"}
-                    </span>
-                  </div>
-
-                  <div className="mt-3 flex items-baseline justify-between">
-                    <span className="text-xs">Projected Score ($S^3$):</span>
-                    <span
-                      className={`text-2xl font-mono font-black ${
-                        recoverySimulated ? "text-emerald-700" : "text-rose-600"
-                      }`}
-                    >
-                      {recoverySimulated ? "78.5 / 100 (+35.7 pts)" : "42.8 / 100"}
-                    </span>
-                  </div>
-                  <div className="mt-1 text-[11px] text-stone-500">
-                    {recoverySimulated
-                      ? "Student elevated from high debarment alert to Tier-1 placement drive eligibility."
-                      : "Student currently at risk of missing campus recruitment drives due to attendance cutoff."}
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
         </div>
+
       </div>
     </section>
   );
