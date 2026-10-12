@@ -27,10 +27,15 @@ import {
   Check,
   HelpCircle,
 } from "lucide-react";
+import Link from "next/link";
+import { CustomSelect, SelectOption } from "@/components/ui/CustomSelect";
+import { WorkspaceShell } from "@/components/layout/WorkspaceShell";
+import { useStudentData } from "@/components/context/StudentDataContext";
 
 type UploadStep = "upload" | "verify" | "dashboard";
 
 export default function DataIntegrationPage() {
+  const { setUploadedCohort, isCustomDataset, resetToDemoData } = useStudentData();
   const [currentStep, setCurrentStep] = useState<UploadStep>("upload");
   const [fileName, setFileName] = useState<string>("");
   const [fileSizeStr, setFileSizeStr] = useState<string>("");
@@ -177,6 +182,7 @@ export default function DataIntegrationPage() {
       });
 
       setProcessedStudents(parsed);
+      setUploadedCohort(parsed, fileName || "Custom Uploaded Dataset");
       setCurrentStep("dashboard");
     } catch (err: any) {
       console.error("Error processing students:", err);
@@ -222,15 +228,16 @@ export default function DataIntegrationPage() {
   const placementReadyCount = processedStudents.filter((s) => s.coding_score >= 60 && s.cgpa >= 7.0 && s.active_backlogs === 0).length;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-in fade-in duration-300">
+    <WorkspaceShell>
+      <div className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 py-5 sm:py-8 space-y-6 sm:space-y-8 animate-in fade-in duration-300">
       {/* ───────────────────────────────────────────────────────────
           HEADER
       ─────────────────────────────────────────────────────────── */}
       <div className="space-y-2">
-        <div className="text-xs font-mono uppercase tracking-widest text-[#78716C] font-semibold">
+        <div className="text-[10px] sm:text-xs font-mono uppercase tracking-widest text-[#78716C] font-semibold">
           [ UNIVERSAL INSTITUTIONAL DATA INGESTION ]
         </div>
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-[#111827] tracking-tight">
+        <h1 className="text-2xl sm:text-4xl font-extrabold text-[#111827] tracking-tight">
           Flexible Multi-Format Data Ingestion & Schema Mapper
         </h1>
         <p className="text-xs sm:text-sm text-[#57534E] max-w-3xl leading-relaxed">
@@ -239,23 +246,23 @@ export default function DataIntegrationPage() {
       </div>
 
       {/* Progress Steps Header */}
-      <div className="flex items-center gap-3 p-3 rounded-2xl bg-white border border-[#EAE5DC] card-shadow text-xs">
-        <div className={`flex items-center gap-2 px-3.5 py-1.5 rounded-full font-bold ${
+      <div className="flex items-center gap-2 sm:gap-3 p-2.5 sm:p-3 rounded-2xl bg-white border border-[#EAE5DC] card-shadow text-xs overflow-x-auto scrollbar-none">
+        <div className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-1.5 rounded-full font-bold whitespace-nowrap text-[11px] sm:text-xs ${
           currentStep === "upload" ? "bg-[#111827] text-white" : "bg-stone-100 text-stone-700"
         }`}>
           <span>1. Upload File</span>
         </div>
-        <span className="text-stone-300">→</span>
-        <div className={`flex items-center gap-2 px-3.5 py-1.5 rounded-full font-bold ${
+        <span className="text-stone-300 shrink-0">→</span>
+        <div className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-1.5 rounded-full font-bold whitespace-nowrap text-[11px] sm:text-xs ${
           currentStep === "verify" ? "bg-[#111827] text-white" : "bg-stone-100 text-stone-700"
         }`}>
-          <span>2. Verify & Confirm Data</span>
+          <span>2. Verify Data</span>
         </div>
-        <span className="text-stone-300">→</span>
-        <div className={`flex items-center gap-2 px-3.5 py-1.5 rounded-full font-bold ${
+        <span className="text-stone-300 shrink-0">→</span>
+        <div className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-1.5 rounded-full font-bold whitespace-nowrap text-[11px] sm:text-xs ${
           currentStep === "dashboard" ? "bg-[#111827] text-white" : "bg-stone-100 text-stone-700"
         }`}>
-          <span>3. AI Decision Dashboard</span>
+          <span>3. AI Dashboard</span>
         </div>
       </div>
 
@@ -345,25 +352,36 @@ export default function DataIntegrationPage() {
                     <div className="text-[11px] text-stone-500">Simple headers: roll_no, marks, arrears</div>
                   </div>
                 </div>
-                <button
-                  onClick={async () => {
-                    const res = await fetch("/lib/data/sample_simple_college_dataset.csv").catch(() => null);
-                    // generate simple blob
-                    const sample = `roll_no,student_name,branch,class_year,percentage_marks,attendance_pct,arrears,coding_score\n2024-CSE-001,Aarav Patel,Computer Science,4,88.5,92.0,0,85\n2024-CSE-002,Bhavna Rao,Computer Science,4,62.0,68.5,2,35\n2024-ECE-105,Chirag Reddy,Electronics & Comm,3,74.5,81.0,0,45\n2024-IT-044,Divya Sharma,Information Tech,3,56.0,62.0,3,25\n2024-MECH-012,Farhan Khan,Mechanical Eng,4,69.0,79.0,1,30\n2024-AI-088,Ishita Nair,AI & Data Science,3,91.0,94.5,0,92\n2024-CSE-077,Karan Joshi,Computer Science,4,58.0,59.0,2,20\n2024-IT-102,Meera Iyer,Information Tech,3,84.0,88.0,0,78`;
-                    const blob = new Blob([sample], { type: "text/csv;charset=utf-8;" });
-                    const url = URL.createObjectURL(blob);
-                    const link = document.createElement("a");
-                    link.setAttribute("href", url);
-                    link.setAttribute("download", "sample_alternative_college_format.csv");
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                  }}
-                  className="px-3 py-1.5 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-700 text-[11px] font-semibold flex items-center gap-1"
-                >
-                  <Download className="w-3 h-3" />
-                  <span>Download</span>
-                </button>
+                <div className="flex items-center gap-1.5">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const sample = `roll_no,student_name,branch,class_year,percentage_marks,attendance_pct,arrears,coding_score\n2024-CSE-001,Aarav Patel,Computer Science,4,88.5,92.0,0,85\n2024-CSE-002,Bhavna Rao,Computer Science,4,62.0,68.5,2,35\n2024-ECE-105,Chirag Reddy,Electronics & Comm,3,74.5,81.0,0,45\n2024-IT-044,Divya Sharma,Information Tech,3,56.0,62.0,3,25\n2024-MECH-012,Farhan Khan,Mechanical Eng,4,69.0,79.0,1,30\n2024-AI-088,Ishita Nair,AI & Data Science,3,91.0,94.5,0,92\n2024-CSE-077,Karan Joshi,Computer Science,4,58.0,59.0,2,20\n2024-IT-102,Meera Iyer,Information Tech,3,84.0,88.0,0,78\n2024-CIVIL-015,Rohan Varma,Civil Engineering,3,71.0,76.0,1,40\n2024-BIOTECH-009,Ananya Sen,Biotechnology,4,86.0,91.0,0,65`;
+                      const file = new File([sample], "custom_alternative_college.csv", { type: "text/csv" });
+                      handleFile(file);
+                    }}
+                    className="px-3 py-1.5 rounded-full bg-[#111827] hover:bg-black text-white text-[11px] font-semibold flex items-center gap-1 shadow-xs cursor-pointer transition-colors"
+                  >
+                    <span>⚡ Test Load</span>
+                  </button>
+                  <button
+                    onClick={async () => {
+                      const sample = `roll_no,student_name,branch,class_year,percentage_marks,attendance_pct,arrears,coding_score\n2024-CSE-001,Aarav Patel,Computer Science,4,88.5,92.0,0,85\n2024-CSE-002,Bhavna Rao,Computer Science,4,62.0,68.5,2,35\n2024-ECE-105,Chirag Reddy,Electronics & Comm,3,74.5,81.0,0,45\n2024-IT-044,Divya Sharma,Information Tech,3,56.0,62.0,3,25\n2024-MECH-012,Farhan Khan,Mechanical Eng,4,69.0,79.0,1,30\n2024-AI-088,Ishita Nair,AI & Data Science,3,91.0,94.5,0,92\n2024-CSE-077,Karan Joshi,Computer Science,4,58.0,59.0,2,20\n2024-IT-102,Meera Iyer,Information Tech,3,84.0,88.0,0,78\n2024-CIVIL-015,Rohan Varma,Civil Engineering,3,71.0,76.0,1,40\n2024-BIOTECH-009,Ananya Sen,Biotechnology,4,86.0,91.0,0,65`;
+                      const blob = new Blob([sample], { type: "text/csv;charset=utf-8;" });
+                      const url = URL.createObjectURL(blob);
+                      const link = document.createElement("a");
+                      link.setAttribute("href", url);
+                      link.setAttribute("download", "sample_alternative_college_format.csv");
+                      document.body.appendChild(link);
+                      link.click();
+                      document.body.removeChild(link);
+                    }}
+                    className="px-3 py-1.5 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-700 text-[11px] font-semibold flex items-center gap-1 cursor-pointer transition-colors"
+                  >
+                    <Download className="w-3 h-3" />
+                    <span>Download</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -461,22 +479,22 @@ export default function DataIntegrationPage() {
                     </div>
 
                     <div className="mt-2">
-                      <select
+                      <CustomSelect
                         value={mappedUserCol || "__unmapped__"}
-                        onChange={(e) => handleMappingChange(field.key, e.target.value)}
-                        className={`w-full px-2.5 py-1.5 rounded-xl text-xs font-medium border focus:outline-none transition-colors ${
+                        onChange={(val) => handleMappingChange(field.key, val)}
+                        options={[
+                          { value: "__unmapped__", label: "-- Not in File (Use Safe Default) --" },
+                          ...rawHeaders.map((h) => ({
+                            value: h,
+                            label: `Column: ${h}`,
+                          })),
+                        ]}
+                        buttonClassName={`py-1.5 px-2.5 rounded-xl text-xs ${
                           isMapped
                             ? "bg-white text-stone-900 border-stone-300 font-semibold"
                             : "bg-white text-stone-400 border-dashed border-stone-200"
                         }`}
-                      >
-                        <option value="__unmapped__">-- Not in File (Use Safe Default) --</option>
-                        {rawHeaders.map((h) => (
-                          <option key={h} value={h}>
-                            Column: {h}
-                          </option>
-                        ))}
-                      </select>
+                      />
                     </div>
 
                     {isMapped && (
@@ -591,6 +609,38 @@ export default function DataIntegrationPage() {
             </div>
           </div>
 
+          {/* Global Platform Activation Alert */}
+          <div className="p-4 sm:p-5 rounded-2xl bg-emerald-50/90 border border-emerald-200 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-emerald-900 shadow-2xs">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-emerald-100 border border-emerald-200 flex items-center justify-center text-emerald-700 shrink-0">
+                <CheckCircle2 className="w-5 h-5" />
+              </div>
+              <div>
+                <div className="font-bold text-xs sm:text-sm text-emerald-950">
+                  Custom Dataset Activated Across All Pages!
+                </div>
+                <div className="text-[11px] text-emerald-700">
+                  CampusIQ is now operating on these {totalCount} students across Faculty Triage, Institutional Home, AI Segmentation, and the Prescriptive Action Tracker.
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 w-full md:w-auto">
+              <Link
+                href="/faculty"
+                className="flex-1 md:flex-none inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-full bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold transition-all shadow-xs"
+              >
+                <span>View in Faculty Triage</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+              <Link
+                href="/home"
+                className="flex-1 md:flex-none inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-full bg-white hover:bg-emerald-100 text-emerald-800 border border-emerald-300 text-xs font-bold transition-all shadow-xs"
+              >
+                <span>View Campus Home</span>
+              </Link>
+            </div>
+          </div>
+
           {/* 4 Summary Metric Badges */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <div className="p-4 rounded-2xl bg-white border border-[#EAE5DC] card-shadow space-y-1">
@@ -648,6 +698,7 @@ export default function DataIntegrationPage() {
           )}
         </div>
       )}
-    </div>
+      </div>
+    </WorkspaceShell>
   );
 }
