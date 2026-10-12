@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { LandingNavbar } from "@/components/landing/LandingNavbar";
 import { LandingDashboardPreview } from "@/components/landing/LandingDashboardPreview";
+import { RichHowItWorks } from "@/components/landing/RichHowItWorks";
 import { ThreeConstellationBackground } from "@/components/canvas/ThreeConstellationBackground";
 import {
   ArrowRight,
@@ -282,30 +283,6 @@ export default function CampusIQLandingPage() {
                 </a>
               </div>
 
-              {/* Quick Mobile Feature Launchers (Instant 1-Click Access) */}
-              <div className="pt-2 flex flex-wrap items-center justify-center gap-2 px-1">
-                <Link
-                  href="/faculty"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-purple-50 hover:bg-purple-100 border border-purple-200 text-purple-900 text-xs font-bold shadow-2xs transition-all active:scale-95"
-                >
-                  <Sparkles className="w-3.5 h-3.5 text-purple-600" />
-                  <span>🎯 What-If Simulator</span>
-                </Link>
-                <Link
-                  href="/home"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-50 hover:bg-amber-100 border border-amber-200 text-amber-900 text-xs font-bold shadow-2xs transition-all active:scale-95"
-                >
-                  <Award className="w-3.5 h-3.5 text-amber-700" />
-                  <span>📄 Dean&apos;s Governance Brief</span>
-                </Link>
-                <Link
-                  href="/upload"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-900 text-xs font-bold shadow-2xs transition-all active:scale-95"
-                >
-                  <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-600" />
-                  <span>⚡ Upload Custom Data</span>
-                </Link>
-              </div>
 
               {/* 3 Feature Micro-Cards (Horizontal Touch Carousel on Mobile) */}
               <div className="flex sm:flex-wrap items-center justify-start sm:justify-center gap-2.5 sm:gap-4 pt-4 sm:pt-6 max-w-4xl mx-auto overflow-x-auto pb-2 px-2 sm:px-0 scrollbar-none snap-x">
@@ -528,9 +505,14 @@ export default function CampusIQLandingPage() {
       </section>
 
       {/* ───────────────────────────────────────────────────────────
-          2. INSTITUTIONAL TELEMETRY STRIP (4 Hard Pillars)
+          2. RICH 4-STEP INTERACTIVE "HOW IT WORKS" ENGINE WALKTHROUGH
       ─────────────────────────────────────────────────────────── */}
-      <section id="how-it-works" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-24">
+      <RichHowItWorks />
+
+      {/* ───────────────────────────────────────────────────────────
+          INSTITUTIONAL TELEMETRY STRIP (4 Hard Pillars)
+      ─────────────────────────────────────────────────────────── */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
           <div className="p-6 rounded-3xl bg-white border border-[#EAE5DC] card-shadow space-y-1">
             <div className="text-3xl sm:text-4xl font-extrabold text-[#111827] font-mono">94.8%</div>
@@ -1425,35 +1407,6 @@ export default function CampusIQLandingPage() {
 
       </div>
 
-      {/* ───────────────────────────────────────────────────────────
-          MOBILE FLOATING ACTION DOCK (Fixed at bottom on phones)
-      ─────────────────────────────────────────────────────────── */}
-      <div className="sm:hidden fixed bottom-3 left-3 right-3 z-40 bg-[#111827]/95 text-white backdrop-blur-xl rounded-2xl p-2.5 border border-stone-700/80 shadow-2xl flex items-center justify-between gap-2 animate-in slide-in-from-bottom duration-300">
-        <div className="flex items-center gap-2 pl-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="text-xs font-bold font-mono tracking-tight">CampusIQ</span>
-          <span className="text-[9px] text-amber-400 font-mono font-bold bg-amber-400/10 px-1.5 py-0.5 rounded border border-amber-400/20">
-            HACKATHON
-          </span>
-        </div>
-        <div className="flex items-center gap-2">
-          <Link
-            href="/faculty"
-            className="px-3 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs flex items-center gap-1 active:scale-95 transition-all shadow-sm"
-          >
-            <Sparkles className="w-3 h-3 text-amber-300" />
-            <span>What-If</span>
-          </Link>
-          <Link
-            href="/home"
-            className="px-3.5 py-1.5 rounded-xl bg-white hover:bg-stone-100 text-stone-950 font-extrabold text-xs flex items-center gap-1 shadow-sm active:scale-95 transition-all"
-          >
-            <span>Launch</span>
-            <ArrowRight className="w-3.5 h-3.5 text-stone-950" />
-          </Link>
-        </div>
-      </div>
     </div>
   );
 }
-
