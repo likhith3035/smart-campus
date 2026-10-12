@@ -86,7 +86,7 @@ export function RichHowItWorks() {
   }, [isPlaying, steps.length]);
 
   return (
-    <section id="how-it-works" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-24">
+    <section id="how-it-works" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-4 sm:scroll-mt-6">
       <div className="rounded-3xl sm:rounded-[36px] bg-white border border-[#EAE5DC] p-6 sm:p-10 lg:p-12 shadow-xl space-y-8 sm:space-y-10 relative overflow-hidden">
         {/* Ambient decorative glow */}
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-br from-blue-100/30 via-indigo-100/20 to-transparent rounded-full blur-3xl pointer-events-none -z-0" />

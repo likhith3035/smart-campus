@@ -155,11 +155,11 @@ export default function CampusIQLandingPage() {
       ─────────────────────────────────────────────────────────── */}
       <LandingNavbar />
 
-      <div className="space-y-24 sm:space-y-32 pb-24">
+      <div className="space-y-10 sm:space-y-14 pb-20">
         {/* ───────────────────────────────────────────────────────────
             1. HERO SECTION WITH EXACT ARCHITECTURAL FRAMING & MOCKUP
         ─────────────────────────────────────────────────────────── */}
-        <section className="relative pt-8 sm:pt-16 pb-16 sm:pb-24 overflow-hidden">
+        <section className="relative pt-4 sm:pt-8 pb-4 sm:pb-6 overflow-hidden">
           {/* Left Architectural Campus Building Framing */}
           <div
             className="hidden lg:block absolute left-0 top-0 w-64 xl:w-80 2xl:w-[380px] h-[600px] xl:h-[720px] pointer-events-none z-0 select-none opacity-85"
@@ -507,7 +507,9 @@ export default function CampusIQLandingPage() {
       {/* ───────────────────────────────────────────────────────────
           2. RICH 4-STEP INTERACTIVE "HOW IT WORKS" ENGINE WALKTHROUGH
       ─────────────────────────────────────────────────────────── */}
-      <RichHowItWorks />
+      <div className="!mt-2 sm:!mt-4">
+        <RichHowItWorks />
+      </div>
 
       {/* ───────────────────────────────────────────────────────────
           INSTITUTIONAL TELEMETRY STRIP (4 Hard Pillars)
