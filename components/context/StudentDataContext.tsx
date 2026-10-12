@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode, useMemo } from "react";
 import { initialStudents } from "@/lib/studentsData";
 import { StudentProfile, InstitutionProfile, DEFAULT_INSTITUTION_PROFILE } from "@/lib/types";
+import { SCENARIO_PRESETS, ScenarioInfo, generateScenarioCohort } from "@/lib/scenarioGenerator";
 
 export type ActivePersona = "dean" | "faculty" | "tpo";
 
@@ -20,6 +21,8 @@ interface StudentDataContextType {
   resetInstitutionProfile: () => void;
   activePersona: ActivePersona;
   setActivePersona: (persona: ActivePersona) => void;
+  activeScenario: ScenarioInfo["id"];
+  applyScenario: (id: ScenarioInfo["id"]) => void;
 }
 
 const STORAGE_KEY = "campusiq_custom_cohort_v1";
@@ -35,6 +38,15 @@ export function StudentDataProvider({ children }: { children: ReactNode }) {
   const [datasetName, setDatasetName] = useState<string>("Standard Campus Benchmark Cohort");
   const [institutionProfile, setInstitutionProfile] = useState<InstitutionProfile>(DEFAULT_INSTITUTION_PROFILE);
   const [activePersona, setActivePersonaState] = useState<ActivePersona>("dean");
+  const [activeScenario, setActiveScenario] = useState<ScenarioInfo["id"]>("baseline");
+
+  const applyScenario = (id: ScenarioInfo["id"]) => {
+    setActiveScenario(id);
+    const { students: cohort, scenarioName } = generateScenarioCohort(id);
+    setStudents(cohort);
+    setIsCustomDataset(id !== "baseline");
+    setDatasetName(scenarioName);
+  };
 
   const setActivePersona = (persona: ActivePersona) => {
     setActivePersonaState(persona);
@@ -167,6 +179,8 @@ export function StudentDataProvider({ children }: { children: ReactNode }) {
         resetInstitutionProfile,
         activePersona,
         setActivePersona,
+        activeScenario,
+        applyScenario,
       }}
     >
       {children}

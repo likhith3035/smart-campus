@@ -129,7 +129,7 @@ export default function CampusHomePage() {
               title="Open Consulting-Grade Board Dossier"
             >
               <FileText className="w-4 h-4 text-amber-800" />
-              <span>Executive Dossier</span>
+              <span>Board Brief (PDF / NAAC)</span>
             </button>
 
             <Link

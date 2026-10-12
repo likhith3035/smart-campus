@@ -4,13 +4,15 @@ import { useState, useEffect } from "react";
 import { initialStudents } from "@/lib/studentsData";
 import { PrescriptiveAction, StudentProfile } from "@/lib/types";
 import { StudentModal } from "@/components/dashboard/StudentModal";
+import { InterventionDispatchModal } from "@/components/dashboard/InterventionDispatchModal";
 import { 
   ClipboardCheck, 
   Clock, 
   CheckCircle2, 
   Download, 
   UserCheck, 
-  Eye 
+  Eye,
+  MessageSquare
 } from "lucide-react";
 import { CustomSelect, SelectOption } from "@/components/ui/CustomSelect";
 import { WorkspaceShell } from "@/components/layout/WorkspaceShell";
@@ -23,6 +25,7 @@ interface ActionItemWithStudent extends PrescriptiveAction {
 export default function InterventionsPage() {
   const { students } = useStudentData();
   const [selectedStudent, setSelectedStudent] = useState<StudentProfile | null>(null);
+  const [dispatchTarget, setDispatchTarget] = useState<{ action: PrescriptiveAction; student: StudentProfile } | null>(null);
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [priorityFilter, setPriorityFilter] = useState<string>("all");
 
@@ -244,8 +247,17 @@ export default function InterventionsPage() {
                 </button>
 
                 <button
+                  onClick={() => setDispatchTarget({ action: act, student: act.student })}
+                  className="px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 flex items-center gap-1.5 transition-all shadow-2xs cursor-pointer"
+                  title="Dispatch WhatsApp Alert to Guardian or Mentor Invite"
+                >
+                  <MessageSquare className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>Dispatch Alert</span>
+                </button>
+
+                <button
                   onClick={() => setSelectedStudent(act.student)}
-                  className="p-2 sm:p-2 rounded-full bg-[#FAF8F5] border border-[#EAE5DC] text-stone-600 hover:text-stone-900 hover:bg-stone-100 transition-colors shrink-0"
+                  className="p-2 sm:p-2 rounded-full bg-[#FAF8F5] border border-[#EAE5DC] text-stone-600 hover:text-stone-900 hover:bg-stone-100 transition-colors shrink-0 cursor-pointer"
                   title="Inspect Student 360 Profile"
                 >
                   <Eye className="w-4 h-4" />
@@ -256,11 +268,26 @@ export default function InterventionsPage() {
         )}
       </div>
 
-      {/* Modal */}
+      {/* Student 360 Modal */}
       {selectedStudent && (
         <StudentModal
           student={selectedStudent}
           onClose={() => setSelectedStudent(null)}
+        />
+      )}
+
+      {/* Closed-Loop Intervention Dispatch Modal */}
+      {dispatchTarget && (
+        <InterventionDispatchModal
+          isOpen={Boolean(dispatchTarget)}
+          onClose={() => setDispatchTarget(null)}
+          action={dispatchTarget.action}
+          student={dispatchTarget.student}
+          onDispatchSuccess={(actionId) => {
+            setActions((prev) =>
+              prev.map((a) => (a.id === actionId ? { ...a, status: "In Progress" } : a))
+            );
+          }}
         />
       )}
       </div>

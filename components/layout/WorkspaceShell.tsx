@@ -12,6 +12,7 @@ import { StudentModal } from "@/components/dashboard/StudentModal";
 import { ExecutiveBriefModal } from "@/components/dashboard/ExecutiveBriefModal";
 import { JudgeTourModal } from "@/components/dashboard/JudgeTourModal";
 import { InstitutionalProfileModal } from "@/components/dashboard/InstitutionalProfileModal";
+import { ScenarioSelectorModal } from "@/components/dashboard/ScenarioSelectorModal";
 import { SignInModal } from "@/components/landing/SignInModal";
 import { useStudentData } from "@/components/context/StudentDataContext";
 import { CampusIQLogo } from "@/components/brand/CampusIQLogo";
@@ -31,6 +32,7 @@ import {
   Building2,
   Settings2,
   ShieldCheck,
+  Sparkles,
 } from "lucide-react";
 
 interface WorkspaceShellProps {
@@ -57,6 +59,7 @@ function WorkspaceShellInner({ children }: WorkspaceShellProps) {
   const [judgeTourOpen, setJudgeTourOpen] = useState(false);
   const [institutionalProfileOpen, setInstitutionalProfileOpen] = useState(false);
   const [personaModalOpen, setPersonaModalOpen] = useState(false);
+  const [scenarioModalOpen, setScenarioModalOpen] = useState(false);
 
   // Academic term selector
   const [selectedTerm, setSelectedTerm] = useState("Fall 2026");
@@ -409,6 +412,30 @@ function WorkspaceShellInner({ children }: WorkspaceShellProps) {
               <Settings2 className="w-3 h-3 text-stone-400" />
             </button>
 
+            {/* Quick Student & Command Search Trigger */}
+            <button
+              onClick={() => setCommandPaletteOpen(true)}
+              className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white border border-stone-200/90 hover:border-stone-400 text-stone-500 hover:text-stone-900 text-xs shadow-2xs transition-all cursor-pointer"
+              title="Search students, roll numbers, or navigate (⌘K / Ctrl+K)"
+            >
+              <Search className="w-3.5 h-3.5 text-stone-400" />
+              <span className="font-medium">Search...</span>
+              <kbd className="px-1.5 py-0.5 rounded bg-stone-100 text-[10px] font-mono font-bold text-stone-600 border border-stone-200">
+                ⌘K
+              </kbd>
+            </button>
+
+            {/* Judge Live Simulation Scenarios Trigger */}
+            <button
+              onClick={() => setScenarioModalOpen(true)}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 border border-amber-300/90 text-amber-950 text-xs font-bold shadow-2xs transition-all cursor-pointer"
+              title="Test 1-Click Simulation Scenarios (Crisis, Placement Surge, etc.)"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-amber-600 fill-amber-500/20" />
+              <span className="hidden xl:inline">Scenarios</span>
+              <span className="xl:hidden">Sim</span>
+            </button>
+
 
 
             {/* 60-Second Judge Tour Trigger */}
@@ -507,6 +534,12 @@ function WorkspaceShellInner({ children }: WorkspaceShellProps) {
       <SignInModal
         isOpen={personaModalOpen}
         onClose={() => setPersonaModalOpen(false)}
+      />
+
+      {/* 1-Click Judge Live Academic Scenarios Modal */}
+      <ScenarioSelectorModal
+        isOpen={scenarioModalOpen}
+        onClose={() => setScenarioModalOpen(false)}
       />
     </div>
   );

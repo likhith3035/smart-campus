@@ -1,0 +1,18 @@
+{
+  "name": "CampusIQ | AI-Powered Student Analytics",
+  "short_name": "CampusIQ",
+  "description": "Enterprise Decision Intelligence & Student Analytics Platform for KPMG in India Hackathon",
+  "start_url": "/home",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FAF7F2",
+  "theme_color": "#0B1528",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

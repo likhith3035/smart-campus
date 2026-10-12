@@ -8,6 +8,8 @@ import { NetworkStatusWatcher } from "@/components/error/NetworkStatusWatcher";
 export const metadata: Metadata = {
   title: "CampusIQ | AI-Powered Student Analytics & Success Platform",
   description: "Turn student data into brighter futures. Identify at-risk students early, provide personalized support, and improve academic and placement outcomes.",
+  manifest: "/manifest.json",
+  themeColor: "#0B1528",
 };
 
 export default function RootLayout({
